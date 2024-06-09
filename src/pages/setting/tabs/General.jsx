@@ -3,7 +3,6 @@ import { Box, Tab } from '@mui/material';
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import UserProfile from './general/UserProfile';
-import CompanyProfile from './general/CompanyProfile';
 import { ME } from '../../../graphql/query';
 
 
