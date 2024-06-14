@@ -7,7 +7,7 @@ import { GET_ALL_CATEGORY } from './graphql/query';
 import CButton from '../../../common/CButton/CButton';
 import toast from 'react-hot-toast';
 import { uploadMultiFile } from '../../../utils/uploadFile';
-import { PRODUCT_DELETE, PRODUCT_MUTATION } from './graphql/mutation';
+import { PRODUCT_DELETE, VENDOR_PRODUCT_MUTATION } from './graphql/mutation';
 import { deleteMultiFile } from '../../../utils/deleteFile';
 import { GET_INGREDIENTS } from '../../../graphql/query';
 
@@ -42,8 +42,8 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
     title: '',
     description: '',
     contains: '',
-    availability: true,
-    discountAvailability: false
+    // availability: true,
+    // discountAvailability: false
   })
 
   const handlePriceWithoutTaxChange = (event) => {
@@ -89,7 +89,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
 
 
   // product create update
-  const [productMutation, { loading: productMutationLoading }] = useMutation(PRODUCT_MUTATION, {
+  const [productMutation, { loading: productMutationLoading }] = useMutation(VENDOR_PRODUCT_MUTATION, {
     onCompleted: (res) => {
       fetchCategory()
       toast.success(res.productMutation.message)
@@ -328,7 +328,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           rows={4}
           multiline
         />
-        <Stack direction='row' gap={2} mt={2} alignItems='center'>
+        {/* <Stack direction='row' gap={2} mt={2} alignItems='center'>
           <FormControlLabel
             sx={{ mb: 1, width: 'fit-content' }}
             control={<Switch checked={payload.availability}
@@ -339,7 +339,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
               checked={payload.discountAvailability}
               onChange={e => setPayload({ ...payload, discountAvailability: e.target.checked })} />}
             label="Discount Active" />
-        </Stack>
+        </Stack> */}
 
         {/* Product image from api */}
         <Stack gap={2} >

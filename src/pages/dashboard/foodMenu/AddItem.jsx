@@ -5,10 +5,10 @@ import { Autocomplete, Box, Button, Checkbox, Collapse, FormControl, FormControl
 import { useState } from 'react';
 import { GET_ALL_CATEGORY } from './graphql/query';
 import toast from 'react-hot-toast';
-import { PRODUCT_MUTATION } from './graphql/mutation';
 import { GET_INGREDIENTS } from '../../../graphql/query';
 import { uploadMultiFile } from '../../../utils/uploadFile';
 import CButton from '../../../common/CButton/CButton';
+import { VENDOR_PRODUCT_MUTATION } from './graphql/mutation';
 
 const icon = <CheckBoxOutlineBlank fontSize="small" />;
 const checkedIcon = <CheckBox fontSize="small" />;
@@ -37,8 +37,8 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
     title: '',
     description: '',
     contains: '',
-    availability: true,
-    discountAvailability: false
+    // availability: true,
+    // discountAvailability: false
   })
 
   const handlePriceWithoutTaxChange = (event) => {
@@ -78,10 +78,10 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
   };
 
   // product create
-  const [productMutation, { loading: productMutationLoading }] = useMutation(PRODUCT_MUTATION, {
+  const [productMutation, { loading: productMutationLoading }] = useMutation(VENDOR_PRODUCT_MUTATION, {
     onCompleted: (res) => {
       fetchCategory()
-      toast.success(res.productMutation.message)
+      toast.success(res.vendorProductMutation.message)
       closeDialog()
     },
     onError: (err) => {
@@ -262,16 +262,16 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           multiline
         />
         <Stack direction='row' gap={2} mt={2} alignItems='center'>
-          <FormControlLabel
+          {/* <FormControlLabel
             sx={{ mb: 1, width: 'fit-content' }}
             control={<Switch checked={payload.availability}
               onChange={e => setPayload({ ...payload, availability: e.target.checked })} />}
-            label="Status Available" />
-          <FormControlLabel
+            label="Status Available" /> */}
+          {/* <FormControlLabel
             control={<Switch color="warning"
               checked={payload.discountAvailability}
               onChange={e => setPayload({ ...payload, discountAvailability: e.target.checked })} />}
-            label="Discount Active" />
+            label="Discount Active" /> */}
         </Stack>
 
         {/* selected image */}

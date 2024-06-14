@@ -9,7 +9,6 @@ import NotFound from './pages/notFound/Index';
 import Layout from './pages/dashboard/Layout';
 import Dashboard from './pages/dashboard/dashboard/Dashboard';
 import FoodItem from './pages/dashboard/foodMenu/Index';
-import FoodCategories from './pages/dashboard/foodMenu/FoodCategories';
 import FoodDetails from './pages/dashboard/foodMenu/FoodDetails';
 import Orders from './pages/dashboard/orders/Index';
 import OrderDetails from './pages/dashboard/orders/OrderDetails';
@@ -44,7 +43,6 @@ function App() {
         <Route element={token ? <Layout /> : <Navigate to='/login' />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/food-item' element={<FoodItem />} />
-          <Route path='/dashboard/food-categories' element={<FoodCategories />} />
           <Route path='/dashboard/:path/food-details/:id' element={<FoodDetails />} />
           <Route path='/dashboard/orders' element={<Orders />} />
           <Route path='/dashboard/orders/details/:id' element={<OrderDetails />} />

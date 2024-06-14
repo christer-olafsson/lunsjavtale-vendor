@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Checkbox, Container, IconButton, Input, InputAdornment, InputLabel, OutlinedInput, Stack, TextField, Typography } from '@mui/material'
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import CButton from '../../common/CButton/CButton'
 import { KeyboardArrowLeft, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useMutation } from '@apollo/client';
@@ -21,7 +21,7 @@ const Login = (props) => {
 
   const [loginUser, { loading, error: loginErr }] = useMutation(LOGIN_USER, {
     onCompleted: (res) => {
-      if(res.loginUser.user.role !== 'vendor'){
+      if (res.loginUser.user.role !== 'vendor') {
         toast.error('Please login with vendor account!')
         return
       }
@@ -47,6 +47,8 @@ const Login = (props) => {
     setPayloadError({ ...payloadError, [e.target.name]: '' });
     setPayload({ ...payload, [e.target.name]: e.target.value })
   }
+
+
   const handleLogin = () => {
     if (!payload.email) {
       setPayloadError({ ...payloadError, email: 'Please enter email!' });
@@ -58,6 +60,12 @@ const Login = (props) => {
     }
     if (loginErr) toast.error('SomeThing went wrong!')
     loginUser({ variables: payload })
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin()
+    }
   }
 
 
@@ -185,7 +193,7 @@ const Login = (props) => {
                   <img width='100%' src="Logo.svg" alt="" />
                 </Box>
               </Stack>
-              <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3 ,textAlign:'center'}}>Supplier Login</Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3, textAlign: 'center' }}>Supplier Login</Typography>
               <TextField
                 onChange={handleInputChange}
                 name='email'
@@ -196,9 +204,11 @@ const Login = (props) => {
                 fullWidth
                 label="Email"
                 variant="outlined"
+                onKeyDown={handleKeyPress}
               />
               <TextField
                 sx={{ mb: 2 }}
+                onKeyDown={handleKeyPress}
                 variant="outlined"
                 type={passwordVisibility ? "text" : "password"}
                 name="password"

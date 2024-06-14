@@ -205,8 +205,8 @@ function Layout() {
           <Box sx={{ ml: 3, mt: 1 }}>
             <ListBtn onClick={handleDrawerClose} link='/dashboard/food-item' text='Food Item'
               selected={pathname === '/dashboard/food-item' || pathname === foodDetailsMatchFromItem?.pathname} />
-            <ListBtn onClick={handleDrawerClose} link='/dashboard/food-categories' text='Food Categories'
-              selected={pathname === '/dashboard/food-categories' || pathname === foodDetailsMatchFromCategories?.pathname} />
+            {/* <ListBtn onClick={handleDrawerClose} link='/dashboard/food-categories' text='Food Categories'
+              selected={pathname === '/dashboard/food-categories' || pathname === foodDetailsMatchFromCategories?.pathname} /> */}
           </Box>
         </Collapse>
         <ListBtn onClick={handleDrawerClose}
@@ -370,7 +370,7 @@ function Layout() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               >
-                <MenuItem sx={{ width: '200px' }} onClick={handleUserMenuClose}>
+                {/* <MenuItem sx={{ width: '200px' }} onClick={handleUserMenuClose}>
                   <ListItemIcon>
                     <AccountCircle />
                   </ListItemIcon>
@@ -382,7 +382,7 @@ function Layout() {
                     <Settings fontSize="small" />
                   </ListItemIcon>
                   Settings
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={() => (
                   handleUserMenuClose(),
                   handleLogout()
