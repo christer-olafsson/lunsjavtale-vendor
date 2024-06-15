@@ -17,6 +17,7 @@ import SalesDetails from './pages/dashboard/paymentsHistory/SalesDetails';
 import Invoice from './pages/dashboard/invoice/Index';
 import InvoiceDetails from './pages/dashboard/invoice/InvoiceDetails';
 import Setting from './pages/setting/Setting';
+import WithdrawReq from './pages/dashboard/withdraw-req/Index';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/dashboard/:path/food-details/:id' element={<FoodDetails />} />
           <Route path='/dashboard/orders' element={<Orders />} />
           <Route path='/dashboard/orders/details/:id' element={<OrderDetails />} />
+          <Route path='/dashboard/withdraw-req' element={<WithdrawReq />} />
           <Route path='/dashboard/payments-history' element={<PaymentsHistory />} />
           <Route path='/dashboard/payments-history/details/:id' element={<SalesDetails />} />
           <Route path='/dashboard/invoice' element={<Invoice />} />

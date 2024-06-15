@@ -36,14 +36,11 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
     price: '',
     description: '',
   })
-  // const [taxRate, setTaxRate] = useState(0.15); // Default tax rate of 15%
   const [payload, setPayload] = useState({
     name: '',
     title: '',
     description: '',
     contains: '',
-    // availability: true,
-    // discountAvailability: false
   })
 
   const handlePriceWithoutTaxChange = (event) => {
@@ -92,7 +89,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
   const [productMutation, { loading: productMutationLoading }] = useMutation(VENDOR_PRODUCT_MUTATION, {
     onCompleted: (res) => {
       fetchCategory()
-      toast.success(res.productMutation.message)
+      toast.success(res.vendorProductMutation.message)
       closeDialog()
     },
     onError: (err) => {
@@ -123,7 +120,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
       setAllAllergies(allergiesName)
     }
   });
-  
+
   // set cover image
   const handleSetCoverImgId = (index) => {
     setSelectedCoverImgId(index);
@@ -205,15 +202,13 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
     },
   });
 
-  
+
   useEffect(() => {
     setPayload({
       name: data.name,
       title: data.title ? data.title : '',
       description: data.description,
       contains: data.contains ? JSON.parse(data.contains) : '',
-      availability: data.availability ? data.availability : false,
-      discountAvailability: data.discountAvailability ? data.discountAvailability : false
     })
     setPriceWithTax(data.priceWithTax);
     setPriceWithoutTax(data.actualPrice);
@@ -225,10 +220,10 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
       isCover: item.node.isCover,
     })));
   }, [])
-  
+
 
   return (
-    <Box sx={{ p: { xs: 0, md: 2 } }}>
+    <Box>
       <Stack direction='row' justifyContent='space-between' mb={4}>
         <Typography variant='h5'>Update Items</Typography>
         <IconButton onClick={closeDialog}>
@@ -318,6 +313,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           multiline
         />
         <TextField
+          sx={{ mb: 3 }}
           error={Boolean(inputerr.description)}
           helperText={inputerr.description}
           name='description'
@@ -328,19 +324,6 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           rows={4}
           multiline
         />
-        {/* <Stack direction='row' gap={2} mt={2} alignItems='center'>
-          <FormControlLabel
-            sx={{ mb: 1, width: 'fit-content' }}
-            control={<Switch checked={payload.availability}
-              onChange={e => setPayload({ ...payload, availability: e.target.checked })} />}
-            label="Status Available" />
-          <FormControlLabel
-            control={<Switch color="warning"
-              checked={payload.discountAvailability}
-              onChange={e => setPayload({ ...payload, discountAvailability: e.target.checked })} />}
-            label="Discount Active" />
-        </Stack> */}
-
         {/* Product image from api */}
         <Stack gap={2} >
           <Stack direction='row' gap={2} flexWrap='wrap' >
@@ -357,7 +340,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
                   position: 'absolute',
                   content: data.isCover ? '"Cover"' : '""',
                   width: '100%',
-                  pl:1,
+                  pl: 1,
                   color: '#fff',
                   height: '25px', bottom: 0,
                   bgcolor: data.isCover ? 'rgba(0,0,0,.7)' : '',

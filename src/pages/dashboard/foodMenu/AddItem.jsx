@@ -160,7 +160,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
 
 
   return (
-    <Box sx={{ p: { xs: 0, md: 2 } }}>
+    <Box>
       <Stack direction='row' justifyContent='space-between' mb={4}>
         <Typography variant='h5'>Add New Items</Typography>
         <IconButton onClick={closeDialog}>

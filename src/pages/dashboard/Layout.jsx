@@ -12,7 +12,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, Outlet, useLocation, useMatch } from 'react-router-dom';
 import { AccountCircle, Description, History, KeyboardArrowRight, Logout, LunchDining, MailOutline, MapOutlined, Notifications, NotificationsNone, People, PinDrop, Recommend, Search, Settings, SpaceDashboard, } from '@mui/icons-material';
-import { Avatar, Badge, ClickAwayListener, Collapse, Menu, MenuItem, Stack } from '@mui/material';
+import { Avatar, Badge, ClickAwayListener, Collapse, InputAdornment, Menu, MenuItem, Stack, TextField } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery } from '@apollo/client';
 import { LOGOUT } from '../login/graphql/mutation';
@@ -101,12 +101,13 @@ function Layout() {
   const [openNotification, setOpenNotification] = useState(false);
   const [expandFoodMenu, setExpandFoodMenu] = useState(false)
 
+
   const { pathname } = useLocation();
   const orderDetailsMatch = useMatch('/dashboard/orders/details/:id')
   const foodDetailsMatchFromItem = useMatch('/dashboard/food-item/food-details/:id')
   const foodDetailsMatchFromCategories = useMatch('/dashboard/food-categories/food-details/:id')
 
-  const {data: user} = useQuery(ME)
+  const { data: user } = useQuery(ME)
 
   const [logout, { loading }] = useMutation(LOGOUT, {
     onCompleted: (res) => {
@@ -188,27 +189,14 @@ function Layout() {
           onClick={handleDrawerClose}
           link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashboard'
           selected={pathname === '/dashboard'} />
-        <ListBtn onClick={() => setExpandFoodMenu(!expandFoodMenu)}
-          link='/dashboard/food-item'
-          expandIcon
-          expand={expandFoodMenu}
+        <ListBtn
           icon={<LunchDining fontSize='small' />}
-          text='Food Menu'
-          selected={
-            pathname === '/dashboard/food-item'
-            || pathname === '/dashboard/food-categories'
-            || pathname === foodDetailsMatchFromItem?.pathname
-            || pathname === foodDetailsMatchFromCategories?.pathname
-          }
+          onClick={handleDrawerClose}
+          link='/dashboard/food-item'
+          text='Food Item'
+          selected={pathname === '/dashboard/food-item' ||
+            pathname === foodDetailsMatchFromItem?.pathname}
         />
-        <Collapse in={expandFoodMenu} timeout="auto" unmountOnExit>
-          <Box sx={{ ml: 3, mt: 1 }}>
-            <ListBtn onClick={handleDrawerClose} link='/dashboard/food-item' text='Food Item'
-              selected={pathname === '/dashboard/food-item' || pathname === foodDetailsMatchFromItem?.pathname} />
-            {/* <ListBtn onClick={handleDrawerClose} link='/dashboard/food-categories' text='Food Categories'
-              selected={pathname === '/dashboard/food-categories' || pathname === foodDetailsMatchFromCategories?.pathname} /> */}
-          </Box>
-        </Collapse>
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/orders'
           icon={<Notifications fontSize='small' />}
@@ -216,17 +204,17 @@ function Layout() {
           selected={pathname === '/dashboard/orders' || pathname === orderDetailsMatch?.pathname}
         />
         <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/payments-history'
+          link='/dashboard/withdraw-req'
           icon={<History fontSize='small' />}
-          text='Payment-History'
-          selected={pathname === '/dashboard/payments-history'}
+          text='Withdraw-Request'
+          selected={pathname === '/dashboard/withdraw-req'}
         />
-        <ListBtn onClick={handleDrawerClose}
+        {/* <ListBtn onClick={handleDrawerClose}
           link='/dashboard/invoice'
           icon={<Description fontSize='small' />}
           text='Invoice'
           selected={pathname === '/dashboard/invoice'}
-        />
+        /> */}
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/settings'
           icon={<Settings fontSize='small' />}
@@ -317,7 +305,7 @@ function Layout() {
               </Box>
             </ClickAwayListener> */}
 
-            <ClickAwayListener onClickAway={() => setOpenNotification(false)}>
+            {/* <ClickAwayListener onClickAway={() => setOpenNotification(false)}>
               <Box sx={{
                 position: 'relative'
               }}>
@@ -348,52 +336,66 @@ function Layout() {
                   </Box>
                 </Collapse>
               </Box>
-            </ClickAwayListener>
+            </ClickAwayListener> */}
             {/* user menu */}
-            <Box>
-              <IconButton
-                onClick={handleUserMenuOpen}
-                size="small"
-                aria-controls={open ? 'account-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-              >
-                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-              </IconButton>
-              <Menu
-                anchorEl={userMenuOpen}
-                id="account-menu"
-                open={open}
-                onClose={handleUserMenuClose}
-                onClick={handleUserMenuClose}
-                PaperProps={paperProps}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              >
-                {/* <MenuItem sx={{ width: '200px' }} onClick={handleUserMenuClose}>
-                  <ListItemIcon>
-                    <AccountCircle />
-                  </ListItemIcon>
-                  Profile
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={handleUserMenuClose}>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem> */}
-                <MenuItem onClick={() => (
-                  handleUserMenuClose(),
-                  handleLogout()
-                )}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-              </Menu>
-            </Box>
+            <ClickAwayListener onClickAway={() => setUsermenuOpen(false)}>
+              <Box sx={{ position: 'relative' }}>
+                <IconButton
+                  disableRipple
+                  onClick={() => setUsermenuOpen(!userMenuOpen)}
+                  size="small"
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                >
+                  <Avatar src={user?.me.photoUrl ? user?.me.photoUrl : ''} sx={{ width: 32, height: 32 }} />
+                  <Box ml={1}>
+                    <Typography sx={{ fontSize: '16px', fontWeight: 600 }}>{user?.me.username}</Typography>
+                    <Typography sx={{
+                      fontSize: '12px',
+                      bgcolor: user?.me.role === 'company-manager' ?
+                        'primary.main' : user?.me.role === 'company-owner' ?
+                          'purple' : 'gray.main',
+                      px: 1, borderRadius: '50px',
+                      color: user?.me.role === 'company-manager' ?
+                        '#fff' : user?.me.role === 'company-owner' ?
+                          '#fff' : 'inherit',
+                    }}>{user?.me.role.replace('company-', '')}</Typography>
+                  </Box>
+                </IconButton>
+
+                <Collapse sx={{
+                  position: 'absolute',
+                  top: 65,
+                  right: 0,
+                  minWidth: '250px',
+                  pt: 2,
+                  bgcolor: '#fff',
+                  boxShadow: 3,
+                  borderRadius: '8px'
+                }} in={userMenuOpen}>
+                  <Stack sx={{ width: '100%' }} alignItems='center'>
+                    <Avatar src={user?.me.photoUrl ?? ''} sx={{ width: '100px', height: '100px', mb: 2 }} />
+                    <Typography sx={{ fontSize: '20px', textAlign: 'center' }}>
+                      {user?.me.firstName + ' ' + user?.me.lastName ?? ''}
+                    </Typography>
+                    <Typography sx={{ fontSize: '20px', textAlign: 'center' }}>{user?.me.username}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.email}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px', mb: 2 }}>{user?.me.phone}</Typography>
+                    <Divider sx={{ width: '100%' }} />
+                    <MenuItem onClick={() => (
+                      setUsermenuOpen(false),
+                      handleLogout()
+                    )}>
+                      <ListItemIcon>
+                        <Logout fontSize="small" />
+                      </ListItemIcon>
+                      Logout
+                    </MenuItem>
+                  </Stack>
+                </Collapse>
+              </Box>
+            </ClickAwayListener>
             {/* user menu end */}
           </Box>
         </Toolbar>

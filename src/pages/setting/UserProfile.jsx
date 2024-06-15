@@ -3,11 +3,11 @@ import { Autocomplete, Avatar, Box, Checkbox, FormControl, FormGroup, InputLabel
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import toast from 'react-hot-toast'
-import { GENERAL_PROFILE_UPDATE } from '../../graphql/mutation'
-import { GET_INGREDIENTS, ME } from '../../../../graphql/query'
-import { deleteFile } from '../../../../utils/deleteFile'
-import { uploadFile } from '../../../../utils/uploadFile'
-import CButton from '../../../../common/CButton/CButton'
+import { GENERAL_PROFILE_UPDATE } from './graphql/mutation'
+import { GET_INGREDIENTS, ME } from '../../graphql/query'
+import { deleteFile } from '../../utils/deleteFile'
+import { uploadFile } from '../../utils/uploadFile'
+import CButton from '../../common/CButton/CButton'
 
 
 const icon = <CheckBoxOutlineBlank fontSize="small" />;
@@ -60,7 +60,7 @@ const UserProfile = () => {
   //get all allergies
   useQuery(GET_INGREDIENTS, {
     onCompleted: (res) => {
-      setAllAllergies(res.ingredients.edges.map(item => item.node))
+      setAllAllergies(res.ingredients.edges.map(item => ({ id: item.node.id, name: item.node.name })))
     }
   });
 
@@ -111,11 +111,11 @@ const UserProfile = () => {
       about: user?.me.about ? user.me.about : ''
     });
     if (user?.me.allergies) {
-      setSelectedAllergies(user?.me.allergies.edges.map(item => item.node))
+      setSelectedAllergies(user?.me.allergies.edges.map(item => ({ id: item.node.id, name: item.node.name })))
     }
   }, [user]);
 
-
+ 
   return (
     <Box>
       {/* <Typography sx={{ fontSize: '18px', fontWeight: 700, mb: 1 }}>User Profile</Typography> */}
@@ -173,7 +173,6 @@ const UserProfile = () => {
               <Typography variant='h6' mb={1}>Allergies</Typography>
 
               <Autocomplete
-                size='small'
                 multiple
                 options={allAllergies}
                 disableCloseOnSelect

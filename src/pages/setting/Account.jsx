@@ -3,10 +3,10 @@ import { Box, Button, FilledInput, IconButton, Input, InputAdornment, InputLabel
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client';
 import toast from 'react-hot-toast';
-import { ACCOUNT_PROFILE_UPDATE } from '../graphql/mutation';
-import { ME } from '../../../graphql/query';
-import { PASSWORD_RESET } from '../../login/graphql/mutation';
-import CButton from '../../../common/CButton/CButton';
+import CButton from '../../common/CButton/CButton';
+import { ME } from '../../graphql/query';
+import { ACCOUNT_PROFILE_UPDATE } from './graphql/mutation';
+import { PASSWORD_RESET } from '../login/graphql/mutation';
 
 const Account = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,8 +21,6 @@ const Account = () => {
     newPass: '',
     repeatPass: ''
   })
-
-
 
 
   const { data: user } = useQuery(ME);
@@ -105,9 +103,9 @@ const Account = () => {
   useEffect(() => {
     setPayload({
       ...payload,
-      username: user.me.username
+      username: user?.me?.username
     });
-    setForgotEmail({ email: user?.me.email })
+    setForgotEmail({ email: user?.me?.email })
   }, [user])
 
   return (
@@ -144,12 +142,7 @@ const Account = () => {
           </Stack> :
           <Stack>
             <InputLabel sx={{ mt: 3, fontWeight: 600 }}>Username</InputLabel>
-            <Input name='username' value={payload.username} onChange={handleInputChange} startAdornment={
-              <InputAdornment position="start">
-                <Typography>Lunsjavtale.no/</Typography>
-              </InputAdornment>
-            }
-            />
+            <Input name='username' value={payload.username} onChange={handleInputChange} />
             <InputLabel sx={{ mt: 3 }}>Current password</InputLabel>
             <Input name='currentPass' value={payload.currentPass} onChange={handleInputChange} variant='standard' />
             <InputLabel sx={{ mt: 3 }}>New Password</InputLabel>

@@ -102,7 +102,7 @@ const FoodDetails = () => {
                 <Typography>{product.contains && typeof product.contains === 'string' ? JSON.parse(product.contains) : ''}</Typography>
               </Box>
             </Stack>
-            <Box sx={{ width: '100%', mt: 5 }}>
+            {/* <Box sx={{ width: '100%', mt: 5 }}>
               <TabContext value={tabValue}>
                 <Box sx={{ borderBottom: '1px solid lightgray', }}>
                   <TabList onChange={handleTabChange} >
@@ -133,7 +133,7 @@ const FoodDetails = () => {
                 </TabPanel>
                 <TabPanel value="3">Item Three</TabPanel>
               </TabContext>
-            </Box>
+            </Box> */}
           </>
       }
     </Box>

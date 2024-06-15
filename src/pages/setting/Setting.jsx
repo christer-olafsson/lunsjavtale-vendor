@@ -1,76 +1,48 @@
-import { BorderColor } from '@mui/icons-material'
-import { Avatar, Box, IconButton, Stack, Typography } from '@mui/material'
-import SettingTab from './SettingTab'
-import { useQuery } from '@apollo/client'
-import { ME } from '../../graphql/query'
+import { Box, Tab, Tabs, Typography } from '@mui/material'
+import UserProfile from './UserProfile'
+import Account from './Account'
+import { useState } from 'react';
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
 
 const Setting = () => {
-  const { data: user } = useQuery(ME)
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Box maxWidth='lg'>
-      <Typography sx={{ fontSize: '24px', fontWeight: 600 }}>System Settings</Typography>
-      <Stack direction={{ xs: 'column', lg: 'row' }} gap={4} mt={4}>
-        <Box sx={{
-          position: { xs: 'none', lg: 'sticky' },
-          top: 100,
-          flex: 1,
-          height: 'fit-content',
-          p: 3,
-          bgcolor: 'light.main',
-          borderRadius: '16px',
-        }}>
-          <Stack alignItems='center'>
-            <Box sx={{
-              width: { xs: '100%', md: '360px' }
-            }}>
-              <img style={{ width: '100%' }} src="/img21232.png" alt="" />
-            </Box>
-            <Box sx={{
-              mt: -6,
-              bgcolor: '#fff',
-              borderRadius: '50%',
-              width: '96px',
-              height: '96px',
-              p: .5
-            }}><Avatar src={user?.me.photoUrl ? user.me.photoUrl : ''} sx={{ width: '100%', height: '100%', }} />
-            </Box>
-            <Typography sx={{ fontSize: '18px', fontWeight: 500 }}>{user?.me.company?.name}</Typography>
-            <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>IT Tecnhology</Typography>
-            <Box sx={{
-              bgcolor: '#fff',
-              p: 2, borderRadius: '8px', mt: 3,
-              width: '100%'
-            }}>
-              <Typography sx={{ fontSize: '16px', fontWeight: 600 }}>Payment Method</Typography>
-              <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>On 04 March, 2024</Typography>
-              <Stack mt={2} direction='row' justifyContent='space-between'>
-                <Stack>
-                  <Box sx={{
-                    bgcolor: 'light.main',
-                    width: '72px', height: '58px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '8px'
-                  }}>
-                    <img src="/visaicon.png" alt="" />
-                  </Box>
-                </Stack>
-                <IconButton>
-                  <BorderColor />
-                </IconButton>
-              </Stack>
-            </Box>
-          </Stack>
+      <Typography sx={{ fontSize: '24px', fontWeight: 600, mb: 3 }}>Profile Update</Typography>
+      <Box>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Profile" />
+            <Tab label="Account" />
+          </Tabs>
         </Box>
-
-        <Box sx={{
-          flex: 2
-        }}>
-          <SettingTab />
-        </Box>
-      </Stack>
+        <CustomTabPanel value={value} index={0}>
+          <UserProfile />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <Account />
+        </CustomTabPanel>
+      </Box>
     </Box>
   )
 }
