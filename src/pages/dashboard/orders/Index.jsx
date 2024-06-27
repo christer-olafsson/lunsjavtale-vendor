@@ -101,21 +101,32 @@ const Orders = () => {
       )
     },
     {
-      field: 'status', headerName: 'Status', width: 250,
+      field: 'status', headerName: 'Status', width: 150,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Status</Typography>
       ),
-      renderCell: (params) => (
-        <Box sx={{
-          display: 'inline-flex',
-          padding: '4px 12px',
-          bgcolor: params.row.status === 'Placed' ? '#40A578' : '#E9EDFF',
-          color: params.row.status === 'Placed' ? '#fff' : 'inherit',
-          borderRadius: '4px',
-        }}>
-          <Typography variant='body2'>{params.row.status}</Typography>
-        </Box>
-      ),
+      renderCell: (params) => {
+        const { row } = params
+        return (
+          <Box sx={{
+            display: 'inline-flex',
+            padding: '1px 12px',
+            bgcolor: row.status === 'Cancelled'
+              ? 'red'
+              : row.status === 'Confirmed'
+                ? 'lightgreen'
+                : row.status === 'Delivered'
+                  ? 'green'
+                  : 'yellow',
+            color: row.status === 'Placed' ? 'dark'
+              : row.status === 'Payment-pending' ?
+                'dark' : '#fff',
+            borderRadius: '4px',
+          }}>
+            <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.status}</Typography>
+          </Box>
+        )
+      }
     },
     // {
     //   field: 'action', headerName: 'Action', width: 150,

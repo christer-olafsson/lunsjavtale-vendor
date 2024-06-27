@@ -26,7 +26,7 @@ const Notifications = () => {
 
   const columns = [
     {
-      field: 'Time', width: 150,
+      field: 'Time', width: 200,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Time</Typography>
       ),
@@ -67,11 +67,11 @@ const Notifications = () => {
         const { row } = params
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Link to={`/dashboard/orders/details/${row.objectId}`}>
+            {/* <Link to={`/dashboard/orders/details/${row.objectId}`}> */}
               <Typography sx={{
                 color: row.isSeen ? 'gray' : 'green'
               }} variant='body2'>{row.message}</Typography>
-            </Link>
+            {/* </Link> */}
           </Stack>
         )
       }
