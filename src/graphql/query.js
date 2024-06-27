@@ -19,6 +19,10 @@ export const ME = gql`
       about
       photoUrl
       fileId
+      isActive
+      vendor{
+        isBlocked
+      }
       company{
         id
         name

@@ -18,6 +18,8 @@ import Invoice from './pages/dashboard/invoice/Index';
 import InvoiceDetails from './pages/dashboard/invoice/InvoiceDetails';
 import Setting from './pages/setting/Setting';
 import WithdrawReq from './pages/dashboard/withdraw-req/Index';
+import Notifications from './pages/dashboard/notification/Notifications';
+import SalesHistory from './pages/dashboard/salesHistory/Index';
 
 function App() {
 
@@ -43,10 +45,12 @@ function App() {
         <Route path='/password-reset/:token?' element={<PassReset />} />
         <Route element={token ? <Layout /> : <Navigate to='/login' />}>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard/notifications' element={<Notifications />} />
           <Route path='/dashboard/food-item' element={<FoodItem />} />
           <Route path='/dashboard/:path/food-details/:id' element={<FoodDetails />} />
           <Route path='/dashboard/orders' element={<Orders />} />
           <Route path='/dashboard/orders/details/:id' element={<OrderDetails />} />
+          <Route path='/dashboard/sales-history' element={<SalesHistory />} />
           <Route path='/dashboard/withdraw-req' element={<WithdrawReq />} />
           <Route path='/dashboard/payments-history' element={<PaymentsHistory />} />
           <Route path='/dashboard/payments-history/details/:id' element={<SalesDetails />} />

@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
 import { Link } from 'react-router-dom';
-import { GET_ALL_CATEGORY, GET_SINGLE_PRODUCTS } from './graphql/query';
+import { GET_ALL_CATEGORY, PRODUCTS } from './graphql/query';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import CDialog from '../../../common/dialog/CDialog';
 import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import Loader from '../../../common/loader/Index';
+import { ME } from '../../../graphql/query';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,10 +37,6 @@ CustomTabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const tabName = [
-  'All', 'Brekfast', 'Lunch', 'Dinner', 'Option'
-]
-
 
 const FoodItem = () => {
   const [productAddDialogOpen, setAddItemDialogOpen] = useState(false)
@@ -48,6 +45,9 @@ const FoodItem = () => {
   const [allCategorys, setAllCategorys] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [products, setProducts] = useState([]);
+  const [searchText, setSearchText] = useState('')
+
+  const { data: user } = useQuery(ME)
 
 
   const [fetchCategory, { error: categoryErr }] = useLazyQuery(GET_ALL_CATEGORY, {
@@ -58,10 +58,11 @@ const FoodItem = () => {
     },
   });
 
-  const [fetchProducts, { loading: loadinProducts, error: errProducts }] = useLazyQuery(GET_SINGLE_PRODUCTS, {
+  const [fetchProducts, { loading: loadinProducts, error: errProducts }] = useLazyQuery(PRODUCTS, {
     fetchPolicy: "network-only",
     variables: {
-      category: categoryId
+      category: categoryId,
+      title: searchText
     },
     onCompleted: (res) => {
       const data = res.products.edges
@@ -95,10 +96,10 @@ const FoodItem = () => {
           borderRadius: '4px',
           pl: 2,
         }}>
-          <Input fullWidth disableUnderline placeholder='Search' />
+          <Input onChange={e => setSearchText(e.target.value)} fullWidth disableUnderline placeholder='Search' />
           <IconButton><Search /></IconButton>
         </Box>
-        <Button onClick={() => setAddItemDialogOpen(true)} sx={{ whiteSpace: 'nowrap', width: '150px' }} variant='contained' startIcon={<Add />}>Add Items</Button>
+        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setAddItemDialogOpen(true)} sx={{ whiteSpace: 'nowrap', width: '150px' }} variant='contained' startIcon={<Add />}>Add Items</Button>
       </Stack>
       {/* product add dialog */}
       {
@@ -191,7 +192,7 @@ const FoodItem = () => {
                     </Stack>
                   </Stack>
                   <Stack direction='row' alignItems='center' justifyContent='space-between' mt={1}>
-                    <Button variant='outlined' onClick={() => handleProductEditDialogOpen(id)} sx={{ bgcolor: '#fff', whiteSpace: 'nowrap' }}>Edit Now</Button>
+                    <Button disabled={user?.me.vendor.isBlocked} variant='outlined' onClick={() => handleProductEditDialogOpen(id)} sx={{ bgcolor: '#fff', whiteSpace: 'nowrap' }}>Edit Now</Button>
                     <Link to={`/dashboard/food-item/food-details/${data.node.id}`}>
                       <Button endIcon={<ArrowRightAlt />}>Details</Button>
                     </Link>

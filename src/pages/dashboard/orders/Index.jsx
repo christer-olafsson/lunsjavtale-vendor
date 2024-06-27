@@ -10,16 +10,17 @@ import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import DataTable from '../../../components/dashboard/DataTable';
 
 const Orders = () => {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
+  const [searchText, setSearchText] = useState('')
 
   const navigate = useNavigate()
 
+
   const { loading, error: orderErr } = useQuery(ORDERS, {
-    fetchPolicy:'cache-and-network',
-    // notifyOnNetworkStatusChange: true,
-    // variables: {
-    //   addedFor: '141'
-    // },
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      companyNameEmail: searchText
+    },
     onCompleted: (res) => {
       setOrders(res.orders.edges.map(item => item.node));
     }
@@ -167,7 +168,7 @@ const Orders = () => {
           borderRadius: '4px',
           pl: 2
         }}>
-          <Input fullWidth disableUnderline placeholder='Search Order Id' />
+          <Input onChange={e => setSearchText(e.target.value)} fullWidth disableUnderline placeholder='Company or Email' />
           <IconButton><Search /></IconButton>
         </Box>
       </Stack>

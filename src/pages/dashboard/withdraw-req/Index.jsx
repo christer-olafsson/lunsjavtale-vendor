@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react'
 import { WITHDRAW_REQ } from './graphql/query';
 import { Avatar, Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
@@ -11,6 +11,7 @@ import LoadingBar from '../../../common/loadingBar/LoadingBar';
 import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import DataTable from '../../../components/dashboard/DataTable';
 import EditWithdrawReq from './EditWithdrawReq';
+import { ME } from '../../../graphql/query';
 
 const WithdrawReq = () => {
   const [withdrawReq, setWithdrawReq] = useState([])
@@ -19,9 +20,11 @@ const WithdrawReq = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [editData, setEditData] = useState({})
 
+  const { data: user } = useQuery(ME)
+
   const [fetchWithdrawReq, { loading: WithdrawReqLoading, error: WithdrawReqErr }] = useLazyQuery(WITHDRAW_REQ, {
     // variables: {
-    //   vendor: searchText
+    //   vendorTitle: searchText
     // },
     fetchPolicy: "network-only",
     onCompleted: (res) => {
@@ -81,7 +84,8 @@ const WithdrawReq = () => {
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
             <Typography sx={{
               fontSize: { xs: '12px', md: '16px' },
-              bgcolor: row.status === 'pending' ? 'yellow' : 'green',
+              bgcolor: row.status === 'pending' ? 'yellow' : row.status === 'accepted' ? 'lightgreen' : row.status === 'completed' ? 'green' : 'gray',
+              color: row.status === 'pending' ? 'dark' : row.status === 'accepted' ? 'dark' : row.status === 'completed' ? '#fff' : 'inherit',
               px: 1, borderRadius: '8px',
             }}>&#x2022; {row.status}</Typography>
           </Stack>
@@ -92,7 +96,7 @@ const WithdrawReq = () => {
       field: 'edit', headerName: '', width: 50,
       renderCell: (params) => {
         return (
-          <IconButton disabled={params.row.status !== 'pending'} onClick={() => handleEditDialog(params.row)} sx={{
+          <IconButton disabled={params.row.status !== 'pending' || user?.me.vendor.isBlocked} onClick={() => handleEditDialog(params.row)} sx={{
             borderRadius: '5px',
             width: { xs: '30px', md: '40px' },
             height: { xs: '30px', md: '40px' },
@@ -134,7 +138,7 @@ const WithdrawReq = () => {
       </Stack>
       <Stack direction={{ xs: 'column', md: 'row' }} gap={2} justifyContent='space-between' mt={3} sx={{ height: '40px' }}>
         <Stack direction='row' gap={2}>
-          <Box sx={{
+          {/* <Box sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -147,7 +151,7 @@ const WithdrawReq = () => {
           }}>
             <Input onChange={e => setSearchText(e.target.value)} fullWidth disableUnderline placeholder='Search.. ' />
             <IconButton><Search /></IconButton>
-          </Box>
+          </Box> */}
           <Box sx={{ minWidth: 200 }}>
             <FormControl size='small' fullWidth>
               <InputLabel>Status</InputLabel>
@@ -164,7 +168,7 @@ const WithdrawReq = () => {
             </FormControl>
           </Box>
         </Stack>
-        <Button onClick={() => setWithdrawReqDialogOpen(true)} variant='contained'>Request Withdraw</Button>
+        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setWithdrawReqDialogOpen(true)} variant='contained'>Request Withdraw</Button>
       </Stack>
       {/* create withdraw req  */}
       <CDialog openDialog={withdrawReqDialogOpen}>

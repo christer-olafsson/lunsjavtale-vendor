@@ -197,7 +197,7 @@ const Account = () => {
             }
             <Stack direction='row' mt={2} justifyContent='space-between'>
               <Box></Box>
-              <CButton isLoading={updateLoading} onClick={handleUpdate} variant='contained'>Save Changes</CButton>
+              <CButton disable={user?.me.vendor.isBlocked} isLoading={updateLoading} onClick={handleUpdate} variant='contained'>Save Changes</CButton>
             </Stack>
           </Stack>
       }

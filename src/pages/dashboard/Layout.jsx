@@ -11,12 +11,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, Outlet, useLocation, useMatch } from 'react-router-dom';
-import { AccountCircle, Description, History, KeyboardArrowRight, Logout, LunchDining, MailOutline, MapOutlined, Notifications, NotificationsNone, People, PinDrop, Recommend, Search, Settings, SpaceDashboard, } from '@mui/icons-material';
+import { AccountCircle, Description, History, KeyboardArrowRight, Logout, LunchDining, MailOutline, MapOutlined, Notifications, NotificationsNone, People, PinDrop, Recommend, Search, Settings, SpaceDashboard, Timeline, } from '@mui/icons-material';
 import { Avatar, Badge, ClickAwayListener, Collapse, InputAdornment, Menu, MenuItem, Stack, TextField } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery } from '@apollo/client';
 import { LOGOUT } from '../login/graphql/mutation';
 import { ME } from '../../graphql/query';
+import { UNREAD_NOTIFICATION_COUNT, USER_NOTIFICATIONS } from './notification/query';
+import SmallNotification from './notification/SmallNotification';
 
 const drawerWidth = 264;
 
@@ -99,7 +101,8 @@ function Layout() {
   const [userMenuOpen, setUsermenuOpen] = useState(null);
   const [openEmail, setOpenEmail] = useState(false)
   const [openNotification, setOpenNotification] = useState(false);
-  const [expandFoodMenu, setExpandFoodMenu] = useState(false)
+  const [unreadNotification, setUnreadNotification] = useState([])
+
 
 
   const { pathname } = useLocation();
@@ -108,6 +111,14 @@ function Layout() {
   const foodDetailsMatchFromCategories = useMatch('/dashboard/food-categories/food-details/:id')
 
   const { data: user } = useQuery(ME)
+
+  useQuery(UNREAD_NOTIFICATION_COUNT, {
+    onCompleted: (res) => {
+      setUnreadNotification(res.unreadNotificationCount)
+    }
+  });
+
+
 
   const [logout, { loading }] = useMutation(LOGOUT, {
     onCompleted: (res) => {
@@ -159,6 +170,7 @@ function Layout() {
         display: 'flex',
         justifyContent: 'center', mt: 2
       }}>
+
         <Link to='/'>
           <Box sx={{
             width: { xs: '150px', md: '180px' },
@@ -168,6 +180,21 @@ function Layout() {
           </Box>
         </Link>
       </Toolbar>
+      {
+        user?.me.vendor.isBlocked &&
+        <Stack alignItems='center' sx={{
+          bgcolor: '#F7DCD9',
+          p: '5px 30px',
+          color: 'red',
+          borderRadius: '4px',
+          mb: 1
+        }}>
+          <Typography sx={{ fontWeight: 600 }}>
+            Account Restricted.
+          </Typography>
+          <a style={{ fontSize: '13px' }} href="https://wa.me/+4748306377" target='blank'>Contact</a>
+        </Stack>
+      }
       {/* <Divider /> */}
       {/* <Typography sx={{
         width: '80%',
@@ -190,6 +217,13 @@ function Layout() {
           link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashboard'
           selected={pathname === '/dashboard'} />
         <ListBtn
+          onClick={handleDrawerClose}
+          link='/dashboard/notifications'
+          icon={<NotificationsNone fontSize='small' />}
+          text='Notifications'
+          selected={pathname === '/dashboard/notifications'}
+        />
+        <ListBtn
           icon={<LunchDining fontSize='small' />}
           onClick={handleDrawerClose}
           link='/dashboard/food-item'
@@ -202,6 +236,12 @@ function Layout() {
           icon={<Notifications fontSize='small' />}
           text='Orders'
           selected={pathname === '/dashboard/orders' || pathname === orderDetailsMatch?.pathname}
+        />
+        <ListBtn onClick={handleDrawerClose}
+          link='/dashboard/sales-history'
+          icon={<Timeline fontSize='small' />}
+          text='Sales-History'
+          selected={pathname === '/dashboard/sales-history'}
         />
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/withdraw-req'
@@ -242,6 +282,7 @@ function Layout() {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -305,38 +346,29 @@ function Layout() {
               </Box>
             </ClickAwayListener> */}
 
-            {/* <ClickAwayListener onClickAway={() => setOpenNotification(false)}>
+            <ClickAwayListener onClickAway={() => setOpenNotification(false)}>
               <Box sx={{
                 position: 'relative'
               }}>
                 <IconButton onClick={() => (
                   setOpenNotification(!openNotification),
                   setOpenEmail(false)
-                )} sx={{ color: 'gray.main' }} color="inherit"
+                )} sx={{ color: 'darkgray' }} color="inherit"
                 >
-                  <Badge badgeContent={0} color="error">
-                    <NotificationsNone />
+                  <Badge badgeContent={unreadNotification} color="error">
+                    <NotificationsNone sx={{ fontSize: '30px' }} />
                   </Badge>
                 </IconButton>
                 <Collapse sx={{
                   position: 'absolute',
-                  right: { xs: -35, md: 0 },
+                  left: { xs: '50%', md: '0' },
+                  transform: 'translateX(-50%)',
                   top: 55,
                 }} in={openNotification}>
-                  <Box sx={{
-                    width: { xs: '90vw', sm: '300px', md: '350px' },
-                    maxHeight: '500px',
-                    overflowY: 'auto',
-                    zIndex: 99999,
-                    bgcolor: '#fff',
-                    border: '1px solid gray',
-                    borderRadius: '8px', p: '10px 20px',
-                  }}>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ipsam asperiores quasi dolor, recusandae sequi ducimus nam labore impedit quam?</p>
-                  </Box>
+                  <SmallNotification onClose={() => setOpenNotification(false)} />
                 </Collapse>
               </Box>
-            </ClickAwayListener> */}
+            </ClickAwayListener>
             {/* user menu */}
             <ClickAwayListener onClickAway={() => setUsermenuOpen(false)}>
               <Box sx={{ position: 'relative' }}>

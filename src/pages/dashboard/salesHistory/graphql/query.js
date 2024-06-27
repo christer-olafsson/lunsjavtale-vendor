@@ -1,8 +1,68 @@
 import { gql } from "@apollo/client";
 
+export const SALES_HISTORIES = gql`
+  query{
+  salesHistories{
+    edges{
+      node{
+        id
+        createdOn
+        quantity
+        priceWithTax
+        totalPriceWithTax
+        orderedQuantity
+        dueAmount
+        vendor{
+          id
+          name
+          email
+          contact
+          postCode
+          logoUrl
+        }
+        order{
+          id
+          deliveryDate
+          paidAmount
+          finalPrice
+          companyAllowance
+          dueAmount
+          status
+          company{
+            id
+            name
+            email
+            contact
+            postCode
+          }
+        }
+        item{
+          id
+          priceWithTax
+          name
+          description
+          attachments{
+            edges{
+              node{
+                fileUrl
+                isCover
+              }
+            }
+          }
+          category{
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 export const ORDERS = gql`
-  query($companyNameEmail: String){
-    orders(companyNameEmail: $companyNameEmail){
+  query{
+    orders{
       edges{
         node{
           id
