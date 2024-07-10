@@ -166,7 +166,7 @@ const UserProfile = () => {
           </Stack>
           <TextField disabled={!payloadEditOn} value={payload.about} onChange={handleInputChange} name='about' size='small' label='About' multiline rows={2} />
           {/* allergies */}
-          {
+          {/* {
             payloadEditOn &&
             <Box mt={2}>
               <Typography variant='h6' mb={1}>Allergies</Typography>
@@ -195,7 +195,7 @@ const UserProfile = () => {
               />
 
             </Box>
-          }
+          } */}
           {
             errors.length > 0 &&
             <ul style={{ color: 'red', fontSize: '13px' }}>
