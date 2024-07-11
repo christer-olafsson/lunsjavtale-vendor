@@ -78,7 +78,7 @@ const Notifications = () => {
     },
   ]
   return (
-    <Box maxWidth='xxl'>
+    <Box maxWidth='xl'>
       <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>All Notifications</Typography>
       <Box mt={3}>
         {

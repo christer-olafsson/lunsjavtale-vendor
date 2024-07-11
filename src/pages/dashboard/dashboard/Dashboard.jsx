@@ -44,7 +44,7 @@ const Dashboard = () => {
   });
 
   return (
-    <Box maxWidth='xxl'>
+    <Box maxWidth='xl'>
       <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Welcome , {user?.me.vendor.name}</Typography>
       {
         loading ? <Loader /> : error ? <ErrorMsg /> :

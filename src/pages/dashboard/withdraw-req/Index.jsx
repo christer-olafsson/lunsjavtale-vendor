@@ -132,7 +132,7 @@ const WithdrawReq = () => {
 
 
   return (
-    <Box maxWidth='xxl'>
+    <Box maxWidth='xl'>
       <Stack direction='row' gap={1} alignItems='center'>
         <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Withdraw Request</Typography>
       </Stack>
