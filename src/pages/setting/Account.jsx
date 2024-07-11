@@ -16,7 +16,7 @@ const Account = () => {
   const [forgotePassSecOpen, setForgotePassSecOpen] = useState(false);
   const [forgotEmail, setForgotEmail] = useState({ email: '' });
   const [payload, setPayload] = useState({
-    username: '',
+    // username: '',
     currentPass: '',
     newPass: '',
     repeatPass: ''
@@ -60,7 +60,7 @@ const Account = () => {
     accountUpdate({
       variables: {
         input: {
-          username: payload.username,
+          // username: payload.username,
           currentPassword: payload.currentPass,
           password: payload.repeatPass,
           id: user.me.id
@@ -141,8 +141,8 @@ const Account = () => {
             }
           </Stack> :
           <Stack>
-            <InputLabel sx={{ mt: 3, fontWeight: 600 }}>Username</InputLabel>
-            <Input name='username' value={payload.username} onChange={handleInputChange} />
+            {/* <InputLabel sx={{ mt: 3, fontWeight: 600 }}>Username</InputLabel>
+            <Input name='username' value={payload.username} onChange={handleInputChange} /> */}
             <InputLabel sx={{ mt: 3 }}>Current password</InputLabel>
             <Input name='currentPass' value={payload.currentPass} onChange={handleInputChange} variant='standard' />
             <InputLabel sx={{ mt: 3 }}>New Password</InputLabel>

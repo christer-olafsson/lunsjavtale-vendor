@@ -1,5 +1,14 @@
 import { gql } from "@apollo/client";
 
+
+
+export const VENDOR_UPDATE = gql`
+  mutation VendorUpdate($input: VendorUpdateMutationInput!){
+    vendorUpdate(input: $input){
+      message
+  }
+  }
+`
 export const GENERAL_PROFILE_UPDATE = gql`
   mutation GeneralProfileUpdate($input: UserMutationInput!){
     generalProfileUpdate(input: $input){

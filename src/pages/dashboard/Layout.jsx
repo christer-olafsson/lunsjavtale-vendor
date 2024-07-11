@@ -232,12 +232,6 @@ function Layout() {
             pathname === foodDetailsMatchFromItem?.pathname}
         />
         <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/orders'
-          icon={<Notifications fontSize='small' />}
-          text='Orders'
-          selected={pathname === '/dashboard/orders' || pathname === orderDetailsMatch?.pathname}
-        />
-        <ListBtn onClick={handleDrawerClose}
           link='/dashboard/sales-history'
           icon={<Timeline fontSize='small' />}
           text='Sales-History'
@@ -380,18 +374,14 @@ function Layout() {
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
                 >
-                  <Avatar src={user?.me.photoUrl ? user?.me.photoUrl : ''} sx={{ width: 32, height: 32 }} />
+                  <Avatar src={user?.me.vendor.logoUrl ?? ''} sx={{ width: 32, height: 32 }} />
                   <Box ml={1}>
-                    <Typography sx={{ fontSize: '16px', fontWeight: 600 }}>{user?.me.username}</Typography>
+                    <Typography sx={{ fontSize: '16px', fontWeight: 600 }}>{user?.me.vendor.name}</Typography>
                     <Typography sx={{
                       fontSize: '12px',
-                      bgcolor: user?.me.role === 'company-manager' ?
-                        'primary.main' : user?.me.role === 'company-owner' ?
-                          'purple' : 'gray.main',
-                      px: 1, borderRadius: '50px',
-                      color: user?.me.role === 'company-manager' ?
-                        '#fff' : user?.me.role === 'company-owner' ?
-                          '#fff' : 'inherit',
+                      bgcolor: 'gray.main',
+                      px: 1,
+                      borderRadius: '50px'
                     }}>{user?.me.role.replace('company-', '')}</Typography>
                   </Box>
                 </IconButton>
@@ -407,13 +397,13 @@ function Layout() {
                   borderRadius: '8px'
                 }} in={userMenuOpen}>
                   <Stack sx={{ width: '100%' }} alignItems='center'>
-                    <Avatar src={user?.me.photoUrl ?? ''} sx={{ width: '100px', height: '100px', mb: 2 }} />
+                    <Avatar src={user?.me.vendor.logoUrl ?? ''} sx={{ width: '100px', height: '100px', mb: 2 }} />
                     <Typography sx={{ fontSize: '20px', textAlign: 'center' }}>
-                      {user?.me.firstName + ' ' + user?.me.lastName ?? ''}
+                      {user?.me.vendor.name}
                     </Typography>
-                    <Typography sx={{ fontSize: '20px', textAlign: 'center' }}>{user?.me.username}</Typography>
-                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.email}</Typography>
-                    <Typography sx={{ textAlign: 'center', fontSize: '14px', mb: 2 }}>{user?.me.phone}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.vendor?.email}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.vendor?.contact}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>PostCode: {user?.me.vendor?.postCode}</Typography>
                     <Divider sx={{ width: '100%' }} />
                     <MenuItem onClick={() => (
                       setUsermenuOpen(false),

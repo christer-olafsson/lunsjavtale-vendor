@@ -21,39 +21,16 @@ export const ME = gql`
       fileId
       isActive
       vendor{
-        isBlocked
-      }
-      company{
         id
+        isBlocked
         name
         email
+        contact
         postCode
         logoUrl
-        totalEmployee
-        noOfEmployees
-        description
-        workingEmail
-        contact
-        isBlocked
-        fileId
+        soldAmount
+        withdrawnAmount
         formationDate
-          billingAddress{
-          id
-          firstName
-          lastName
-          address
-          sector
-          country
-          phone
-        }
-      }
-      allergies{
-        edges{
-          node{
-            id
-            name
-          }
-        }
       }
     }
   }

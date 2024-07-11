@@ -8,6 +8,7 @@ import RecentSales from './RecentSales';
 import SoldProducts from './SoldProducts';
 import Loader from '../../../common/loader/Index';
 import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
+import { ME } from '../../../graphql/query';
 
 const boxStyle = {
   box: {
@@ -29,6 +30,9 @@ const Dashboard = () => {
   const [dateRange, setDateRange] = useState('')
   const [data, setData] = useState({})
 
+  const { data: user } = useQuery(ME)
+  console.log(user)
+
   const { loading, error } = useQuery(VENDOR_DASHBOARD, {
     variables: {
       dateRange
@@ -41,7 +45,7 @@ const Dashboard = () => {
 
   return (
     <Box maxWidth='xxl'>
-      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Welcome , Lunsjavtale</Typography>
+      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Welcome , {user?.me.vendor.name}</Typography>
       {
         loading ? <Loader /> : error ? <ErrorMsg /> :
           <Stack gap={3}>

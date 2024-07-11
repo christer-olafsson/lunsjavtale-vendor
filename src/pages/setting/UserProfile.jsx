@@ -1,9 +1,9 @@
-import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material'
-import { Autocomplete, Avatar, Box, Checkbox, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import { CheckBox, CheckBoxOutlineBlank, Delete } from '@mui/icons-material'
+import { Autocomplete, Avatar, Box, Button, Checkbox, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import toast from 'react-hot-toast'
-import { GENERAL_PROFILE_UPDATE } from './graphql/mutation'
+import { GENERAL_PROFILE_UPDATE, VENDOR_UPDATE } from './graphql/mutation'
 import { GET_INGREDIENTS, ME } from '../../graphql/query'
 import { deleteFile } from '../../utils/deleteFile'
 import { uploadFile } from '../../utils/uploadFile'
@@ -15,42 +15,40 @@ const checkedIcon = <CheckBox fontSize="small" />;
 
 const UserProfile = () => {
   const [file, setFile] = useState(null)
+  const [errors, setErrors] = useState({})
   const [payloadEditOn, setPayloadEditOn] = useState(false);
-  const [errors, setErrors] = useState([])
   const [allAllergies, setAllAllergies] = useState([]);
   const [selectedAllergies, setSelectedAllergies] = useState([]);
   const [fileUploadLoading, setFileUploadLoading] = useState(false)
 
 
   const [payload, setPayload] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    // postCode: '',
-    dateOfBirth: '',
-    gender: '',
-    phone: '',
-    about: ''
+    name: '',
+    email: '',
+    contact: '',
+    postCode: '',
+    // formationDate: null
   })
 
   const { data: user } = useQuery(ME);
 
-  const [profileUpdate, { loading: updateLoading }] = useMutation(GENERAL_PROFILE_UPDATE, {
+  const [vendorUpdate, { loading: updateLoading }] = useMutation(VENDOR_UPDATE, {
     refetchQueries: [
       { query: ME }
     ],
     onCompleted: (res) => {
-      const data = res.generalProfileUpdate
+      const data = res.vendorUpdate
       toast.success(data.message);
       setPayloadEditOn(false)
       setErrors({})
+      setFile('')
     },
     onError: (err) => {
       if (err.graphQLErrors && err.graphQLErrors.length > 0) {
         const graphqlError = err.graphQLErrors[0];
         const { extensions } = graphqlError;
         if (extensions && extensions.errors) {
-          setErrors(Object.values(extensions.errors));
+          setErrors(extensions.errors);
         }
       }
     }
@@ -69,52 +67,51 @@ const UserProfile = () => {
   };
 
   const handleUpdate = async () => {
-    const postCodeValue = parseInt(payload.postCode);
-    const dateOfBirthValue = payload.dateOfBirth !== undefined ? payload.dateOfBirth : null;
-    let photoUrl = user.me.photoUrl;
-    let fileId = user.me.fileId;
+    if (!payload.name) {
+      setErrors({ name: 'Name Required!' })
+      return
+    }
+    if (!payload.email) {
+      setErrors({ email: 'Email Required!' })
+      return
+    }
+    if (!payload.contact) {
+      setErrors({ contact: 'Contact Required!' })
+      return
+    }
+    let logoUrl = user.me.vendor.logoUrl;
+    let fileId = user.me.vendor.fileId;
     if (file) {
       setFileUploadLoading(true)
-      const { public_id, secure_url } = await uploadFile(file, 'owners')
-      if (user.me.fileId) {
-        await deleteFile(user.me.fileId)
-      }
-      photoUrl = secure_url
+      const { public_id, secure_url } = await uploadFile(file, 'vendor')
+      await deleteFile(user.me.vendor.fileId)
+      logoUrl = secure_url
       fileId = public_id
       setFileUploadLoading(false)
     }
-    profileUpdate({
+    vendorUpdate({
       variables: {
         input: {
           ...payload,
-          id: user.id,
-          postCode: postCodeValue,
-          dateOfBirth: dateOfBirthValue,
-          allergies: selectedAllergies.map(item => item.id),
-          photoUrl,
+          id: user.me.vendor.id,
+          postCode: parseInt(payload.postCode),
+          logoUrl,
           fileId
         }
       }
     })
   }
-
+  console.log(user)
   useEffect(() => {
     setPayload({
-      firstName: user?.me.firstName ? user.me.firstName : '',
-      lastName: user?.me.lastName ? user.me.lastName : '',
-      address: user?.me.address ? user.me.address : '',
-      // postCode: user?.me.postCode ? user.me.postCode : '',
-      dateOfBirth: user?.me.dateOfBirth ? user.me.dateOfBirth : null,
-      gender: user?.me.gender ? user.me.gender : '',
-      phone: user?.me.phone ? user.me.phone : '',
-      about: user?.me.about ? user.me.about : ''
+      name: user?.me.vendor.name ?? '',
+      email: user?.me.vendor.email ?? '',
+      contact: user?.me.vendor.contact ?? '',
+      postCode: user?.me.vendor.postCode ?? '',
+      // formationDate: user?.me.vendor.formationDate ?? null,
     });
-    if (user?.me.allergies) {
-      setSelectedAllergies(user?.me.allergies.edges.map(item => ({ id: item.node.id, name: item.node.name })))
-    }
   }, [user]);
 
- 
   return (
     <Box>
       {/* <Typography sx={{ fontSize: '18px', fontWeight: 700, mb: 1 }}>User Profile</Typography> */}
@@ -124,7 +121,7 @@ const UserProfile = () => {
           {
             payloadEditOn &&
             <>
-              <Avatar src={file ? URL.createObjectURL(file) : user?.me.photoUrl ? user?.me.photoUrl : ''} sx={{ width: '80px', height: '80px' }} />
+              <Avatar src={file ? URL.createObjectURL(file) : user?.me.vendor.logoUrl ?? ''} sx={{ width: '80px', height: '80px' }} />
               <label style={{
                 border: '1px solid lightgray',
                 padding: '5px 24px',
@@ -140,72 +137,15 @@ const UserProfile = () => {
         <Stack mt={4}>
           <Stack direction='row' gap={2} mb={2}>
             <Stack flex={1} gap={2}>
-              <TextField disabled={!payloadEditOn} value={payload.firstName} onChange={handleInputChange} name='firstName' size='small' label='First Name' />
-              <TextField disabled={!payloadEditOn} value={payload.address} onChange={handleInputChange} name='address' size='small' label='Address' />
-              <TextField disabled={!payloadEditOn} value={payload.phone} onChange={handleInputChange} name='phone' size='small' label='Phone number' />
+              <TextField helperText={errors.name} error={Boolean(errors.name)} disabled={!payloadEditOn} value={payload.name} onChange={handleInputChange} name='name' size='small' label='Name' />
+              <TextField helperText={errors.postCode} error={Boolean(errors.postCode)} disabled={!payloadEditOn} value={payload.postCode} onChange={handleInputChange} name='postCode' size='small' label='Post Code' />
+              {/* <TextField disabled={!payloadEditOn} value={payload.formationDate ?? ''} name='formationDate' onChange={handleInputChange} size='small' type='date' helperText={`Formation Date`} /> */}
             </Stack>
             <Stack flex={1} gap={2}>
-              <TextField disabled={!payloadEditOn} value={payload.lastName} onChange={handleInputChange} name='lastName' size='small' label='Last Name' />
-              {/* <TextField disabled={!payloadEditOn} value={payload.postCode} onChange={handleInputChange} name='postCode' type='number' size='small' label='Post Code' /> */}
-              <FormControl disabled={!payloadEditOn} size='small'>
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                  value={payload.gender}
-                  label="Gender"
-                  name='gender'
-                  onChange={handleInputChange}
-                >
-                  <MenuItem value={'male'}>Male</MenuItem>
-                  <MenuItem value={'female'}>Female</MenuItem>
-                  <MenuItem value={'other'}>Other</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField disabled={!payloadEditOn} value={payload.dateOfBirth ? payload.dateOfBirth : ''} name='dateOfBirth' onChange={handleInputChange} size='small' type='date' helperText={`Date of birth`} />
-
+              <TextField helperText={errors.email} inputProps={{readOnly:true}} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='Email' />
+              <TextField helperText={errors.contact} error={Boolean(errors.contact)} disabled={!payloadEditOn} value={payload.contact} onChange={handleInputChange} name='contact' size='small' label='Contact' />
             </Stack>
           </Stack>
-          <TextField disabled={!payloadEditOn} value={payload.about} onChange={handleInputChange} name='about' size='small' label='About' multiline rows={2} />
-          {/* allergies */}
-          {/* {
-            payloadEditOn &&
-            <Box mt={2}>
-              <Typography variant='h6' mb={1}>Allergies</Typography>
-
-              <Autocomplete
-                multiple
-                options={allAllergies}
-                disableCloseOnSelect
-                value={selectedAllergies}
-                getOptionLabel={(option) => option.name}
-                onChange={(event, value) => setSelectedAllergies(value.map(item => item))}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.name}
-                  </li>
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select Allergies" />
-                )}
-              />
-
-            </Box>
-          } */}
-          {
-            errors.length > 0 &&
-            <ul style={{ color: 'red', fontSize: '13px' }}>
-              {
-                errors.map((err, id) => (
-                  <li key={id}>{err}</li>
-                ))
-              }
-            </ul>
-          }
         </Stack>
       </FormGroup>
       <Stack direction='row' mt={2} justifyContent='space-between'>
