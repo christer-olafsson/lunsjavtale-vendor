@@ -25,7 +25,7 @@ const Login = (props) => {
         toast.error('Please login with vendor account!')
         return
       }
-      localStorage.setItem("token", res.loginUser.access);
+      localStorage.setItem("vendor_lunsjavtale", res.loginUser.access);
       toast.success('Login Success!');
       window.location.href = "/";
     },

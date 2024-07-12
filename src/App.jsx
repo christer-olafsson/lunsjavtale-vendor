@@ -19,7 +19,7 @@ import SalesHistory from './pages/dashboard/salesHistory/Index';
 
 function App() {
 
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem("vendor_lunsjavtale"));
   const { data: user } = useQuery(ME, {
     skip: !token
   });
@@ -30,7 +30,7 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    setToken(localStorage.getItem('token'))
+    setToken(localStorage.getItem("vendor_lunsjavtale"))
   }, [])
 
   return (
