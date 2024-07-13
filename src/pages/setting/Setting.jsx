@@ -1,7 +1,8 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material'
-import UserProfile from './UserProfile'
+import VendorProfile from './VendorProfile'
 import Account from './Account'
 import { useState } from 'react';
+import OwnerProfile from './OwnerProfile';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,14 +33,18 @@ const Setting = () => {
       <Box>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Profile" />
+            <Tab label="Vendor" />
+            <Tab label="Owner" />
             <Tab label="Account" />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <UserProfile />
+          <VendorProfile />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
+          <OwnerProfile />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
           <Account />
         </CustomTabPanel>
       </Box>

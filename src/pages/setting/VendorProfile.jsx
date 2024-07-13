@@ -1,24 +1,18 @@
-import { CheckBox, CheckBoxOutlineBlank, Delete } from '@mui/icons-material'
 import { Autocomplete, Avatar, Box, Button, Checkbox, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import toast from 'react-hot-toast'
-import { GENERAL_PROFILE_UPDATE, VENDOR_UPDATE } from './graphql/mutation'
-import { GET_INGREDIENTS, ME } from '../../graphql/query'
+import { VENDOR_UPDATE } from './graphql/mutation'
+import { ME } from '../../graphql/query'
 import { deleteFile } from '../../utils/deleteFile'
 import { uploadFile } from '../../utils/uploadFile'
 import CButton from '../../common/CButton/CButton'
 
 
-const icon = <CheckBoxOutlineBlank fontSize="small" />;
-const checkedIcon = <CheckBox fontSize="small" />;
-
-const UserProfile = () => {
+const VendorProfile = () => {
   const [file, setFile] = useState(null)
   const [errors, setErrors] = useState({})
   const [payloadEditOn, setPayloadEditOn] = useState(false);
-  const [allAllergies, setAllAllergies] = useState([]);
-  const [selectedAllergies, setSelectedAllergies] = useState([]);
   const [fileUploadLoading, setFileUploadLoading] = useState(false)
 
 
@@ -54,13 +48,6 @@ const UserProfile = () => {
     }
   })
 
-  //get all allergies
-  useQuery(GET_INGREDIENTS, {
-    onCompleted: (res) => {
-      setAllAllergies(res.ingredients.edges.map(item => ({ id: item.node.id, name: item.node.name })))
-    }
-  });
-
 
   const handleInputChange = (e) => {
     setPayload({ ...payload, [e.target.name]: e.target.value })
@@ -83,7 +70,7 @@ const UserProfile = () => {
     let fileId = user.me.vendor.fileId;
     if (file) {
       setFileUploadLoading(true)
-      const { public_id, secure_url } = await uploadFile(file, 'vendor')
+      const { public_id, secure_url } = await uploadFile(file, 'vendors')
       await deleteFile(user.me.vendor.fileId)
       logoUrl = secure_url
       fileId = public_id
@@ -163,4 +150,4 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
+export default VendorProfile
