@@ -68,6 +68,14 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
 
   // added mutiple image
   const handleFileSelect = (event) => {
+    const Upfiles = event.target.files;
+    const maxFileSize = 500 * 1024; // 500KB in bytes
+    for (const file of Upfiles) {
+      if (file.size > maxFileSize) {
+        alert(`File ${file.name} is too large. Please select a file smaller than 500 KB.`);
+        return;
+      }
+    }
     const files = Array.from(event.target.files).slice(0, 5);
     setSelectedFiles(files);
   };
@@ -136,7 +144,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
     if (selectedFiles) {
       setImgUploadLoading(true)
       const res = await uploadMultiFile(selectedFiles, 'products');
-      attachments = res.map((item,id) => ({
+      attachments = res.map((item, id) => ({
         fileUrl: item.secure_url,
         fileId: item.public_id,
         isCover: selectedCoverImgId === id ? true : false
@@ -291,7 +299,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
                   content: selectedCoverImgId === index ? '"Cover"' : '""',
                   width: '100%',
                   color: '#fff',
-                  pl:1,
+                  pl: 1,
                   height: '25px', bottom: 0,
                   bgcolor: selectedCoverImgId === index ? 'rgba(0,0,0,.7)' : '',
                   // border: '2px solid green',
@@ -314,7 +322,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           </Stack>
           <Box sx={{ flex: 1 }}>
             <Stack sx={{ width: '100%', p: 2, border: '1px solid lightgray', borderRadius: '8px' }}>
-              <Typography sx={{ fontSize: '14px', textAlign: 'center', mb: 2 }}>Chose multiple files Max(5) (min 500*500 px)</Typography>
+              <Typography sx={{ fontSize: '14px', textAlign: 'center', mb: 2 }}>Chose multiple files Max(5) (min 500*500 px) (Max 500KB)</Typography>
               <Button component="label" role={undefined} variant="outlined" startIcon={<CloudUpload />}>
                 Upload file
                 <input type="file" accept="image/*" multiple onChange={handleFileSelect} hidden />

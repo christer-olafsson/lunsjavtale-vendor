@@ -116,7 +116,15 @@ const VendorProfile = () => {
               }} htmlFor="avatar">Choose</label>
             </>
           }
-          <input onChange={(e) => setFile(e.target.files[0])} type="file" id="avatar" hidden accept="jpg,png,gif" />
+          <input onChange={(e) => {
+            const file = e.target.files[0];
+            const maxFileSize = 500 * 1024; // 500KB in bytes
+            if (file.size > maxFileSize) {
+              alert(`File ${file.name} is too large. Please select a file smaller than 500KB.`);
+              return
+            }
+            setFile(e.target.files[0])
+          }} type="file" id="avatar" hidden accept="jpg,png,gif" />
           {/* <Button disabled={!payloadEditOn} onClick={() => setFile(null)} startIcon={<Delete />}>Remove</Button> */}
         </Stack>
       </Stack>
@@ -129,7 +137,7 @@ const VendorProfile = () => {
               {/* <TextField disabled={!payloadEditOn} value={payload.formationDate ?? ''} name='formationDate' onChange={handleInputChange} size='small' type='date' helperText={`Formation Date`} /> */}
             </Stack>
             <Stack flex={1} gap={2}>
-              <TextField helperText={errors.email} inputProps={{readOnly:true}} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='Email' />
+              <TextField helperText={errors.email} inputProps={{ readOnly: true }} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='Email' />
               <TextField helperText={errors.contact} error={Boolean(errors.contact)} disabled={!payloadEditOn} value={payload.contact} onChange={handleInputChange} name='contact' size='small' label='Contact' />
             </Stack>
           </Stack>
