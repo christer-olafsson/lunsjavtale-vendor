@@ -182,7 +182,7 @@ const OwnerProfile = () => {
               <CButton onClick={() => setPayloadEditOn(false)} variant='outlined'>Cencel</CButton>
               <CButton isLoading={updateLoading || fileUploadLoading} onClick={handleUpdate} variant='contained'>Save Changes</CButton>
             </Stack> :
-            <CButton onClick={() => setPayloadEditOn(true)} variant='contained'>Edit</CButton>
+            <CButton disable={user?.me.vendor.isBlocked} onClick={() => setPayloadEditOn(true)} variant='contained'>Edit</CButton>
         }
       </Stack>
     </Box>

@@ -16,7 +16,7 @@ import { Avatar, Badge, ClickAwayListener, Collapse, InputAdornment, Menu, MenuI
 import toast from 'react-hot-toast';
 import { useMutation, useQuery } from '@apollo/client';
 import { LOGOUT } from '../login/graphql/mutation';
-import { ME } from '../../graphql/query';
+import { CLIENT_DETAILS, ME } from '../../graphql/query';
 import { UNREAD_NOTIFICATION_COUNT, USER_NOTIFICATIONS } from './notification/query';
 import SmallNotification from './notification/SmallNotification';
 
@@ -111,6 +111,13 @@ function Layout() {
   const foodDetailsMatchFromCategories = useMatch('/dashboard/food-categories/food-details/:id')
 
   const { data: user } = useQuery(ME)
+  const [clientDetails, setClientDetails] = useState({})
+
+  useQuery(CLIENT_DETAILS, {
+    onCompleted: (res) => {
+      setClientDetails(res.clientDetails)
+    },
+  });
 
   useQuery(UNREAD_NOTIFICATION_COUNT, {
     onCompleted: (res) => {
@@ -192,7 +199,7 @@ function Layout() {
           <Typography sx={{ fontWeight: 600 }}>
             Account Restricted.
           </Typography>
-          <a style={{ fontSize: '13px' }} href="https://wa.me/+4748306377" target='blank'>Contact</a>
+          <a style={{ fontSize: '13px' }} href={`https://wa.me/${clientDetails?.contact}`} target='blank'>Contact</a>
         </Stack>
       }
       {/* <Divider /> */}

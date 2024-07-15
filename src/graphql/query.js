@@ -36,6 +36,25 @@ export const ME = gql`
   }
 `
 
+export const CLIENT_DETAILS = gql`
+  query{
+  clientDetails{
+    id
+    name
+    email
+    slogan
+    socialMediaLinks
+    logoUrl
+    coverPhotoUrl
+    logoFileId
+    coverPhotoFileId
+    address
+    formationDate
+    contact
+  }
+}
+`
+
 export const GET_ALL_CATEGORY = gql`
 query{
   categories{
