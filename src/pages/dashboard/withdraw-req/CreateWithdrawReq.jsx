@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Close } from '@mui/icons-material'
 import { Box, FormControl, FormGroup, FormHelperText, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { WITHDRAW_REQ_MUTATION } from './graphql/mutation';
 import CButton from '../../../common/CButton/CButton';
+import { ME } from '../../../graphql/query';
 
 
 const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
@@ -15,6 +16,8 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
     status: 'pending',
     withdrawAmount: '',
   })
+
+  const {data:user} = useQuery(ME)
 
   const [withdrawReqMutation, { loading }] = useMutation(WITHDRAW_REQ_MUTATION, {
     onCompleted: (res) => {
@@ -52,7 +55,15 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
     })
   }
 
+  useEffect(() => {
+   setPayload({
+    ...payload,
+    withdrawAmount: user?.me?.vendor?.balance ?? '00'
+   })
+  }, [user])
+  
 
+console.log(user)
   return (
     <Box>
 

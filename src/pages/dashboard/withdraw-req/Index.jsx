@@ -31,7 +31,7 @@ const WithdrawReq = () => {
       setWithdrawReq(res.withdrawRequests.edges.map(item => item.node))
     },
   });
-
+  console.log(withdrawReq)
   const handleEditDialog = (data) => {
     setEditDialogOpen(true)
     setEditData(data)
@@ -84,8 +84,14 @@ const WithdrawReq = () => {
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
             <Typography sx={{
               fontSize: { xs: '12px', md: '16px' },
-              bgcolor: row.status === 'pending' ? 'yellow' : row.status === 'accepted' ? 'lightgreen' : row.status === 'completed' ? 'green' : 'gray',
-              color: row.status === 'pending' ? 'dark' : row.status === 'accepted' ? 'dark' : row.status === 'completed' ? '#fff' : 'inherit',
+              bgcolor: row.status === 'pending' ? 'yellow'
+                : row.status === 'accepted' ? 'lightgreen'
+                  : row.status === 'completed' ? 'green'
+                    : 'red',
+              color: row.status === 'pending' ?
+                'dark' : row.status === 'accepted' ?
+                  'dark' : row.status === 'completed' ?
+                    '#fff' : '#fff',
               px: 1, borderRadius: '8px',
             }}>&#x2022; {row.status}</Typography>
           </Stack>
@@ -93,7 +99,7 @@ const WithdrawReq = () => {
       }
     },
     {
-      field: 'edit', headerName: '', width: 50,
+      field: 'edit', headerName: '', width: 100,
       renderCell: (params) => {
         return (
           <IconButton disabled={params.row.status !== 'pending' || user?.me.vendor.isBlocked} onClick={() => handleEditDialog(params.row)} sx={{
@@ -107,22 +113,17 @@ const WithdrawReq = () => {
         )
       },
     },
-    // {
-    //   field: 'delete', headerName: '', width: 50,
-    //   renderCell: (params) => {
-    //     return (
-    //       <IconButton
-    //         // onClick={() => handleDelete(params.row)} 
-    //         sx={{
-    //           borderRadius: '5px',
-    //           width: { xs: '30px', md: '40px' },
-    //           height: { xs: '30px', md: '40px' },
-    //         }}>
-    //         <DeleteOutlineOutlined sx={{ color: params.row.isValid ? 'inherit' : 'darkgray' }} fontSize='small' />
-    //       </IconButton>
-    //     )
-    //   },
-    // },
+    {
+      field: 'note', headerName: '', flex: 1,
+      renderHeader: () => (
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Note</Typography>
+      ),
+      renderCell: (params) => (
+        <Stack sx={{ height: '100%', }} justifyContent='center'>
+          <Typography sx={{ fontWeight: 600 }} > {params.row.note}</Typography>
+        </Stack >
+      )
+    }
   ];
 
 

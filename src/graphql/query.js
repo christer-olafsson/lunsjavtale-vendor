@@ -28,6 +28,7 @@ export const ME = gql`
         contact
         postCode
         logoUrl
+        balance
         soldAmount
         withdrawnAmount
         formationDate
