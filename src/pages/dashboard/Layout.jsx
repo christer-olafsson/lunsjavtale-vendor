@@ -22,12 +22,13 @@ import SmallNotification from './notification/SmallNotification';
 
 const drawerWidth = 264;
 
-const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expand }) => {
+const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expand, notification }) => {
   return (
     <Link onClick={onClick} className='link' to={link}>
       <Box sx={{
         width: '100%',
         display: 'inline-flex',
+        alignItems:'center',
         whiteSpace: 'nowrap',
         justifyContent: 'space-between',
         padding: '8px 12px',
@@ -58,6 +59,7 @@ const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expan
             fontWeight: 400, ml: 1
           }}>{text}</Typography>
         </Box>
+        {notification && <Badge sx={{ mr: .5 }} badgeContent={notification} color="error" />}
         {expandIcon && <KeyboardArrowRight sx={{
           transition: '.3s ease',
           transform: expand ? 'rotate(90deg)' : 'rotate(0deg)'
@@ -65,33 +67,6 @@ const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expan
       </Box>
     </Link>
   )
-};
-
-const paperProps = {
-  elevation: 0,
-  sx: {
-    overflow: 'visible',
-    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-    mt: 1.5,
-    '& .MuiAvatar-root': {
-      width: 32,
-      height: 32,
-      ml: -0.5,
-      mr: 1,
-    },
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      top: 0,
-      right: 14,
-      width: 10,
-      height: 10,
-      bgcolor: 'background.paper',
-      transform: 'translateY(-50%) rotate(45deg)',
-      zIndex: 0,
-    },
-  },
 };
 
 
@@ -224,6 +199,7 @@ function Layout() {
           link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashboard'
           selected={pathname === '/dashboard'} />
         <ListBtn
+          notification={unreadNotification > 0 ? unreadNotification : ''}
           onClick={handleDrawerClose}
           link='/dashboard/notifications'
           icon={<NotificationsNone fontSize='small' />}
@@ -360,14 +336,17 @@ function Layout() {
                     <NotificationsNone sx={{ fontSize: '30px' }} />
                   </Badge>
                 </IconButton>
-                <Collapse sx={{
-                  position: 'absolute',
-                  left: { xs: '50%', md: '0' },
-                  transform: 'translateX(-50%)',
-                  top: 55,
-                }} in={openNotification}>
-                  <SmallNotification onClose={() => setOpenNotification(false)} />
-                </Collapse>
+                {
+                  openNotification &&
+                  <Collapse sx={{
+                    position: 'absolute',
+                    left: { xs: '50%', md: '0' },
+                    transform: 'translateX(-50%)',
+                    top: 55,
+                  }} in={openNotification}>
+                    <SmallNotification onClose={() => setOpenNotification(false)} />
+                  </Collapse>
+                }
               </Box>
             </ClickAwayListener>
             {/* user menu */}

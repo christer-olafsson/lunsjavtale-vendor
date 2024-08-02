@@ -40,7 +40,7 @@ const SmallNotification = ({ onClose }) => {
             notifications?.slice(0, 5).map(item => (
               <Box key={item.id}>
                 <Typography sx={{ fontSize: '16px', fontWeight: 600, color: 'green' }}>{item.title}</Typography>
-                <Link to={`/dashboard/orders/details/${item.objectId}`}>
+                <Link to={`/dashboard/notifications`}>
                   <Typography onClick={onClose} sx={{ fontSize: '14px' }}>{item.message}</Typography>
                 </Link>
                 <Stack direction='row' alignItems='center' gap={.5} >
