@@ -120,3 +120,15 @@ html {
 .custom-scrollbar::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
+
+
+
+/* MUI data grid header color */
+.css-58mx1k-MuiDataGrid-root .MuiDataGrid-columnHeader {
+  background-color: #63883B;
+  color: #fff;
+}
+.css-58mx1k-MuiDataGrid-root .MuiDataGrid-filler {
+  background-color: #63883B;
+  color: #fff;
+}

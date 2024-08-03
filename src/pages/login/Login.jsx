@@ -130,7 +130,7 @@ const Login = (props) => {
       justifyContent: 'center',
       gap: 5,
       py: { xs: 5, lg: 0 },
-      backgroundImage: 'url("/loginbg.png")',
+      backgroundImage: 'url("/herobg3.jpg")',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: 'cover'
@@ -140,7 +140,7 @@ const Login = (props) => {
           width: '150px',
           mb: 2
         }}>
-          <img width='100%' src="Logo.svg" alt="" />
+          <img width='100%' src="/Logo.svg" alt="" />
         </Box>
         <Box />
       </Stack>
@@ -190,7 +190,7 @@ const Login = (props) => {
                   width: { xs: '70%', md: '200px' },
                   mb: 2
                 }}>
-                  <img width='100%' src="Logo.svg" alt="" />
+                  <img width='100%' src="/Logo.svg" alt="" />
                 </Box>
               </Stack>
               <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3, textAlign: 'center' }}>Supplier Login</Typography>
