@@ -6,6 +6,12 @@ const DataTable = ({ rows, columns, getRowHeight, columnVisibilityModel }) => {
   return (
     <Box maxWidth='xl' sx={{ height: '100%', width: '100%', }}>
       <DataGrid
+        sx={{
+          '& .MuiDataGrid-columnHeader': {
+            backgroundColor: 'primary.main',
+            color: '#fff'
+          },
+        }}
         rows={rows}
         columns={columns}
         autoHeight
