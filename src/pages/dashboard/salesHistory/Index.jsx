@@ -8,11 +8,12 @@ import { format } from 'date-fns';
 import Loader from '../../../common/loader/Index';
 import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import DataTable from '../../../components/dashboard/DataTable';
+import useIsMobile from '../../../hook/useIsMobile';
 
 const SalesHistory = () => {
   const [salesHistories, setSalesHistories] = useState([])
 
-  console.log(salesHistories)
+  const isMobile = useIsMobile()
   const { loading, error: salesHistoryErr } = useQuery(SALES_HISTORIES, {
     onCompleted: (res) => {
       setSalesHistories(res.salesHistories.edges.map(item => item.node));
@@ -107,7 +108,9 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'status', headerName: 'Status', width: 150,flex:1,
+      field: 'status', headerName: 'Status', 
+      width: isMobile ? 150 : undefined,
+      flex: isMobile ? undefined : 1,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Status</Typography>
       ),

@@ -8,9 +8,12 @@ import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import DataTable from '../../../components/dashboard/DataTable';
 import { AccessTime } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import useIsMobile from '../../../hook/useIsMobile';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([])
+
+  const isMobile = useIsMobile()
 
   const { loading, error } = useQuery(USER_NOTIFICATIONS, {
     onCompleted: (res) => {
@@ -26,7 +29,7 @@ const Notifications = () => {
 
   const columns = [
     {
-      field: 'Time', width: 200,
+      field: 'Time', width: 150,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Time</Typography>
       ),
@@ -43,7 +46,7 @@ const Notifications = () => {
       }
     },
     {
-      field: 'title', width: 300,
+      field: 'title', width: 230,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Title</Typography>
       ),
@@ -59,7 +62,9 @@ const Notifications = () => {
       }
     },
     {
-      field: 'Message', flex: 1,
+      field: 'Message', 
+      width: isMobile ? 500 : undefined,
+      flex: isMobile ? undefined : 1,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Message</Typography>
       ),

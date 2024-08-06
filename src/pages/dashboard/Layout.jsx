@@ -28,7 +28,7 @@ const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expan
       <Box sx={{
         width: '100%',
         display: 'inline-flex',
-        alignItems:'center',
+        alignItems: 'center',
         whiteSpace: 'nowrap',
         justifyContent: 'space-between',
         padding: '8px 12px',
@@ -178,19 +178,18 @@ function Layout() {
         </Stack>
       }
       {/* <Divider /> */}
-      {/* <Typography sx={{
+      <Typography sx={{
         width: '80%',
-        padding: '16px 12px',
-        color: '#fff',
-        bgcolor: 'primary.main',
+        padding: '10px',
         borderRadius: '8px',
+        border: '1px solid lightgray',
         fontSize: '15px',
         fontWeight: 500,
         textAlign: 'center',
-        m: 3
+        m: 2
       }}>
-        Deal: Lunsjavtale
-      </Typography> */}
+        Balance: <b>{user?.me.vendor?.balance}</b> kr
+      </Typography>
       <Stack sx={{
         width: '80%'
       }}>

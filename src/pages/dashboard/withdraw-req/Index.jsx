@@ -12,6 +12,7 @@ import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import DataTable from '../../../components/dashboard/DataTable';
 import EditWithdrawReq from './EditWithdrawReq';
 import { ME } from '../../../graphql/query';
+import useIsMobile from '../../../hook/useIsMobile';
 
 const WithdrawReq = () => {
   const [withdrawReq, setWithdrawReq] = useState([])
@@ -21,6 +22,8 @@ const WithdrawReq = () => {
   const [editData, setEditData] = useState({})
 
   const { data: user } = useQuery(ME)
+
+  const isMobile = useIsMobile()
 
   const [fetchWithdrawReq, { loading: WithdrawReqLoading, error: WithdrawReqErr }] = useLazyQuery(WITHDRAW_REQ, {
     // variables: {
@@ -114,7 +117,9 @@ const WithdrawReq = () => {
       },
     },
     {
-      field: 'note', headerName: '', flex: 1,
+      field: 'note', headerName: '', 
+      width: isMobile ? 400 : undefined,
+      flex: isMobile ? undefined : 1,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Note</Typography>
       ),

@@ -24,23 +24,26 @@ const SmallNotification = ({ onClose }) => {
 
 
   return (
-    <Stack className='custom-scrollbar' justifyContent={ notifications?.length === 0 ? 'center' : 'none'} sx={{
+    <Stack className='custom-scrollbar' justifyContent={notifications?.length === 0 ? 'center' : 'none'} sx={{
       width: { xs: '300px', sm: '300px', md: '350px' },
       overflowY: 'auto',
       // minHeight: '500px',
       zIndex: 99999,
       bgcolor: '#fff',
       border: '1px solid lightgray',
-      borderRadius: '8px', p: '10px 20px',
-    }} gap={2}>
+      borderRadius: '8px',
+    }} gap={1}>
       {
         loading ? <Loader /> : error ? <ErrorMsg /> :
           notifications?.length === 0 ?
             <Typography sx={{ textAlign: 'center', color: 'gray' }}>No Notification</Typography> :
             notifications?.slice(0, 5).map(item => (
-              <Box key={item.id}>
-                <Typography sx={{ fontSize: '16px', fontWeight: 600, color: 'green' }}>{item.title}</Typography>
-                <Link to={`/dashboard/notifications`}>
+              <Box sx={{
+                borderBottom: '1px solid lightgray',
+                p: 2
+              }} key={item.id}>
+                <Typography sx={{ fontSize: '16px', fontWeight: 600, color: item.isSeen ? 'gray' : 'green' }}>{item.title}</Typography>
+                <Link style={{ color: item.isSeen ? 'gray' : 'inherit' }} to={`/dashboard/notifications`}>
                   <Typography onClick={onClose} sx={{ fontSize: '14px' }}>{item.message}</Typography>
                 </Link>
                 <Stack direction='row' alignItems='center' gap={.5} >

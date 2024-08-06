@@ -102,8 +102,8 @@ const RecentSales = ({ data }) => {
     }}>
       <Stack direction='row' justifyContent='space-between'>
         <Typography variant='h5'>Recent Sales</Typography>
-        <Link to='/dashboard/orders'>
-          <Button endIcon={<KeyboardArrowRight />}>See All Orders</Button>
+        <Link to='/dashboard/sales-history'>
+          <Button endIcon={<KeyboardArrowRight />}>See All</Button>
         </Link>
       </Stack>
 

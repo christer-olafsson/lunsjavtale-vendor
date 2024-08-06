@@ -54,7 +54,7 @@ const SoldProducts = ({ data }) => {
     }}>
       <Stack direction='row' justifyContent='space-between'>
         <Typography variant='h5'>Sold Products </Typography>
-        <Link to='/dashboard/orders'>
+        <Link to='/dashboard/sales-history'>
           <Button endIcon={<KeyboardArrowRight />}>See All</Button>
         </Link>
       </Stack>
