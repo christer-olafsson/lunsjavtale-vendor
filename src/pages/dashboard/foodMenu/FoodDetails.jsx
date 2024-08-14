@@ -85,10 +85,10 @@ const FoodDetails = () => {
                 // flex:1
               }}>
                 <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>{product.name}</Typography>
-                <Stack direction='row' gap={1} mt={2} alignItems='center'>
+                {/* <Stack direction='row' gap={1} mt={2} alignItems='center'>
                   <Rating size='small' sx={{ color: 'primary.main' }} value={4} readOnly />
                   <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>157 Reviews</Typography>
-                </Stack>
+                </Stack> */}
                 <Stack direction='row' gap={4} mt={2} alignItems='flex-end'>
                   <Typography sx={{ fontSize: { xs: '18px', lg: '24px', fontWeight: 600 } }}>${product.priceWithTax}
                     <i style={{ fontWeight: 400, fontSize: '16px' }}> (Incl. Tax)</i> </Typography>
