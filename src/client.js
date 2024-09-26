@@ -47,7 +47,7 @@ const link = from([
   errorLink,
   new createUploadLink({uri: import.meta.env.VITE_API_URL})
 ]);
-
+//link
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(link),
