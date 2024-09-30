@@ -31,14 +31,12 @@ const Dashboard = () => {
   const [data, setData] = useState({})
 
   const { data: user } = useQuery(ME)
-  console.log(user)
 
   const { loading, error } = useQuery(VENDOR_DASHBOARD, {
     variables: {
       dateRange
     },
     onCompleted: (res) => {
-      console.log(res)
       setData(res.vendorDashboard.data)
     }
   });

@@ -2,7 +2,7 @@
 import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-const DataTable = ({ rows, columns, getRowHeight, columnVisibilityModel }) => {
+const DataTable = ({ noRowsLabel = 'Empty', rows, columns, getRowHeight, columnVisibilityModel }) => {
   return (
     <Box maxWidth='xl' sx={{ height: '100%', width: '100%', }}>
       <DataGrid
@@ -16,6 +16,13 @@ const DataTable = ({ rows, columns, getRowHeight, columnVisibilityModel }) => {
         columns={columns}
         autoHeight
         getRowHeight={getRowHeight}
+        localeText={{
+          noRowsLabel,
+          footerRowSelected: (count) =>
+            count !== 1
+              ? `${count.toLocaleString()} Selected`
+              : `${count.toLocaleString()} Selected`,
+        }}
         initialState={{
           pagination: {
             paginationModel: {

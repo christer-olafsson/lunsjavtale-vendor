@@ -29,7 +29,7 @@ const Notifications = () => {
 
   const columns = [
     {
-      field: 'Time', width: 150,
+      field: 'Time', width: 200,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Time</Typography>
       ),
@@ -38,9 +38,7 @@ const Notifications = () => {
         return (
           <Stack sx={{ height: '100%' }} direction='row' gap={.5} alignItems='center'>
             <AccessTime sx={{ fontSize: '16px', color: row.isSeen ? 'gray' : 'green' }} />
-            <Typography sx={{
-              color: row.isSeen ? 'gray' : 'green'
-            }} variant='body2'>{getTimeDifference(row.sentOn)}</Typography>
+            <Typography variant='body2'>{getTimeDifference(row.sentOn)}</Typography>
           </Stack>
         )
       }
@@ -54,15 +52,13 @@ const Notifications = () => {
         const { row } = params
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{
-              color: row.isSeen ? 'gray' : 'green'
-            }}>{row.title}</Typography>
+            <Typography>{row.title}</Typography>
           </Stack>
         )
       }
     },
     {
-      field: 'Message', 
+      field: 'Message',
       width: isMobile ? 500 : undefined,
       flex: isMobile ? undefined : 1,
       renderHeader: () => (
@@ -73,9 +69,9 @@ const Notifications = () => {
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
             {/* <Link to={`/dashboard/orders/details/${row.objectId}`}> */}
-              <Typography sx={{
-                color: row.isSeen ? 'gray' : 'green'
-              }}>{row.message}</Typography>
+            <Typography sx={{
+              color: row.isSeen ? 'gray' : 'green'
+            }}>{row.message}</Typography>
             {/* </Link> */}
           </Stack>
         )

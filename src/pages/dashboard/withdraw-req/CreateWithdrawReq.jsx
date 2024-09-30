@@ -17,7 +17,7 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
     withdrawAmount: '',
   })
 
-  const {data:user} = useQuery(ME)
+  const { data: user } = useQuery(ME)
 
   const [withdrawReqMutation, { loading }] = useMutation(WITHDRAW_REQ_MUTATION, {
     onCompleted: (res) => {
@@ -56,14 +56,13 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
   }
 
   useEffect(() => {
-   setPayload({
-    ...payload,
-    withdrawAmount: user?.me?.vendor?.balance ?? '00'
-   })
+    setPayload({
+      ...payload,
+      withdrawAmount: user?.me?.vendor?.balance ?? '0.00'
+    })
   }, [user])
-  
 
-console.log(user)
+
   return (
     <Box>
 
@@ -98,7 +97,7 @@ console.log(user)
 
       </FormGroup>
 
-      <CButton isLoading={loading} onClick={handleSave} variant='contained' style={{ width: '100%', mt: 2 }}>
+      <CButton disable={payload.withdrawAmount === '0.00'} isLoading={loading} onClick={handleSave} variant='contained' style={{ width: '100%', mt: 2 }}>
         Request Withdraw
       </CButton>
 

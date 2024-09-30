@@ -21,15 +21,31 @@ const SalesHistory = () => {
   });
 
   const columns = [
+    // {
+    //   field: 'id', headerName: '', width: 100,
+    //   renderHeader: () => (
+    //     <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>ID</Typography>
+    //   ),
+    //   renderCell: (params) => (
+    //     <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
+    //       <Link to={`/dashboard/sales-history/${params.row.id}`}>
+    //         <Typography sx={{ fontSize: { xs: '14px', md: '16px' } }}>&#x2022; {params.row.id}</Typography>
+    //       </Link>
+    //     </Stack>
+    //   ),
+    // },
     {
-      field: 'orderDate', width: 200,
+      field: 'Date', width: 280,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Order Date</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Date</Typography>
       ),
       renderCell: (params) => {
         return (
-          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}>{format(params.row.createdOn, 'dd-MM-yyyy')}</Typography>
+          <Stack sx={{ height: '100%' }} justifyContent='center'>
+            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Ordered: <b>{format(params.row.createdOn, 'dd-MM-yyyy')}</b>
+              <span style={{ fontSize: '13px', marginLeft: '5px' }}>{format(params.row?.createdOn, 'hh:mm a')}</span>
+            </Typography>
+            {/* <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Delivery: <b>{format(params.row.deliveryDate, 'dd-MM-yyyy')}</b> </Typography> */}
           </Stack>
         )
       }
@@ -120,22 +136,18 @@ const SalesHistory = () => {
           <Box sx={{
             display: 'inline-flex',
             padding: '1px 12px',
-            bgcolor: row.order.status === 'Cancelled'
-              ? 'red'
-              : row.order.status === 'Confirmed'
-                ? 'lightgreen'
-                : row.order.status === 'Delivered'
-                  ? 'green'
-                  : row.order.status === 'Processing'
-                    ? '#8294C4'
-                    : row.order.status === 'Payment-completed'
-                      ? 'blue'
-                      : row.order.status === 'Ready-to-deliver'
-                        ? '#01B8A9'
-                        : 'yellow',
-            color: row.order.status === 'Placed'
-              ? 'dark' : row.order.status === 'Payment-pending'
-                ? 'dark' : row.order.status === 'Confirmed' ? 'dark' : '#fff',
+            bgcolor:
+              row.status === 'Cancelled' ? 'red' :
+                row.status === 'Placed' ? '#6251DA' :
+                  row.status === 'Updated' ? '#6251DA' :
+                    row.status === 'Confirmed' ? '#433878' :
+                      row.status === 'Delivered' ? 'green' :
+                        row.status === 'Processing' ? '#B17457' :
+                          row.status === 'Payment-completed' ? '#00695c' :
+                            row.status === 'Ready-to-deliver' ? '#283593' :
+                              row.status === 'Payment-pending' ? '#c2185b' :
+                                '#616161',
+            color: '#FFF',
             borderRadius: '4px',
           }}>
             <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.order.status}</Typography>

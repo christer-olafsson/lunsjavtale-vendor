@@ -290,6 +290,10 @@ function Layout() {
             display: 'flex',
             alignItems: 'center'
           }}>
+            {
+              import.meta.env.VITE_ENVIRONMENT === 'stage' &&
+              <Typography sx={{ fontSize: '18px', fontWeight: 600, color: 'red' }}>Test Mode</Typography>
+            }
             {/* <ClickAwayListener onClickAway={() => setOpenEmail(false)}>
               <Box sx={{
                 position: 'relative'

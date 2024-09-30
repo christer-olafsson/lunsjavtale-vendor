@@ -10,18 +10,17 @@ import { PASSWORD_RESET } from '../login/graphql/mutation';
 
 const Account = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [payloadEditOn, setPayloadEditOn] = useState(false);
   const [errors, setErrors] = useState([])
   const [passwordErr, setPasswordErr] = useState(null);
   const [forgotePassSecOpen, setForgotePassSecOpen] = useState(false);
   const [forgotEmail, setForgotEmail] = useState({ email: '' });
+  const [editOn, setEditOn] = useState(false)
   const [payload, setPayload] = useState({
-    // username: '',
+    username: '',
     currentPass: '',
     newPass: '',
     repeatPass: ''
   })
-
 
   const { data: user } = useQuery(ME);
 
@@ -30,8 +29,14 @@ const Account = () => {
     onCompleted: (res) => {
       const data = res.accountProfileUpdate
       toast.success(data.message);
-      setPayloadEditOn(false)
+      setEditOn(false)
       setErrors({})
+      setPayload({
+        username: '',
+        currentPass: '',
+        newPass: '',
+        repeatPass: ''
+      })
     },
     onError: (err) => {
       toast.error(err.message)
@@ -39,7 +44,6 @@ const Account = () => {
         const graphqlError = err.graphQLErrors[0];
         const { extensions } = graphqlError;
         if (extensions && extensions.errors) {
-          console.log(extensions.errors)
           setErrors(Object.values(extensions.errors));
         }
       }
@@ -51,6 +55,10 @@ const Account = () => {
   }
 
   const handleUpdate = () => {
+    if (!payload.username) {
+      toast.error('User name required!')
+      return
+    }
     if (payload.newPass !== payload.repeatPass) {
       setPasswordErr('Password not match!')
       return;
@@ -60,7 +68,7 @@ const Account = () => {
     accountUpdate({
       variables: {
         input: {
-          // username: payload.username,
+          username: payload.username,
           currentPassword: payload.currentPass,
           password: payload.repeatPass,
           id: user.me.id
@@ -103,9 +111,9 @@ const Account = () => {
   useEffect(() => {
     setPayload({
       ...payload,
-      username: user?.me?.username
+      username: user.me.username
     });
-    setForgotEmail({ email: user?.me?.email })
+    setForgotEmail({ email: user?.me.email })
   }, [user])
 
   return (
@@ -141,12 +149,32 @@ const Account = () => {
             }
           </Stack> :
           <Stack>
-            {/* <InputLabel sx={{ mt: 3, fontWeight: 600 }}>Username</InputLabel>
-            <Input name='username' value={payload.username} onChange={handleInputChange} /> */}
+            <InputLabel sx={{ mt: 3, fontWeight: 600 }}>Username</InputLabel>
+            <Input disabled={!editOn} name='username' value={payload.username} onChange={handleInputChange}
+            />
             <InputLabel sx={{ mt: 3 }}>Current password</InputLabel>
-            <Input name='currentPass' value={payload.currentPass} onChange={handleInputChange} variant='standard' />
+            <Input
+              disabled={!editOn}
+              name='currentPass'
+              value={payload.currentPass}
+              onChange={handleInputChange}
+              variant='standard'
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
             <InputLabel sx={{ mt: 3 }}>New Password</InputLabel>
             <Input
+              disabled={!editOn}
               type={showPassword ? 'text' : 'password'}
               variant='standard'
               name='newPass'
@@ -166,6 +194,7 @@ const Account = () => {
             />
             <InputLabel sx={{ mt: 3 }}>Repeat Password</InputLabel>
             <Input
+              disabled={!editOn}
               type={showPassword ? 'text' : 'password'}
               variant='standard'
               name='repeatPass'
@@ -184,7 +213,7 @@ const Account = () => {
               }
             />
             {passwordErr && <Typography sx={{ fontSize: '14px', my: 1, color: 'red' }}>Password not match!</Typography>}
-            <Button onClick={() => setForgotePassSecOpen(true)} sx={{ width: 'fit-content', mt: 3 }}>Forget Password?</Button>
+            <Button disabled={!editOn} onClick={() => setForgotePassSecOpen(true)} sx={{ width: 'fit-content', mt: 3 }}>Forget Password?</Button>
             {
               errors.length > 0 &&
               <ul style={{ color: 'red', fontSize: '13px' }}>
@@ -197,7 +226,14 @@ const Account = () => {
             }
             <Stack direction='row' mt={2} justifyContent='space-between'>
               <Box></Box>
-              <CButton disable={user?.me.vendor.isBlocked} isLoading={updateLoading} onClick={handleUpdate} variant='contained'>Save Changes</CButton>
+              {
+                editOn ?
+                  <Stack direction='row' gap={2} alignItems='center'>
+                    <Button onClick={() => setEditOn(false)} variant='outlined'>Cancel</Button>
+                    <CButton isLoading={updateLoading} onClick={handleUpdate} variant='contained'>Save Changes</CButton>
+                  </Stack>
+                  : <Button onClick={() => setEditOn(true)} variant='contained'>Edit</Button>
+              }
             </Stack>
           </Stack>
       }
