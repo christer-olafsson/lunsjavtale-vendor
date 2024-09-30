@@ -62,14 +62,18 @@ const RecentSales = ({ data }) => {
           <Box sx={{
             display: 'inline-flex',
             padding: '1px 12px',
-            bgcolor: row.status === 'Cancelled'
-              ? 'red'
-              : row.status === 'Confirmed'
-                ? 'lightgreen'
-                : row.status === 'Delivered'
-                  ? 'green'
-                  : 'yellow',
-            color: row.status === 'Placed' ? 'dark' : row.status === 'Payment-pending' ? 'dark' : '#fff',
+            bgcolor:
+              row.status === 'Cancelled' ? 'red' :
+                row.status === 'Placed' ? '#6251DA' :
+                  row.status === 'Updated' ? '#6251DA' :
+                    row.status === 'Confirmed' ? '#433878' :
+                      row.status === 'Delivered' ? 'green' :
+                        row.status === 'Processing' ? '#B17457' :
+                          row.status === 'Payment-completed' ? '#00695c' :
+                            row.status === 'Ready-to-deliver' ? '#283593' :
+                              row.status === 'Payment-pending' ? '#c2185b' :
+                                '#616161',
+            color: '#FFF',
             borderRadius: '4px',
           }}>
             <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.status}</Typography>

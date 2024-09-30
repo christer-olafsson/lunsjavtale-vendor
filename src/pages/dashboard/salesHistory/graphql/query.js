@@ -112,6 +112,68 @@ export const ORDER = gql`
     deliveryDate
     finalPrice
     status
+    createdOn
+    isDeleted
+    paymentType
+    companyAllowance
+    shippingCharge
+    dueAmount
+    discountAmount
+    paidAmount
+    isFullPaid
+    employeeDueAmount
+    companyDueAmount
+    note
+    statuses{
+      edges{
+        node{
+          id
+          status
+          note
+          createdOn
+        }
+      }
+    }
+    coupon{
+      id
+      name
+      isActive
+      value
+    }
+    billingAddress{
+      id
+      firstName
+      lastName
+      address
+      sector
+      country
+      phone
+    }
+    shippingAddress{
+      id
+      address
+      postCode
+      city
+      state
+      fullName
+      phone
+      instruction
+    }
+    company{
+      id
+      name
+      email
+      contact
+      postCode
+      allowancePercentage
+      isBlocked
+      status
+      logoUrl
+      noOfEmployees
+      orderedAmount
+      invoiceAmount
+      paidAmount
+    }
     orderCarts{
       edges{
         node{
@@ -120,10 +182,26 @@ export const ORDER = gql`
           orderedQuantity
           priceWithTax
           totalPriceWithTax
+          ingredients{
+          edges{
+            node{
+              id
+              name
+            }
+          }
+        }
           item{
             id
             priceWithTax
             name
+            ingredients(isDeleted: false){
+              edges{
+                node{
+                  id
+                  name
+                }
+              }
+            }
             attachments{
               edges{
                 node{
@@ -137,11 +215,21 @@ export const ORDER = gql`
               id
               name
             }
+            vendor{
+              id
+              name
+              email
+              contact
+              postCode
+              isBlocked
+              logoUrl
+            }
           }
           users{
             edges{
               node{
                 id
+                dueAmount
                 addedFor{
                   id
                   username
