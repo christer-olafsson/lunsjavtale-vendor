@@ -6,7 +6,6 @@ import { useTheme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 const ProductCard = ({ data }) => {
-  console.log('product card:', data)
   const theme = useTheme()
   return (
     <Stack sx={{
@@ -55,15 +54,16 @@ const ProductCard = ({ data }) => {
         </Box>
       }
       <Stack direction='row' gap={1}>
-        <Typography sx={{ flex: 1, 
+        <Typography sx={{
+          flex: 1,
           bgcolor: 'light.main',
-          paddingY:'8px',
+          paddingY: '8px',
           borderRadius: '4px',
-          textAlign:'center',
-          color:'black'
-          }}>NOK {data.node.priceWithTax}</Typography>
+          textAlign: 'center',
+          color: 'black'
+        }}>NOK {data.node.priceWithTax}</Typography>
         <Link to='/search'>
-          <CButton style={{ }} variant='contained' color='secondary'>
+          <CButton style={{}} variant='contained' color='secondary'>
             Get Stared
           </CButton>
         </Link>

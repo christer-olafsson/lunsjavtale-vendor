@@ -167,7 +167,7 @@ const FoodItem = () => {
                     src={data?.node.attachments.edges.find(item => item.node.isCover)?.node.fileUrl || '/noImage.png'} alt="" />
                   <Stack>
                     <Typography sx={{ fontSize: '14px', fontWeight: '600' }}>{data?.node.name}</Typography>
-                    <Stack direction='row' alignItems='center' gap={2}>
+                    <Stack direction='row' flexWrap='wrap' alignItems='center' gap={.5}>
                       <Typography
                         sx={{
                           fontSize: '12px',
@@ -177,7 +177,22 @@ const FoodItem = () => {
                         }}>
                         {data.node.availability ? 'Available' : 'Not Available'}
                       </Typography>
-                      <Typography sx={{ fontSize: '12px', fontWeight: 500 }}>{data.node.category?.name ? data.node.category?.name : 'Uncategorised'}</Typography>
+                      {
+                        data?.node.weeklyVariants.edges.length > 0 &&
+                        data?.node.weeklyVariants.edges.map((item, id) => (
+                          <Typography
+                            key={id}
+                            sx={{
+                              fontSize: '12px',
+                              bgcolor: 'blue',
+                              color: '#fff',
+                              px: 1, borderRadius: '4px',
+                            }}>
+                            {item.node.name}
+                          </Typography>
+                        ))
+                      }
+                      <Typography sx={{ fontSize: '12px', fontWeight: 500, border: '1px solid lightgray', px: 1, borderRadius: '4px' }}>{data.node.category?.name ? data.node.category?.name : 'Uncategorised'}</Typography>
                     </Stack>
                     {/* <Stack direction='row' alignItems='center' gap={1}>
                       <Rating value={4} size='small' sx={{ color: 'primary.main' }} readOnly />

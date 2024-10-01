@@ -108,7 +108,6 @@ const CategoryTab = (props) => {
 
   const { loading, error } = useQuery(GET_ALL_CATEGORY, {
     onCompleted: (data) => {
-      // console.log(data)
       const res = data?.categories?.edges.filter((item) => item.node.isActive)
       setAllCategorys(res)
     },
@@ -142,7 +141,7 @@ const CategoryTab = (props) => {
         </Tabs>
       </Stack>
       {
-        loading ? <Loader /> : error ? <ErrorMsg/> :
+        loading ? <Loader /> : error ? <ErrorMsg /> :
           allCategorys.map((item, id) => (
             <CustomTabPanel key={id} value={tabIndex} index={id}>
               <Stack>

@@ -50,6 +50,13 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
     setPriceWithoutTax(inputPrice);
   };
 
+  const handlePriceWithTaxChange = (event) => {
+    const inputPriceWithTax = parseFloat(event.target.value);
+    const taxRate = 0.15; // 15% tax rate
+    const priceWithoutTax = inputPriceWithTax / (1 + taxRate);
+    setPriceWithoutTax(Math.round(priceWithoutTax * 100) / 100);
+    setPriceWithTax(inputPriceWithTax);
+  };
   // const handleTaxRateChange = (event) => {
   //   const newTaxRate = parseFloat(event.target.value);
   //   setTaxRate(newTaxRate);
@@ -204,6 +211,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
               type="number"
               value={priceWithoutTax}
               onChange={handlePriceWithoutTaxChange}
+              // InputProps={{ readOnly: true }}
               error={Boolean(inputerr.price)}
               label='Price'
             />
@@ -217,9 +225,9 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
               placeholder='E.g: Todays..'
             />
             <TextField
+              onChange={handlePriceWithTaxChange}
               error={Boolean(inputerr.price || errors.priceWithTax)}
               value={priceWithTax ? priceWithTax : ''}
-              InputProps={{ readOnly: true }}
               label='Price (incl. Tax 15%)'
               helperText={errors.priceWithTax}
             />

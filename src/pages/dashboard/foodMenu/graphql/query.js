@@ -102,6 +102,15 @@ export const PRODUCTS = gql`
           isDeleted
           title
           contains
+          weeklyVariants {
+            edges {
+              node {
+                id
+                name
+                days
+              }
+            }
+          }
           vendor{
             id
             name
