@@ -52,10 +52,13 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
     setPriceWithoutTax(inputPrice);
   };
 
-  // const handleTaxRateChange = (event) => {
-  //   const newTaxRate = parseFloat(event.target.value);
-  //   setTaxRate(newTaxRate);
-  // };
+  const handlePriceWithTaxChange = (event) => {
+    const inputPriceWithTax = parseFloat(event.target.value);
+    const taxRate = 0.15; // 15% tax rate
+    const priceWithoutTax = inputPriceWithTax / (1 + taxRate);
+    setPriceWithoutTax(Math.round(priceWithoutTax * 100) / 100);
+    setPriceWithTax(inputPriceWithTax);
+  };
 
   const handleInputChange = (e) => {
     setPayload({ ...payload, [e.target.name]: e.target.value })
@@ -282,7 +285,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
               error={Boolean(inputerr.price)}
               type="number"
               value={priceWithTax}
-              inputProps={{ readOnly: true }}
+              onChange={handlePriceWithTaxChange}
               label='Price incl. Tax (15%)'
             />
           </Stack>
