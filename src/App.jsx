@@ -10,8 +10,6 @@ import Layout from './pages/dashboard/Layout';
 import Dashboard from './pages/dashboard/dashboard/Dashboard';
 import FoodItem from './pages/dashboard/foodMenu/Index';
 import FoodDetails from './pages/dashboard/foodMenu/FoodDetails';
-import PaymentsHistory from './pages/dashboard/paymentsHistory/Index';
-import SalesDetails from './pages/dashboard/paymentsHistory/SalesDetails';
 import Setting from './pages/setting/Setting';
 import WithdrawReq from './pages/dashboard/withdraw-req/Index';
 import Notifications from './pages/dashboard/notification/Notifications';
@@ -47,10 +45,7 @@ function App() {
           <Route path='/dashboard/food-item' element={<FoodItem />} />
           <Route path='/dashboard/:path/food-details/:id' element={<FoodDetails />} />
           <Route path='/dashboard/sales-history' element={<SalesHistory />} />
-          {/* <Route path='/dashboard/sales-history/:id' element={<OrderDetails />} /> */}
           <Route path='/dashboard/withdraw-req' element={<WithdrawReq />} />
-          <Route path='/dashboard/payments-history' element={<PaymentsHistory />} />
-          <Route path='/dashboard/payments-history/details/:id' element={<SalesDetails />} />
           <Route path='/dashboard/settings' element={<Setting />} />
           <Route path='*' element={<NotFound />} />
         </Route>

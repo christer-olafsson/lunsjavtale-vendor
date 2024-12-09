@@ -57,7 +57,7 @@ const WithdrawReq = () => {
     {
       field: 'reqOn', headerName: '', width: 200,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Placed On</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Plassert På</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%', }} justifyContent='center'>
@@ -68,7 +68,7 @@ const WithdrawReq = () => {
     {
       field: 'withdrawAmount', headerName: '', width: 200,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Amount</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Beløp</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%', }} justifyContent='center'>
@@ -117,11 +117,11 @@ const WithdrawReq = () => {
       },
     },
     {
-      field: 'note', headerName: '', 
+      field: 'note', headerName: '',
       width: isMobile ? 400 : undefined,
       flex: isMobile ? undefined : 1,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Note</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Notat</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%', }} justifyContent='center'>
@@ -140,7 +140,7 @@ const WithdrawReq = () => {
   return (
     <Box maxWidth='xl'>
       <Stack direction='row' gap={1} alignItems='center'>
-        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Withdraw Request</Typography>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Uttaksforespørsel</Typography>
       </Stack>
       <Stack direction={{ xs: 'column', md: 'row' }} gap={2} justifyContent='space-between' mt={3} sx={{ height: '40px' }}>
         <Stack direction='row' gap={2}>
@@ -164,17 +164,17 @@ const WithdrawReq = () => {
               <Select
                 label="Status"
               >
-                <MenuItem value={'all'}>All </MenuItem>
+                <MenuItem value={'all'}>Alle </MenuItem>
                 {/* <MenuItem value={10}>New</MenuItem> */}
-                <MenuItem value={'pending'}>Pending</MenuItem>
-                <MenuItem value={'approved'}>Approved</MenuItem>
-                <MenuItem value={'rejected'}>Rejected</MenuItem>
+                <MenuItem value={'pending'}>Venter</MenuItem>
+                <MenuItem value={'approved'}>Godkjent</MenuItem>
+                <MenuItem value={'rejected'}>Avvist</MenuItem>
                 {/* <MenuItem value={40}>Unavailable</MenuItem> */}
               </Select>
             </FormControl>
           </Box>
         </Stack>
-        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setWithdrawReqDialogOpen(true)} variant='contained'>Request Withdraw</Button>
+        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setWithdrawReqDialogOpen(true)} variant='contained'>Be om uttak</Button>
       </Stack>
       {/* create withdraw req  */}
       <CDialog openDialog={withdrawReqDialogOpen}>

@@ -13,7 +13,7 @@ const SoldProducts = ({ data }) => {
     {
       field: 'name', width: 300,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Name</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Navn</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -26,7 +26,7 @@ const SoldProducts = ({ data }) => {
     {
       field: 'soldAmount', headerName: '', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Sold Amount</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Solgt Beløp</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
@@ -53,21 +53,24 @@ const SoldProducts = ({ data }) => {
       p: 2, borderRadius: '8px'
     }}>
       <Stack direction='row' justifyContent='space-between'>
-        <Typography variant='h5'>Sold Products </Typography>
+        <Typography variant='h5'>Solgte Produkter</Typography>
         <Link to='/dashboard/sales-history'>
-          <Button endIcon={<KeyboardArrowRight />}>See All</Button>
+          <Button endIcon={<KeyboardArrowRight />}>Se Alle</Button>
         </Link>
       </Stack>
 
       <Box mt={3}>
         <DataGrid
-        autoHeight
+          autoHeight
           initialState={{
             pagination: {
               paginationModel: {
                 pageSize: 4,
               },
             },
+          }}
+          localeText={{
+            noRowsLabel: 'Empty',
           }}
           pageSizeOptions={[4]}
           columns={columns}

@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <Box maxWidth='xl'>
-      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Welcome , {user?.me.vendor.name}</Typography>
+      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Velkommen, {user?.me.vendor.name}</Typography>
       {
         loading ? <Loader /> : error ? <ErrorMsg /> :
           <Stack gap={3}>
@@ -56,16 +56,16 @@ const Dashboard = () => {
                   label="Status"
                   onChange={e => setDateRange(e.target.value)}
                 >
-                  <MenuItem value={'last-7-days'}>Last 7 days </MenuItem>
-                  <MenuItem value={'last-30-days'}>Last 30 days</MenuItem>
-                  <MenuItem value={'last-6-months'}>Last 6 months</MenuItem>
-                  <MenuItem value={'last-12-months'}>Last 12 months</MenuItem>
+                  <MenuItem value={'last-7-days'}>Siste 7 dager</MenuItem>
+                  <MenuItem value={'last-30-days'}>Siste 30 dager</MenuItem>
+                  <MenuItem value={'last-6-months'}>Siste 6 måneder</MenuItem>
+                  <MenuItem value={'last-12-months'}>Siste 12 måneder</MenuItem>
                 </Select>
               </FormControl>
             </Stack>
             <Stack direction={{ xs: 'column', md: 'row' }} gap={2} mt={3}>
               <Box sx={boxStyle.box}>
-                <Typography sx={boxStyle.title}>Sales Today </Typography>
+                <Typography sx={boxStyle.title}>Dagens Salg</Typography>
                 <Typography sx={boxStyle.value}>
                   <ShoppingBasketOutlined fontSize='large' />
                   {data?.salesToday}
@@ -73,11 +73,11 @@ const Dashboard = () => {
                 </Typography>
               </Box>
               <Box sx={boxStyle.box}>
-                <Typography sx={boxStyle.title}>Total Orders </Typography>
+                <Typography sx={boxStyle.title}>Totale Bestillinger</Typography>
                 <Typography sx={boxStyle.value}><AddShoppingCartOutlined fontSize='large' />{data?.totalOrders}</Typography>
               </Box>
               <Box sx={boxStyle.box}>
-                <Typography sx={boxStyle.title}>Total Sales </Typography>
+                <Typography sx={boxStyle.title}>Totalt Salg</Typography>
                 <Typography sx={boxStyle.value}>
                   <AccountBalanceWalletOutlined fontSize='large' />
                   {user?.me?.vendor?.soldAmount}
@@ -90,11 +90,9 @@ const Dashboard = () => {
               <RecentSales data={data} />
             </Box>
 
-
             <Box sx={{ width: { xs: '100%', lg: '60%' } }}>
               <SoldProducts data={data} />
             </Box>
-
 
           </Stack>
       }

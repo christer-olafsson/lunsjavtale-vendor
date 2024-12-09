@@ -195,46 +195,46 @@ function Layout() {
       }}>
         <ListBtn
           onClick={handleDrawerClose}
-          link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashboard'
+          link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashbord'
           selected={pathname === '/dashboard'} />
         <ListBtn
           notification={unreadNotification > 0 ? unreadNotification : ''}
           onClick={handleDrawerClose}
           link='/dashboard/notifications'
           icon={<NotificationsNone fontSize='small' />}
-          text='Notifications'
+          text='Varsler'
           selected={pathname === '/dashboard/notifications'}
         />
         <ListBtn
           icon={<LunchDining fontSize='small' />}
           onClick={handleDrawerClose}
           link='/dashboard/food-item'
-          text='Food Item'
+          text='Matvare'
           selected={pathname === '/dashboard/food-item' ||
             pathname === foodDetailsMatchFromItem?.pathname}
         />
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/sales-history'
           icon={<Timeline fontSize='small' />}
-          text='Sales-History'
+          text='Salgs-Historikk'
           selected={pathname === '/dashboard/sales-history'}
         />
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/withdraw-req'
           icon={<History fontSize='small' />}
-          text='Withdraw-Request'
+          text='Uttaks-Forespørsel'
           selected={pathname === '/dashboard/withdraw-req'}
         />
         {/* <ListBtn onClick={handleDrawerClose}
           link='/dashboard/invoice'
           icon={<Description fontSize='small' />}
-          text='Invoice'
+          text='Faktura'
           selected={pathname === '/dashboard/invoice'}
         /> */}
         <ListBtn onClick={handleDrawerClose}
           link='/dashboard/settings'
           icon={<Settings fontSize='small' />}
-          text='Settings'
+          text='Innstillinger'
           selected={pathname === '/dashboard/settings'}
         />
       </Stack>

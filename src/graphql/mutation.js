@@ -8,3 +8,12 @@ export const MEETING_MUTATION = gql`
     }
   }
 `
+
+export const SEND_VERIFICATION_MAIL = gql`
+  mutation SendVerificationMail ($email: String!){
+    sendVerificationMail(email:$email){
+    success
+    message
+  }
+  }
+`

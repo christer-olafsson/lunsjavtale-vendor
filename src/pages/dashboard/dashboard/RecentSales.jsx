@@ -13,7 +13,7 @@ const RecentSales = ({ data }) => {
     {
       field: 'orderDate', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Order Date</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Bestillingsdato</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -27,7 +27,7 @@ const RecentSales = ({ data }) => {
     {
       field: 'deliveryDate', headerName: 'Prce', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Delivery Date</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Leveringsdato</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
@@ -40,7 +40,7 @@ const RecentSales = ({ data }) => {
     {
       field: 'totalPrice', headerName: '', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Total Price</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Totalpris</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
@@ -105,9 +105,9 @@ const RecentSales = ({ data }) => {
       p: 2, borderRadius: '8px'
     }}>
       <Stack direction='row' justifyContent='space-between'>
-        <Typography variant='h5'>Recent Sales</Typography>
+        <Typography variant='h5'>Nylige Salg</Typography>
         <Link to='/dashboard/sales-history'>
-          <Button endIcon={<KeyboardArrowRight />}>See All</Button>
+          <Button endIcon={<KeyboardArrowRight />}>Se Alle</Button>
         </Link>
       </Stack>
 
@@ -120,6 +120,9 @@ const RecentSales = ({ data }) => {
                 pageSize: 4,
               },
             },
+          }}
+          localeText={{
+            noRowsLabel: 'Empty',
           }}
           pageSizeOptions={[4]}
           columns={columns}

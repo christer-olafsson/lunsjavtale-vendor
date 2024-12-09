@@ -31,7 +31,7 @@ const Notifications = () => {
     {
       field: 'Time', width: 200,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Time</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Tid</Typography>
       ),
       renderCell: (params) => {
         const { row } = params
@@ -46,7 +46,7 @@ const Notifications = () => {
     {
       field: 'title', width: 230,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Title</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Tittel</Typography>
       ),
       renderCell: (params) => {
         const { row } = params
@@ -62,7 +62,7 @@ const Notifications = () => {
       width: isMobile ? 500 : undefined,
       flex: isMobile ? undefined : 1,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Message</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Melding</Typography>
       ),
       renderCell: (params) => {
         const { row } = params
@@ -80,7 +80,7 @@ const Notifications = () => {
   ]
   return (
     <Box maxWidth='xl'>
-      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>All Notifications</Typography>
+      <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Alle Varsler</Typography>
       <Box mt={3}>
         {
           loading ? <Loader /> : error ? <ErrorMsg /> :

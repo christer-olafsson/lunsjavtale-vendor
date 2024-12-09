@@ -76,7 +76,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
     const maxFileSize = 500 * 1024; // 500KB in bytes
     for (const file of Upfiles) {
       if (file.size > maxFileSize) {
-        alert(`File ${file.name} is too large. Please select a file smaller than 500 KB.`);
+        alert(`Filen ${file.name} er for stor. Vennligst velg en fil som er mindre enn 500 KB.`);
         return;
       }
     }
@@ -145,19 +145,19 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
 
   const handleProductUpdate = async () => {
     if (!payload.name) {
-      setInputerr({ name: "Product name required!" });
+      setInputerr({ name: "Produktnavn er påkrevd!" });
       return;
     }
     if (!categoryId) {
-      setInputerr({ category: "Category required!" });
+      setInputerr({ category: "Kategori er påkrevd!" });
       return;
     }
     if (!priceWithTax) {
-      setInputerr({ price: "Product Price required!" });
+      setInputerr({ price: "Produktpris er påkrevd!" });
       return;
     }
     if (!payload.description) {
-      setInputerr({ description: "Product description required!" });
+      setInputerr({ description: "Produktbeskrivelse er påkrevd!" });
       return;
     }
     if (deletedImgId) {
@@ -236,7 +236,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
   return (
     <Box>
       <Stack direction='row' justifyContent='space-between' mb={4}>
-        <Typography variant='h5'>Update Items</Typography>
+        <Typography variant='h5'>Oppdater varer</Typography>
         <IconButton onClick={closeDialog}>
           <Close />
         </IconButton>
@@ -249,15 +249,15 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           name='name'
           value={payload.name}
           onChange={handleInputChange}
-          label='Product Name'
+          label='Produktnavn'
         />
         <Stack direction='row' gap={2} mb={2} mt={2}>
           <Stack flex={1} gap={2}>
             <FormControl error={Boolean(inputerr.category)} >
-              <InputLabel>Category</InputLabel>
+              <InputLabel>Kategori</InputLabel>
               <Select
                 value={categoryId}
-                label="Category"
+                label="Kategori"
                 onChange={(e) => setCategoryId(e.target.value)}
               >
                 {allCategories?.map(item => (
@@ -270,7 +270,7 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
               type="number"
               value={priceWithoutTax}
               onChange={handlePriceWithoutTaxChange}
-              label='Price'
+              label='Pris'
             />
           </Stack>
           <Stack flex={1} gap={2}>
@@ -278,15 +278,15 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
               name='title'
               value={payload.title}
               onChange={handleInputChange}
-              label='Title'
-              placeholder='E.g: Todays..'
+              label='Tittel'
+              placeholder='F.eks: Dagens..'
             />
             <TextField
               error={Boolean(inputerr.price)}
               type="number"
               value={priceWithTax}
               onChange={handlePriceWithTaxChange}
-              label='Price incl. Tax (15%)'
+              label='Pris inkl. MVA (15%)'
             />
           </Stack>
         </Stack>
@@ -318,8 +318,8 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           value={payload.contains}
           onChange={handleInputChange}
           sx={{ my: 2 }}
-          label='Contains'
-          placeholder='E.g: 570 Calories, 40g carbohydrate..'
+          label='Inneholder'
+          placeholder='F.eks: 570 kalorier, 40g karbohydrater..'
           rows={2}
           multiline
         />
@@ -330,8 +330,8 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           name='description'
           value={payload.description}
           onChange={handleInputChange}
-          label='Description'
-          placeholder='Products details'
+          label='Beskrivelse'
+          placeholder='Produktdetaljer'
           rows={4}
           multiline
         />
@@ -408,14 +408,14 @@ const EditItem = ({ data, fetchCategory, closeDialog }) => {
           ))}
         </ul>
       )}
-      <CButton isLoading={productMutationLoading || imgUploadLoading} onClick={handleProductUpdate} variant='contained' style={{ width: '100%', mt: 2 }}>Save and Update</CButton>
-      <Button onClick={() => setProductDeleteSecOpen(true)} sx={{ mt: 3 }} color='warning'>Delete this product</Button>
+      <CButton isLoading={productMutationLoading || imgUploadLoading} onClick={handleProductUpdate} variant='contained' style={{ width: '100%', mt: 2 }}>Lagre og oppdater</CButton>
+      <Button onClick={() => setProductDeleteSecOpen(true)} sx={{ mt: 3 }} color='warning'>Slett dette produktet</Button>
       <Collapse in={productDeleteSecOpen}>
         <Paper elevation={3} sx={{ p: 2 }}>
-          <Typography>Are you want to sure remove this product?</Typography>
+          <Typography>Er du sikker på at du vil fjerne dette produktet?</Typography>
           <Stack direction='row' gap={2}>
-            <Button disabled={productDeleteLoading || imgDeleteLoading} onClick={handleProductDelete} color='warning'>Confirm</Button>
-            <Button onClick={() => setProductDeleteSecOpen(false)}>Cencel</Button>
+            <Button disabled={productDeleteLoading || imgDeleteLoading} onClick={handleProductDelete} color='warning'>Bekreft</Button>
+            <Button onClick={() => setProductDeleteSecOpen(false)}>Avbryt</Button>
           </Stack>
         </Paper>
       </Collapse>

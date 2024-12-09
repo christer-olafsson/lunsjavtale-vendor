@@ -57,7 +57,7 @@ const OrderDetails = () => {
         <IconButton onClick={() => navigate(- 1)}>
           <ArrowBack />
         </IconButton>
-        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Order Details</Typography>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Bestillingsdetaljer</Typography>
       </Stack>
 
       <Box mt={2}>
@@ -88,11 +88,11 @@ const OrderDetails = () => {
               </Stack>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Order ID:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Bestillings ID:</b></Typography>
               <Typography>#{order?.id}</Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Ordered On:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Bestilt den:</b></Typography>
               <Box >
                 {
                   order?.createdOn &&
@@ -104,49 +104,49 @@ const OrderDetails = () => {
               </Box>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Delivery Date:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Leveringsdato:</b></Typography>
               <Typography sx={{ fontWeight: 600 }}>{order?.deliveryDate}</Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Payment Type:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Betalingsmetode:</b></Typography>
               <Typography>{order?.paymentType === 'online' ? 'Vipps' : order?.paymentType}</Typography>
             </Stack>
             {
               order?.coupon &&
               <Stack direction='row'>
-                <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Coupon:</b></Typography>
+                <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Rabattkode:</b></Typography>
                 <Typography sx={{ bgcolor: 'coral', px: 1, borderRadius: '4px', color: '#fff' }}>{order?.coupon.name}</Typography>
               </Stack>
             }
             {
               order?.discountAmount &&
               <Stack direction='row'>
-                <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Discount Amount:</b></Typography>
+                <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Rabattbeløp:</b></Typography>
                 <Typography>{order?.discountAmount} kr</Typography>
               </Stack>
             }
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Customer Allowance:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Kunde tillatelse:</b></Typography>
               <Typography>{order?.companyAllowance ?? '0'} %</Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Final Price:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Sluttpris:</b></Typography>
               <Typography sx={{ color: 'Highlight', fontWeight: 600 }}>{order?.finalPrice ?? '0'} kr</Typography>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Company Due Amount:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Firma skyldig beløp:</b></Typography>
               <Stack direction='row'>
                 <Typography sx={{ fontWeight: 600, color: 'coral' }} mr={1}>{order?.companyDueAmount} kr </Typography>
               </Stack>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Staffs Due Amount:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Ansatte skyldig beløp:</b></Typography>
               <Stack direction='row'>
                 <Typography sx={{ fontWeight: 600, color: 'coral' }} mr={1}>{order?.employeeDueAmount} kr </Typography>
               </Stack>
             </Stack>
             <Stack direction='row'>
-              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Paid Amount:</b></Typography>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Betalt beløp:</b></Typography>
               <Typography sx={{ fontWeight: 600, color: 'green' }}>{order?.paidAmount} kr</Typography>
             </Stack>
             {
@@ -158,55 +158,55 @@ const OrderDetails = () => {
                 maxWidth: '400px',
                 color: 'coral'
               }}>
-                Note: <b>{order?.note}</b>
+                Notat: <b>{order?.note}</b>
               </Typography>
             }
           </Stack>
           <Stack direction={{ xs: 'column', md: 'row' }} gap={{ xs: 4, md: 3, lg: 10 }}>
             <Box>
-              <Typography variant='h5' mb={1}>Billing Address</Typography>
+              <Typography variant='h5' mb={1}>Fakturaadresse</Typography>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Address:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Adresse:</b></Typography>
                 <Typography>{order?.billingAddress?.address}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>First Name:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Fornavn:</b></Typography>
                 <Typography>{order?.billingAddress?.firstName}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Last Name:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Etternavn:</b></Typography>
                 <Typography>{order?.billingAddress?.lastName}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Phone:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Telefon:</b></Typography>
                 <Typography>{order?.billingAddress?.phone}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Sector:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Sektor:</b></Typography>
                 <Typography>{order?.billingAddress?.sector}</Typography>
               </Stack>
             </Box>
             <Divider sx={{ display: { xs: 'none', md: 'block' } }} orientation="vertical" />
             <Box>
-              <Typography variant='h5' mb={1}>Shipping Address</Typography>
+              <Typography variant='h5' mb={1}>Leveringsadresse</Typography>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Address:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Adresse:</b></Typography>
                 <Typography>{order?.shippingAddress?.address}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Name:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Navn:</b></Typography>
                 <Typography>{order?.shippingAddress?.fullName}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>City:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>By:</b></Typography>
                 <Typography>{order?.shippingAddress?.city}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Phone:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Telefon:</b></Typography>
                 <Typography>{order?.shippingAddress?.phone}</Typography>
               </Stack>
               <Stack direction='row'>
-                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Post Code:</b></Typography>
+                <Typography sx={{ width: '100px', whiteSpace: 'nowarp' }}> <b>Postnummer:</b></Typography>
                 <Typography>{order?.shippingAddress?.postCode}</Typography>
               </Stack>
               {
@@ -217,7 +217,7 @@ const OrderDetails = () => {
                   p: 1, mt: 1, borderRadius: '8px',
                   maxWidth: '400px'
                 }}>
-                  Instruction: <b>{order?.shippingAddress?.instruction}</b>
+                  Instruksjon: <b>{order?.shippingAddress?.instruction}</b>
                 </Typography>
               }
             </Box>
@@ -232,7 +232,7 @@ const OrderDetails = () => {
             <Stack gap={3}>
               {
                 loading ? <Loader /> : orderErr ? <ErrorMsg /> :
-                  !order?.orderCarts?.edges ? <Typography>Not Found!</Typography> :
+                  !order?.orderCarts?.edges ? <Typography>Ikke funnet!</Typography> :
                     order?.orderCarts?.edges.map(data => (
                       <Stack key={data.node.id}>
 
@@ -253,12 +253,12 @@ const OrderDetails = () => {
                             }} src={data?.node.item.attachments?.edges.find(item => item.node.isCover)?.node.fileUrl ?? "/noImage.png"} alt="" />
                             <Box mb={{ xs: 0, md: 2 }}>
                               <Typography sx={{ fontSize: { xs: '14', md: '18px' }, fontWeight: 600 }}>{data?.node.item.name}</Typography>
-                              <Typography variant='body2'>Category: <b>{data?.node.item.category.name}</b></Typography>
-                              <Typography>Price: <b>{data?.node.item.priceWithTax}</b> kr</Typography>
+                              <Typography variant='body2'>Kategori: <b>{data?.node.item.category.name}</b></Typography>
+                              <Typography>Pris: <b>{data?.node.item.priceWithTax}</b> kr</Typography>
                               {
                                 data?.node.ingredients?.edges &&
                                 <Box>
-                                  <Typography sx={{ fontWeight: 600 }}>Ingredients: </Typography>
+                                  <Typography sx={{ fontWeight: 600 }}>Ingredienser: </Typography>
                                   {
                                     data?.node.ingredients?.edges.map(item => (
                                       <ul key={item.node.id}>
@@ -272,10 +272,10 @@ const OrderDetails = () => {
                             </Box>
                           </Stack>
                           <Stack gap={.5} mr={2}>
-                            <Typography>Quantity: <b>{data?.node.orderedQuantity}</b> </Typography>
-                            <Typography>Total Price: <b>{data?.node.totalPriceWithTax}</b> kr</Typography>
+                            <Typography>Kvantitet: <b>{data?.node.orderedQuantity}</b> </Typography>
+                            <Typography>Total pris: <b>{data?.node.totalPriceWithTax}</b> kr</Typography>
                             <Button sx={{ whiteSpace: 'nowrap' }} onClick={() => handleSelectedStaffsDetails(data.node)} variant='outlined' size='small' endIcon={<ArrowDropDown />}>
-                              Selected Staffs ({data?.node.users?.edges?.length})
+                              Valgte ansatte ({data?.node.users?.edges?.length})
                             </Button>
                           </Stack>
                         </Stack>
@@ -289,7 +289,7 @@ const OrderDetails = () => {
 
             {/* order timeline */}
             <Stack mt={4}>
-              <Typography variant='h5' sx={{ px: 3, mb: 2 }}>Order Timeline</Typography>
+              <Typography variant='h5' sx={{ px: 3, mb: 2 }}>Bestillingstidslinje</Typography>
               <Box sx={{ px: 3 }}>
                 {order?.statuses?.edges.map((status, index) => (
                   <Box key={status.node.id} sx={{ display: 'flex', mb: 2 }}>
@@ -332,16 +332,16 @@ const OrderDetails = () => {
           <Stack sx={{
             px: 3
           }} gap={2}>
-            <Typography variant='h5'>Customer Information</Typography>
+            <Typography variant='h5'>Kundeinformasjon</Typography>
             <Stack direction='row' gap={1}>
               <Avatar src={order?.company?.logoUrl ?? '/noImage.png'} />
               <Box>
-                <Typography sx={{ fontSize: '16px' }}>Name: <b>
+                <Typography sx={{ fontSize: '16px' }}>Navn: <b>
                   <Link to={`/dashboard/customers/details/${order?.company?.id}`}>{order?.company?.name}</Link>
                 </b></Typography>
-                <Typography sx={{ fontSize: '16px' }}>Email: <b>{order?.company?.email}</b></Typography>
-                <Typography sx={{ fontSize: '16px' }}>Contact: <b>{order?.company?.contact}</b></Typography>
-                <Typography sx={{ fontSize: '16px' }}>PostCode: <b>{order?.company?.postCode}</b></Typography>
+                <Typography sx={{ fontSize: '16px' }}>E-post: <b>{order?.company?.email}</b></Typography>
+                <Typography sx={{ fontSize: '16px' }}>Kontakt: <b>{order?.company?.contact}</b></Typography>
+                <Typography sx={{ fontSize: '16px' }}>Postnummer: <b>{order?.company?.postCode}</b></Typography>
               </Box>
             </Stack>
 

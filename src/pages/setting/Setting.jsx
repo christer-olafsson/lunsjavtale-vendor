@@ -33,7 +33,7 @@ const Setting = () => {
       <Box>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Vendor" />
+            <Tab label="Supplier" />
             <Tab label="Owner" />
             <Tab label="Account" />
           </Tabs>

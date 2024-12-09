@@ -6,7 +6,7 @@ import { KeyboardArrowLeft, Visibility, VisibilityOff } from '@mui/icons-materia
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER, PASSWORD_RESET } from './graphql/mutation';
 import toast from 'react-hot-toast';
-import { SEND_VERIFICATION_MAIL } from '../search/graphql/mutation';
+import { SEND_VERIFICATION_MAIL } from '../../graphql/mutation';
 
 
 const Login = (props) => {
@@ -51,14 +51,14 @@ const Login = (props) => {
 
   const handleLogin = () => {
     if (!payload.email) {
-      setPayloadError({ ...payloadError, email: 'Please enter email!' });
+      setPayloadError({ ...payloadError, email: 'Vennligst skriv inn e-post!' });
       return;
     }
     if (!payload.password) {
-      setPayloadError({ ...payloadError, password: 'Please enter password!' })
+      setPayloadError({ ...payloadError, password: 'Vennligst skriv inn passord!' })
       return;
     }
-    if (loginErr) toast.error('SomeThing went wrong!')
+    if (loginErr) toast.error('Noe gikk galt!')
     loginUser({ variables: payload })
   }
 
@@ -107,7 +107,7 @@ const Login = (props) => {
 
   const handleForgotePassword = () => {
     if (!forgotEmail.email) {
-      toast.error('Please enter your email!')
+      toast.error('Vennligst skriv inn e-posten din!')
       return;
     }
     passwordReset({
@@ -162,7 +162,7 @@ const Login = (props) => {
                   color: 'gray',
                   fontSize: '22px',
                   mb: 2,
-                }} startIcon={<KeyboardArrowLeft />}> Back </Button>
+                }} startIcon={<KeyboardArrowLeft />}> Tilbake </Button>
               </Stack>
               {
                 passResetData ?
@@ -172,10 +172,10 @@ const Login = (props) => {
                     px: 2, py: 1, color: 'primary.main'
                   }}>{passResetData.passwordResetMail.message}</Typography> :
                   <Stack>
-                    <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3 }}>Forgote Password?</Typography>
-                    <Input value={forgotEmail.email} sx={{ mb: 2 }} placeholder='Enter Your Email' onChange={(e) => setForgotEmail({ email: e.target.value })} type="text" />
+                    <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3 }}>Glemt passord?</Typography>
+                    <Input value={forgotEmail.email} sx={{ mb: 2 }} placeholder='Skriv inn e-posten din' onChange={(e) => setForgotEmail({ email: e.target.value })} type="text" />
                     {/* <TextField onChange={(e)=> setForgotEmail(e.target.value)} sx={{ mb: 2 }} fullWidth placeholder='email address' variant="outlined" /> */}
-                    <CButton isLoading={passResetLoading} disable={passResetLoading} onClick={handleForgotePassword} variant='contained'>Submit</CButton>
+                    <CButton isLoading={passResetLoading} disable={passResetLoading} onClick={handleForgotePassword} variant='contained'>Send inn</CButton>
                   </Stack>
               }
             </Stack>
@@ -193,7 +193,7 @@ const Login = (props) => {
                   <img width='100%' src="/Logo.svg" alt="" />
                 </Box>
               </Stack>
-              <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3, textAlign: 'center' }}>Supplier Login</Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: '25px', mb: 3, textAlign: 'center' }}>Leverandørinnlogging</Typography>
               <TextField
                 onChange={handleInputChange}
                 name='email'
@@ -202,7 +202,7 @@ const Login = (props) => {
                 helperText={payloadError && payloadError.email}
                 sx={{ mb: 2 }}
                 fullWidth
-                label="Email"
+                label="E-post"
                 variant="outlined"
                 onKeyDown={handleKeyPress}
               />
@@ -212,7 +212,7 @@ const Login = (props) => {
                 variant="outlined"
                 type={passwordVisibility ? "text" : "password"}
                 name="password"
-                label="Password"
+                label="Passord"
                 fullWidth
                 value={payload.password}
                 error={payloadError.password !== ""}
@@ -235,7 +235,7 @@ const Login = (props) => {
               />
               <Stack direction='row' justifyContent='space-between' mb={2}>
                 {/* <FormControlLabel control={<Checkbox />} label="Remember me" /> */}
-                <Typography onClick={() => setForgotePassSecOpen(true)} sx={{ fontSize: '15px', alignSelf: 'center', color: 'primary.main ', cursor: 'pointer' }}>Forgot password?</Typography>
+                <Typography onClick={() => setForgotePassSecOpen(true)} sx={{ fontSize: '15px', alignSelf: 'center', color: 'primary.main ', cursor: 'pointer' }}>Glemt passord?</Typography>
               </Stack>
               {emailNotReceivedSecOpen &&
                 <Box sx={{
@@ -249,12 +249,12 @@ const Login = (props) => {
                   color: 'primary.main',
                   my: 3
                 }}>
-                  <Typography >Don't received an email?</Typography>
-                  <Button onClick={handleResendMail} disabled={disableResendBtn}>Click to send again</Button>
+                  <Typography >Har du ikke mottatt en e-post?</Typography>
+                  <Button onClick={handleResendMail} disabled={disableResendBtn}>Klikk for å sende igjen</Button>
 
                 </Box>
               }
-              <CButton onClick={handleLogin} isLoading={loading} variant='contained'> Sign In</CButton>
+              <CButton onClick={handleLogin} isLoading={loading} variant='contained'> Logg inn</CButton>
               {/* <CButton startIcon={<Google />} variant='outlined' style={{ mt: 2 }}>Sign in with Google</CButton> */}
             </Stack>
           )

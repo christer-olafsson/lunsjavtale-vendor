@@ -40,10 +40,10 @@ const FoodDetails = () => {
           <>
 
             <Stack direction='row' alignItems='center' gap={2} mb={2}>
-              <IconButton onClick={()=> navigate(-1)}>
+              <IconButton onClick={() => navigate(-1)}>
                 <West />
               </IconButton>
-              <Typography sx={{ fontSize: '20px', fontWeight: 600 }}>Food Details</Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 600 }}>Matdetaljer</Typography>
             </Stack>
             <Stack direction={{ xs: 'column', lg: 'row' }} gap={3}>
               <Stack direction='row' gap={2}>
@@ -91,14 +91,14 @@ const FoodDetails = () => {
                 </Stack> */}
                 <Stack direction='row' gap={4} mt={2} alignItems='flex-end'>
                   <Typography sx={{ fontSize: { xs: '18px', lg: '24px', fontWeight: 600 } }}>${product.priceWithTax}
-                    <i style={{ fontWeight: 400, fontSize: '16px' }}> (Incl. Tax)</i> </Typography>
+                    <i style={{ fontWeight: 400, fontSize: '16px' }}> (Inkl. Mva)</i> </Typography>
                   <Typography sx={{ fontSize: { xs: '18px', lg: '16px', fontWeight: 600, color: '#848995' } }}>${product.actualPrice}</Typography>
                 </Stack>
                 {/* <Stack direction='row' gap={2} mt={2}>
                   <LocalOffer fontSize='small' />
                   <Typography sx={{ fontSize: '14px' }}>Save 50% right now</Typography>
                 </Stack> */}
-                <Typography sx={{ fontSize: { xs: '14px', lg: '16px', fontWeight: 600 }, mt: 2 }}>Contains:</Typography>
+                <Typography sx={{ fontSize: { xs: '14px', lg: '16px', fontWeight: 600 }, mt: 2 }}>Inneholder:</Typography>
                 <Typography>{product.contains && typeof product.contains === 'string' ? JSON.parse(product.contains) : ''}</Typography>
               </Box>
             </Stack>

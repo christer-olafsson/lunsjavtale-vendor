@@ -79,7 +79,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
     const maxFileSize = 500 * 1024; // 500KB in bytes
     for (const file of Upfiles) {
       if (file.size > maxFileSize) {
-        alert(`File ${file.name} is too large. Please select a file smaller than 500 KB.`);
+        alert(`Filen ${file.name} er for stor. Vennligst velg en fil som er mindre enn 500 KB.`);
         return;
       }
     }
@@ -128,23 +128,23 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
 
   const handleProductSave = async () => {
     if (!payload.name) {
-      setInputerr({ name: "Product name required!" });
+      setInputerr({ name: "Produktnavn er påkrevd!" });
       return;
     }
     if (!categoryId) {
-      setInputerr({ category: "Category required!" });
+      setInputerr({ category: "Kategori er påkrevd!" });
       return;
     }
     if (!priceWithTax) {
-      setInputerr({ price: "Product Price required!" });
+      setInputerr({ price: "Produktpris er påkrevd!" });
       return;
     }
     if (!payload.description) {
-      setInputerr({ description: "Product description required!" });
+      setInputerr({ description: "Produktbeskrivelse er påkrevd!" });
       return;
     }
     // if (selectedFiles.length === 0) {
-    //   setInputerr({ selectedFile: 'Product image empty!' });
+    //   setInputerr({ selectedFile: 'Produktbilde er tomt!' });
     //   return
     // }
     let attachments = []
@@ -177,7 +177,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
   return (
     <Box>
       <Stack direction='row' justifyContent='space-between' mb={4}>
-        <Typography variant='h5'>Add New Items</Typography>
+        <Typography variant='h5'>Legg til nye varer</Typography>
         <IconButton onClick={closeDialog}>
           <Close />
         </IconButton>
@@ -190,15 +190,15 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           name='name'
           value={payload.name}
           onChange={handleInputChange}
-          label='Product Name'
+          label='Produktnavn'
         />
         <Stack direction='row' gap={2} mb={2} mt={2}>
           <Stack flex={1} gap={2}>
             <FormControl error={Boolean(inputerr.category)} >
-              <InputLabel>Category</InputLabel>
+              <InputLabel>Kategori</InputLabel>
               <Select
                 value={categoryId}
-                label="Category"
+                label="Kategori"
                 onChange={(e) => setCategoryId(e.target.value)}
               >
                 {allCategories?.map(item => (
@@ -213,7 +213,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
               onChange={handlePriceWithoutTaxChange}
               // InputProps={{ readOnly: true }}
               error={Boolean(inputerr.price)}
-              label='Price'
+              label='Pris'
             />
           </Stack>
           <Stack flex={1} gap={2}>
@@ -221,14 +221,14 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
               name='title'
               value={payload.title}
               onChange={handleInputChange}
-              label='Title'
-              placeholder='E.g: Todays..'
+              label='Tittel'
+              placeholder='F.eks: Dagens..'
             />
             <TextField
               onChange={handlePriceWithTaxChange}
               error={Boolean(inputerr.price || errors.priceWithTax)}
               value={priceWithTax ? priceWithTax : ''}
-              label='Price (incl. Tax 15%)'
+              label='Pris (inkl. MVA 15%)'
               helperText={errors.priceWithTax}
             />
           </Stack>
@@ -261,8 +261,8 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           value={payload.contains}
           onChange={handleInputChange}
           sx={{ my: 2 }}
-          label='Contains'
-          placeholder='E.g: 570 Calories, 40g carbohydrate..'
+          label='Inneholder'
+          placeholder='F.eks: 570 kalorier, 40g karbohydrater..'
           rows={2}
           multiline
         />
@@ -272,8 +272,8 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           name='description'
           value={payload.description}
           onChange={handleInputChange}
-          label='Description'
-          placeholder='Products details'
+          label='Beskrivelse'
+          placeholder='Produktdetaljer'
           rows={4}
           multiline
         />
@@ -282,12 +282,12 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
             sx={{ mb: 1, width: 'fit-content' }}
             control={<Switch checked={payload.availability}
               onChange={e => setPayload({ ...payload, availability: e.target.checked })} />}
-            label="Status Available" /> */}
+            label="Status tilgjengelig" /> */}
           {/* <FormControlLabel
             control={<Switch color="warning"
               checked={payload.discountAvailability}
               onChange={e => setPayload({ ...payload, discountAvailability: e.target.checked })} />}
-            label="Discount Active" /> */}
+            label="Rabatt aktiv" /> */}
         </Stack>
 
         {/* selected image */}
@@ -351,7 +351,7 @@ const AddItem = ({ fetchCategory, closeDialog }) => {
           ))}
         </ul>
       )} */}
-      <CButton isLoading={productMutationLoading || imgUploadLoading} onClick={handleProductSave} variant='contained' style={{ width: '100%', mt: 2 }}>Save and Add</CButton>
+      <CButton isLoading={productMutationLoading || imgUploadLoading} onClick={handleProductSave} variant='contained' style={{ width: '100%', mt: 2 }}>Lagre og legg til</CButton>
     </Box>
 
   )

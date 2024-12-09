@@ -37,15 +37,15 @@ const SalesHistory = () => {
     {
       field: 'Date', width: 280,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Date</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Dato</Typography>
       ),
       renderCell: (params) => {
         return (
           <Stack sx={{ height: '100%' }} justifyContent='center'>
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Ordered: <b>{format(params.row.createdOn, 'dd-MM-yyyy')}</b>
+            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Bestilt: <b>{format(params.row.createdOn, 'dd-MM-yyyy')}</b>
               <span style={{ fontSize: '13px', marginLeft: '5px' }}>{format(params.row?.createdOn, 'hh:mm a')}</span>
             </Typography>
-            {/* <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Delivery: <b>{format(params.row.deliveryDate, 'dd-MM-yyyy')}</b> </Typography> */}
+            {/* <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Levering: <b>{format(params.row.deliveryDate, 'dd-MM-yyyy')}</b> </Typography> */}
           </Stack>
         )
       }
@@ -53,7 +53,7 @@ const SalesHistory = () => {
     {
       field: 'products', width: 300,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Products</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Produkter</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -70,7 +70,7 @@ const SalesHistory = () => {
     {
       field: 'ordered Company', width: 250,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Ordered Company</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Bestilt Firma</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -87,7 +87,7 @@ const SalesHistory = () => {
     {
       field: 'quentity', width: 120,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Quantity</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Mengde</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -100,7 +100,7 @@ const SalesHistory = () => {
     {
       field: 'totalprice', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Total Price</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Total Pris</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -113,7 +113,7 @@ const SalesHistory = () => {
     {
       field: 'dueAmount', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Due Amount</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Skyldig Beløp</Typography>
       ),
       renderCell: (params) => {
         return (
@@ -163,7 +163,7 @@ const SalesHistory = () => {
   return (
     <Box maxWidth='xxl'>
       <Stack direction={{ xs: 'column', md: 'row' }} gap={2} justifyContent='space-between'>
-        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Sales History</Typography>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Salgs Historie</Typography>
         {/* <Box sx={{
           display: 'flex',
           alignItems: 'center',
@@ -175,7 +175,7 @@ const SalesHistory = () => {
           borderRadius: '4px',
           pl: 2
         }}>
-          <Input fullWidth disableUnderline placeholder='Search Order Id' />
+          <Input fullWidth disableUnderline placeholder='Søk Ordre Id' />
           <IconButton><Search /></IconButton>
         </Box> */}
       </Stack>

@@ -43,7 +43,7 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
 
   const handleSave = async () => {
     if (!payload.withdrawAmount) {
-      setErrors({ withdrawAmount: 'Withdraw Amount Empty!' })
+      setErrors({ withdrawAmount: 'Uttaksbeløp er tomt!' })
       return
     }
     withdrawReqMutation({
@@ -67,7 +67,7 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
     <Box>
 
       <Stack direction='row' justifyContent='space-between' mb={4}>
-        <Typography variant='h5'>Withdraw Requst</Typography>
+        <Typography variant='h5'>Uttaksforespørsel</Typography>
         <IconButton onClick={closeDialog}>
           <Close />
         </IconButton>
@@ -80,7 +80,7 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
           onChange={handleInputChange}
           value={payload.withdrawAmount}
           name='withdrawAmount'
-          label='Withdraw Amount'
+          label='Uttaksbeløp'
           type='number'
         />
 
@@ -92,13 +92,13 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
           onChange={handleInputChange}
           value={payload.note}
           name='note'
-          label='Note'
+          label='Notat'
         />
 
       </FormGroup>
 
       <CButton disable={payload.withdrawAmount === '0.00'} isLoading={loading} onClick={handleSave} variant='contained' style={{ width: '100%', mt: 2 }}>
-        Request Withdraw
+        Be om uttak
       </CButton>
 
     </Box>

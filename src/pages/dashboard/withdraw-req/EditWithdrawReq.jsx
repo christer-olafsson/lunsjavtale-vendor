@@ -40,7 +40,7 @@ const EditWithdrawReq = ({ data, fetchWithdrawReq, closeDialog }) => {
 
   const handleUpdate = () => {
     if (!payload.withdrawAmount) {
-      setErrors({ withdrawAmount: 'Withdraw Amount Empty!' })
+      setErrors({ withdrawAmount: 'Uttaksbeløp er tomt!' })
       return
     }
     if (data.id) {
@@ -54,7 +54,7 @@ const EditWithdrawReq = ({ data, fetchWithdrawReq, closeDialog }) => {
       })
     }
   }
- 
+
   useEffect(() => {
     if (data) {
       setPayload({
@@ -70,7 +70,7 @@ const EditWithdrawReq = ({ data, fetchWithdrawReq, closeDialog }) => {
     <Box>
 
       <Stack direction='row' justifyContent='space-between' mb={4}>
-        <Typography variant='h5'>Withdraw Requst</Typography>
+        <Typography variant='h5'>Uttaksforespørsel</Typography>
         <IconButton onClick={closeDialog}>
           <Close />
         </IconButton>
@@ -83,7 +83,7 @@ const EditWithdrawReq = ({ data, fetchWithdrawReq, closeDialog }) => {
           onChange={handleInputChange}
           value={payload.withdrawAmount}
           name='withdrawAmount'
-          label='Withdraw Amount'
+          label='Uttaksbeløp'
           type='number'
         />
 
@@ -95,13 +95,13 @@ const EditWithdrawReq = ({ data, fetchWithdrawReq, closeDialog }) => {
           onChange={handleInputChange}
           value={payload.note}
           name='note'
-          label='Note'
+          label='Notat'
         />
 
       </FormGroup>
 
       <CButton isLoading={loading} onClick={handleUpdate} variant='contained' style={{ width: '100%', mt: 2 }}>
-        Update Withdraw
+        Oppdater uttak
       </CButton>
 
     </Box>
