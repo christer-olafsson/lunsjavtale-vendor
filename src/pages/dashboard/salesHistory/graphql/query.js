@@ -12,6 +12,7 @@ export const SALES_HISTORIES = gql`
         totalPriceWithTax
         orderedQuantity
         dueAmount
+        ownerCommission
         vendor{
           id
           name
@@ -19,6 +20,7 @@ export const SALES_HISTORIES = gql`
           contact
           postCode
           logoUrl
+          commission
         }
         order{
           id

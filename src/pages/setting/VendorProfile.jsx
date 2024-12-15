@@ -21,6 +21,7 @@ const VendorProfile = () => {
     email: '',
     contact: '',
     postCode: '',
+    commission: ''
     // formationDate: null
   })
 
@@ -82,6 +83,7 @@ const VendorProfile = () => {
           ...payload,
           id: user.me.vendor.id,
           postCode: parseInt(payload.postCode),
+          commission: parseInt(payload.commission),
           logoUrl,
           fileId
         }
@@ -95,6 +97,7 @@ const VendorProfile = () => {
       email: user?.me.vendor.email ?? '',
       contact: user?.me.vendor.contact ?? '',
       postCode: user?.me.vendor.postCode ?? '',
+      commission: user?.me.vendor.commission ?? '',
       // formationDate: user?.me.vendor.formationDate ?? null,
     });
   }, [user]);
@@ -133,11 +136,12 @@ const VendorProfile = () => {
           <Stack direction='row' gap={2} mb={2}>
             <Stack flex={1} gap={2}>
               <TextField helperText={errors.name} error={Boolean(errors.name)} disabled={!payloadEditOn} value={payload.name} onChange={handleInputChange} name='name' size='small' label='Navn' />
-              <TextField helperText={errors.postCode} error={Boolean(errors.postCode)} disabled={!payloadEditOn} value={payload.postCode} onChange={handleInputChange} name='postCode' size='small' label='Postnummer' />
+              <TextField inputProps={{ readOnly: true }} helperText={errors.postCode} error={Boolean(errors.postCode)} disabled={!payloadEditOn} value={payload.postCode} onChange={handleInputChange} name='postCode' size='small' label='Postnummer' />
               {/* <TextField disabled={!payloadEditOn} value={payload.formationDate ?? ''} name='formationDate' onChange={handleInputChange} size='small' type='date' helperText={`Stiftelsesdato`} /> */}
             </Stack>
             <Stack flex={1} gap={2}>
               <TextField helperText={errors.email} inputProps={{ readOnly: true }} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='E-post' />
+              <TextField inputProps={{ readOnly: true }} disabled={!payloadEditOn} value={`${payload.commission}%`} size='small' label='Commission (%)' />
               <TextField helperText={errors.contact} error={Boolean(errors.contact)} disabled={!payloadEditOn} value={payload.contact} onChange={handleInputChange} name='contact' size='small' label='Kontakt' />
             </Stack>
           </Stack>

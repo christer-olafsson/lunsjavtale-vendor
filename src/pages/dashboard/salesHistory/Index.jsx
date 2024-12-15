@@ -19,7 +19,7 @@ const SalesHistory = () => {
       setSalesHistories(res.salesHistories.edges.map(item => item.node));
     }
   });
-
+  console.log(salesHistories)
   const columns = [
     // {
     //   field: 'id', headerName: '', width: 100,
@@ -35,23 +35,23 @@ const SalesHistory = () => {
     //   ),
     // },
     {
-      field: 'Date', width: 280,
+      field: 'Date', width: 150,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Dato</Typography>
       ),
       renderCell: (params) => {
         return (
           <Stack sx={{ height: '100%' }} justifyContent='center'>
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Bestilt: <b>{format(params.row.createdOn, 'dd-MM-yyyy')}</b>
-              <span style={{ fontSize: '13px', marginLeft: '5px' }}>{format(params.row?.createdOn, 'hh:mm a')}</span>
+            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}><b>{format(params.row.createdOn, 'dd-MM-yyyy')}</b>
             </Typography>
+            <Typography style={{ fontSize: '14px', }}>{format(params.row?.createdOn, 'hh:mm a')}</Typography>
             {/* <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}> Levering: <b>{format(params.row.deliveryDate, 'dd-MM-yyyy')}</b> </Typography> */}
           </Stack>
         )
       }
     },
     {
-      field: 'products', width: 300,
+      field: 'products', width: 250,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Produkter</Typography>
       ),
@@ -68,7 +68,7 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'ordered Company', width: 250,
+      field: 'ordered Company', width: 200,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Bestilt Firma</Typography>
       ),
@@ -98,14 +98,40 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'totalprice', width: 150,
+      field: 'productPrice', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Total Pris</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Produktpris</Typography>
       ),
       renderCell: (params) => {
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
             <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row.totalPriceWithTax} kr</Typography>
+          </Stack>
+        )
+      }
+    },
+    {
+      field: 'commission', width: 150,
+      renderHeader: () => (
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Kommisjon</Typography>
+      ),
+      renderCell: (params) => {
+        return (
+          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
+            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row?.vendor?.commission}%</Typography>
+          </Stack>
+        )
+      }
+    },
+    {
+      field: 'totalPrice', width: 150,
+      renderHeader: () => (
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Totalpris</Typography>
+      ),
+      renderCell: (params) => {
+        return (
+          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
+            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row.totalPriceWithTax - params.row.ownerCommission} kr</Typography>
           </Stack>
         )
       }

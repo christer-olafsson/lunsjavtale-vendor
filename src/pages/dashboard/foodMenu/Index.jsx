@@ -1,4 +1,4 @@
-import { Add, ArrowRightAlt, Search } from '@mui/icons-material';
+import { Add, ArrowRightAlt, Info, Search } from '@mui/icons-material';
 import { Box, Button, Divider, IconButton, Input, Rating, Stack, Tab, Tabs, Typography, styled, tabClasses, tabsClasses } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import CDialog from '../../../common/dialog/CDialog';
 import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import Loader from '../../../common/loader/Index';
 import { ME } from '../../../graphql/query';
+import ProductCard from './ProductCard';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +42,6 @@ CustomTabPanel.propTypes = {
 const FoodItem = () => {
   const [productAddDialogOpen, setAddItemDialogOpen] = useState(false)
   const [productEditDialogOpen, setProductEditDialogOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(null);
   const [allCategorys, setAllCategorys] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
   const [products, setProducts] = useState([]);
@@ -71,14 +71,9 @@ const FoodItem = () => {
   });
 
 
-  const handleProductEditDialogOpen = (id) => {
-    setSelectedProductId(id)
-    setProductEditDialogOpen(true);
-  };
-
   useEffect(() => {
     fetchCategory()
-    fetchProducts()
+    // fetchProducts()
   }, [])
 
 
@@ -99,7 +94,7 @@ const FoodItem = () => {
           <Input onChange={e => setSearchText(e.target.value)} fullWidth disableUnderline placeholder='Search' />
           <IconButton><Search /></IconButton>
         </Box>
-        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setAddItemDialogOpen(true)} sx={{ whiteSpace: 'nowrap', width: '150px' }} variant='contained' startIcon={<Add />}>Add Items</Button>
+        <Button disabled={user?.me.vendor.isBlocked} onClick={() => setAddItemDialogOpen(true)} sx={{ whiteSpace: 'nowrap', width: '150px' }} variant='contained' startIcon={<Add />}>legge til</Button>
       </Stack>
       {/* product add dialog */}
       {
@@ -155,72 +150,7 @@ const FoodItem = () => {
             products.length === 0 ?
               <Typography sx={{ p: 5 }}>No Product Found!</Typography> :
               products.map((data, id) => (
-                <Box key={id} sx={{
-                  width: { xs: '100%', md: '300px' },
-                  bgcolor: data.node.availability ? 'light.main' : '#fff',
-                  p: { xs: 1, lg: 2.5 },
-                  borderRadius: '8px',
-                  border: '1px solid lightgray',
-                  opacity: data.node.availability ? '1' : '.6'
-                }}>
-                  <img style={{ width: '100%', height: '138px', objectFit: 'cover', borderRadius: '4px' }}
-                    src={data?.node.attachments.edges.find(item => item.node.isCover)?.node.fileUrl || '/noImage.png'} alt="" />
-                  <Stack>
-                    <Typography sx={{ fontSize: '14px', fontWeight: '600' }}>{data?.node.name}</Typography>
-                    <Stack direction='row' flexWrap='wrap' alignItems='center' gap={.5}>
-                      <Typography
-                        sx={{
-                          fontSize: '12px',
-                          bgcolor: data.node.availability ? 'primary.main' : 'darkgray',
-                          color: '#fff',
-                          px: 1, borderRadius: '4px',
-                        }}>
-                        {data.node.availability ? 'Available' : 'Not Available'}
-                      </Typography>
-                      {
-                        data?.node.weeklyVariants.edges.length > 0 &&
-                        data?.node.weeklyVariants.edges.map((item, id) => (
-                          <Typography
-                            key={id}
-                            sx={{
-                              fontSize: '12px',
-                              bgcolor: 'blue',
-                              color: '#fff',
-                              px: 1, borderRadius: '4px',
-                            }}>
-                            {item.node.name}
-                          </Typography>
-                        ))
-                      }
-                      <Typography sx={{ fontSize: '12px', fontWeight: 500, border: '1px solid lightgray', px: 1, borderRadius: '4px' }}>{data.node.category?.name ? data.node.category?.name : 'Uncategorised'}</Typography>
-                    </Stack>
-                    {/* <Stack direction='row' alignItems='center' gap={1}>
-                      <Rating value={4} size='small' sx={{ color: 'primary.main' }} readOnly />
-                      <Typography sx={{ fontSize: '12px' }}>86 Rating</Typography>
-                      <span>|</span>
-                      <Typography sx={{ fontSize: '12px' }}>43 Delivery</Typography>
-                    </Stack> */}
-                    <Stack direction='row' alignItems='center' justifyContent='space-between' gap={1} mt={1}>
-                      <Typography sx={{ fontSize: '16px' }}><i style={{ fontWeight: 600 }}>kr </i> {data.node.priceWithTax}
-                        <i style={{ fontWeight: 400, fontSize: '13px' }}> (tax)</i> </Typography>
-                      <Typography sx={{ fontSize: { xs: '14px', lg: '14px', color: '#848995' } }}><i style={{ fontWeight: 600 }}>kr </i>{data.node.actualPrice} </Typography>
-                    </Stack>
-                  </Stack>
-                  <Stack direction='row' alignItems='center' justifyContent='space-between' mt={1}>
-                    <Button disabled={user?.me.vendor.isBlocked} variant='outlined' onClick={() => handleProductEditDialogOpen(id)} sx={{ bgcolor: '#fff', whiteSpace: 'nowrap' }}>Edit Now</Button>
-                    <Link to={`/dashboard/food-item/food-details/${data.node.id}`}>
-                      <Button endIcon={<ArrowRightAlt />}>Details</Button>
-                    </Link>
-                  </Stack>
-                  {/* product edit dialog */}
-                  {
-                    selectedProductId === id && (
-                      <CDialog openDialog={productEditDialogOpen}>
-                        <EditItem fetchCategory={fetchCategory} data={data.node} closeDialog={() => setProductEditDialogOpen(false)} />
-                      </CDialog>
-                    )
-                  }
-                </Box>
+                <ProductCard fetchCategory={fetchCategory} key={id} data={data} />
               ))
         }
       </Stack>

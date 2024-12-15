@@ -32,6 +32,7 @@ export const ME = gql`
         soldAmount
         withdrawnAmount
         formationDate
+        commission
       }
     }
   }

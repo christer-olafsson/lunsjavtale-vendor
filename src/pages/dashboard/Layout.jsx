@@ -188,7 +188,7 @@ function Layout() {
         textAlign: 'center',
         m: 2
       }}>
-        Balance: <b>{user?.me.vendor?.balance}</b> kr
+        Balansere: <b>{user?.me.vendor?.balance}</b> kr
       </Typography>
       <Stack sx={{
         width: '80%'
@@ -401,7 +401,7 @@ function Layout() {
                       <ListItemIcon>
                         <Logout fontSize="small" />
                       </ListItemIcon>
-                      Logout
+                      logge ut
                     </MenuItem>
                   </Stack>
                 </Collapse>
