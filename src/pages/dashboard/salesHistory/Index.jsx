@@ -137,19 +137,6 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'dueAmount', width: 150,
-      renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Skyldig Beløp</Typography>
-      ),
-      renderCell: (params) => {
-        return (
-          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row.dueAmount} kr</Typography>
-          </Stack>
-        )
-      }
-    },
-    {
       field: 'status', headerName: 'Status',
       width: isMobile ? 150 : undefined,
       flex: isMobile ? undefined : 1,

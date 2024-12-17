@@ -58,7 +58,6 @@ const Login = (props) => {
       setPayloadError({ ...payloadError, password: 'Vennligst skriv inn passord!' })
       return;
     }
-    if (loginErr) toast.error('Noe gikk galt!')
     loginUser({ variables: payload })
   }
 
