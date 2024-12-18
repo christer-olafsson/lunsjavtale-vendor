@@ -80,7 +80,7 @@ const Dashboard = () => {
                 <Typography sx={boxStyle.title}>Totalt Salg</Typography>
                 <Typography sx={boxStyle.value}>
                   <AccountBalanceWalletOutlined fontSize='large' />
-                  {user?.me?.vendor?.soldAmount}
+                  {data?.totalSales}
                   <span>kr</span>
                 </Typography>
               </Box>
