@@ -7,6 +7,7 @@ const DataTable = ({ noRowsLabel = 'Empty', rows, columns, getRowHeight, columnV
     <Box maxWidth='xl' sx={{ height: '100%', width: '100%', }}>
       <DataGrid
         sx={{
+          boxShadow: 1,
           '& .MuiDataGrid-columnHeader': {
             backgroundColor: 'primary.main',
             color: '#fff'

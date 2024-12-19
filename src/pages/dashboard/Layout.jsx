@@ -34,10 +34,10 @@ const ListBtn = ({ style, text, icon, link, selected, onClick, expandIcon, expan
         padding: '8px 12px',
         borderRadius: '4px',
         overflow: 'hidden',
-        // mb: 1,
+        mb: 1,
         cursor: 'pointer',
         color: selected ? 'primary.main' : 'gray',
-        bgcolor: selected ? 'light.main' : '',
+        bgcolor: selected ? '#fff' : '',
         ...style,
         position: 'relative',
         ":before": {
@@ -145,8 +145,8 @@ function Layout() {
       flexDirection: 'column',
       // justifyContent: 'center',
       alignItems: 'center',
-      // bgcolor: '#F1F3F6',
-      // height: '100%',
+      bgcolor: '#F1F3F6',
+      height: '100%',
     }}>
       <Toolbar sx={{
         display: 'flex',
@@ -186,7 +186,8 @@ function Layout() {
         fontSize: '15px',
         fontWeight: 500,
         textAlign: 'center',
-        m: 2
+        mb: 6,
+        boxShadow: 1
       }}>
         Balansere: <b>{user?.me.vendor?.balance}</b> kr
       </Typography>

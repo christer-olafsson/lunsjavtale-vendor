@@ -34,7 +34,7 @@ const WithdrawReq = () => {
       setWithdrawReq(res.withdrawRequests.edges.map(item => item.node))
     },
   });
-  console.log(withdrawReq)
+
   const handleEditDialog = (data) => {
     setEditDialogOpen(true)
     setEditData(data)
