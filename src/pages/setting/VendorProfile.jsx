@@ -14,13 +14,13 @@ const VendorProfile = () => {
   const [errors, setErrors] = useState({})
   const [payloadEditOn, setPayloadEditOn] = useState(false);
   const [fileUploadLoading, setFileUploadLoading] = useState(false)
+  const [postCodes, setPostCodes] = useState([])
 
 
   const [payload, setPayload] = useState({
     name: '',
     email: '',
     contact: '',
-    postCode: '',
     commission: ''
     // formationDate: null
   })
@@ -63,6 +63,10 @@ const VendorProfile = () => {
       setErrors({ email: 'E-post påkrevd!' })
       return
     }
+    if (postCodes.length === 0) {
+      setErrors({ postCode: 'Post code Required!' })
+      return
+    }
     if (!payload.contact) {
       setErrors({ contact: 'Kontakt påkrevd!' })
       return
@@ -82,24 +86,24 @@ const VendorProfile = () => {
         input: {
           ...payload,
           id: user.me.vendor.id,
-          postCode: parseInt(payload.postCode),
           commission: parseInt(payload.commission),
           logoUrl,
           fileId
-        }
+        },
+        postCode: postCodes.map(code => parseInt(code))
       }
     })
   }
-  console.log(user)
+
   useEffect(() => {
     setPayload({
       name: user?.me.vendor.name ?? '',
       email: user?.me.vendor.email ?? '',
       contact: user?.me.vendor.contact ?? '',
-      postCode: user?.me.vendor.postCode ?? '',
       commission: user?.me.vendor.commission ?? '',
       // formationDate: user?.me.vendor.formationDate ?? null,
     });
+    setPostCodes(user?.me.vendor.postCode ?? [])
   }, [user]);
 
   return (
@@ -135,13 +139,30 @@ const VendorProfile = () => {
         <Stack mt={4}>
           <Stack direction='row' gap={2} mb={2}>
             <Stack flex={1} gap={2}>
-              <TextField helperText={errors.name} error={Boolean(errors.name)} disabled={!payloadEditOn} value={payload.name} onChange={handleInputChange} name='name' size='small' label='Navn' />
-              <TextField inputProps={{ readOnly: true }} helperText={errors.postCode} error={Boolean(errors.postCode)} disabled={!payloadEditOn} value={payload.postCode} onChange={handleInputChange} name='postCode' size='small' label='Postnummer' />
+              <TextField helperText={errors.name} error={Boolean(errors.name)} disabled={!payloadEditOn} value={payload.name} onChange={handleInputChange} name='name' size='small' label='Supplier Name' />
+              <Autocomplete
+                freeSolo
+                multiple
+                size='small'
+                disabled={!payloadEditOn}
+                options={postCodes}
+                value={postCodes}
+                disableCloseOnSelect
+                onChange={(event, value) => setPostCodes(value)}
+                getOptionLabel={(option) => option}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    {option}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField helperText={errors.postCode} error={Boolean(errors.postCode)} {...params} type='' label="Postnummer" placeholder="Type and press Enter" />
+                )}
+              />
               {/* <TextField disabled={!payloadEditOn} value={payload.formationDate ?? ''} name='formationDate' onChange={handleInputChange} size='small' type='date' helperText={`Stiftelsesdato`} /> */}
             </Stack>
             <Stack flex={1} gap={2}>
               <TextField helperText={errors.email} inputProps={{ readOnly: true }} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='E-post' />
-              <TextField inputProps={{ readOnly: true }} disabled={!payloadEditOn} value={`${payload.commission}%`} size='small' label='Commission (%)' />
               <TextField helperText={errors.contact} error={Boolean(errors.contact)} disabled={!payloadEditOn} value={payload.contact} onChange={handleInputChange} name='contact' size='small' label='Kontakt' />
             </Stack>
           </Stack>

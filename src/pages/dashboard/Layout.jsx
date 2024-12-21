@@ -392,8 +392,7 @@ function Layout() {
                       {user?.me.vendor.name}
                     </Typography>
                     <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.vendor?.email}</Typography>
-                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>{user?.me.vendor?.contact}</Typography>
-                    <Typography sx={{ textAlign: 'center', fontSize: '14px' }}>PostCode: {user?.me.vendor?.postCode}</Typography>
+                    <Typography sx={{ textAlign: 'center', fontSize: '14px', mb: 2 }}>{user?.me.vendor?.contact}</Typography>
                     <Divider sx={{ width: '100%' }} />
                     <MenuItem onClick={() => (
                       setUsermenuOpen(false),
