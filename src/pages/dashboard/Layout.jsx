@@ -85,7 +85,7 @@ function Layout() {
   const foodDetailsMatchFromItem = useMatch('/dashboard/food-item/food-details/:id')
   const foodDetailsMatchFromCategories = useMatch('/dashboard/food-categories/food-details/:id')
 
-  const { data: user } = useQuery(ME)
+  const { data: user } = useQuery(ME, { notifyOnNetworkStatusChange: true })
   const [clientDetails, setClientDetails] = useState({})
 
   useQuery(CLIENT_DETAILS, {

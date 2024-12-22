@@ -11,6 +11,8 @@ import ErrorMsg from '../../../common/ErrorMsg/ErrorMsg';
 import { ME } from '../../../graphql/query';
 import CDialog from '../../../common/dialog/CDialog';
 import CreateWithdrawReq from '../withdraw-req/CreateWithdrawReq';
+import { WITHDRAW_REQ } from '../withdraw-req/graphql/query';
+import { Link } from 'react-router-dom';
 
 const boxStyle = {
   box: {
@@ -46,6 +48,15 @@ const Dashboard = () => {
   const [dateRange, setDateRange] = useState('');
   const [data, setData] = useState({});
   const [widthDrawReqDialogOpen, setWidthDrawReqDialogOpen] = useState(false);
+  const [pendingWithdrawReq, setPendingWithdrawReq] = useState([])
+
+
+  useQuery(WITHDRAW_REQ, {
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (res) => {
+      setPendingWithdrawReq(res.withdrawRequests.edges.filter(item => item.node.status === 'pending').map(item => item.node))
+    },
+  });
 
   const { data: user } = useQuery(ME);
 
@@ -132,6 +143,7 @@ const Dashboard = () => {
                 title: 'Totalt uttak',
                 value: data?.totalWithdraw,
                 icon: <PublishOutlined fontSize="large" />,
+                pendingWithdrawReqLength: pendingWithdrawReq?.length
               },
             ].map((item, index) => (
               <Box key={index} sx={boxStyle.box}>
@@ -144,6 +156,12 @@ const Dashboard = () => {
                       </IconButton>
                     </Tooltip>
                   )}
+                  {
+                    item.pendingWithdrawReqLength &&
+                    <Link className='link' to='/dashboard/withdraw-req'>
+                      <Typography sx={{ color: 'red', fontWeight: 600 }}>pending ( {item.pendingWithdrawReqLength} )</Typography>
+                    </Link>
+                  }
                 </Stack>
                 <Typography sx={boxStyle.value}>
                   {item.icon}

@@ -101,21 +101,21 @@ const WithdrawReq = () => {
         )
       }
     },
-    {
-      field: 'edit', headerName: '', width: 100,
-      renderCell: (params) => {
-        return (
-          <IconButton disabled={params.row.status !== 'pending' || user?.me.vendor.isBlocked} onClick={() => handleEditDialog(params.row)} sx={{
-            borderRadius: '5px',
-            width: { xs: '30px', md: '40px' },
-            height: { xs: '30px', md: '40px' },
-          }}
-          >
-            <EditOutlined sx={{}} fontSize='small' />
-          </IconButton>
-        )
-      },
-    },
+    // {
+    //   field: 'edit', headerName: '', width: 100,
+    //   renderCell: (params) => {
+    //     return (
+    //       <IconButton disabled={params.row.status !== 'pending' || user?.me.vendor.isBlocked} onClick={() => handleEditDialog(params.row)} sx={{
+    //         borderRadius: '5px',
+    //         width: { xs: '30px', md: '40px' },
+    //         height: { xs: '30px', md: '40px' },
+    //       }}
+    //       >
+    //         <EditOutlined sx={{}} fontSize='small' />
+    //       </IconButton>
+    //     )
+    //   },
+    // },
     {
       field: 'note', headerName: '',
       width: isMobile ? 400 : undefined,

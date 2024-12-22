@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { WITHDRAW_REQ_MUTATION } from './graphql/mutation';
 import CButton from '../../../common/CButton/CButton';
 import { ME } from '../../../graphql/query';
+import { WITHDRAW_REQ } from './graphql/query';
 
 
 const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
@@ -21,10 +22,11 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
 
   const [withdrawReqMutation, { loading }] = useMutation(WITHDRAW_REQ_MUTATION, {
     onCompleted: (res) => {
-      fetchWithdrawReq()
+      if (fetchWithdrawReq) fetchWithdrawReq()
       toast.success(res.withdrawRequestMutation.message)
       closeDialog()
     },
+    refetchQueries: [WITHDRAW_REQ, ME],
     onError: (err) => {
       toast.error(err.message)
       if (err.graphQLErrors && err.graphQLErrors.length > 0) {
@@ -97,7 +99,7 @@ const CreateWithdrawReq = ({ fetchWithdrawReq, closeDialog }) => {
 
       </FormGroup>
 
-      <CButton disable={payload.withdrawAmount === '0.00'} isLoading={loading} onClick={handleSave} variant='contained' style={{ width: '100%', mt: 2 }}>
+      <CButton disable={payload.withdrawAmount === '0.00' || user?.me.vendor.isBlocked} isLoading={loading} onClick={handleSave} variant='contained' style={{ width: '100%', mt: 2 }}>
         Be om uttak
       </CButton>
 
