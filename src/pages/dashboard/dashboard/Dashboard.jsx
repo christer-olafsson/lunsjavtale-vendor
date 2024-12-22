@@ -143,7 +143,7 @@ const Dashboard = () => {
                 title: 'Totalt uttak',
                 value: data?.totalWithdraw,
                 icon: <PublishOutlined fontSize="large" />,
-                pendingWithdrawReqLength: pendingWithdrawReq?.length
+                pendingWithdrawReqLength: pendingWithdrawReq?.length > 0 ? pendingWithdrawReq?.length : ''
               },
             ].map((item, index) => (
               <Box key={index} sx={boxStyle.box}>
