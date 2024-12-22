@@ -131,7 +131,7 @@ const SalesHistory = () => {
       renderCell: (params) => {
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row.totalPriceWithTax - params.row.ownerCommission} kr</Typography>
+            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{(params.row.totalPriceWithTax - params.row.ownerCommission)?.toFixed(2)} kr</Typography>
           </Stack>
         )
       }
