@@ -139,7 +139,7 @@ const Login = (props) => {
           width: '150px',
           mb: 2
         }}>
-          <img width='100%' src="/Logo.svg" alt="" />
+          <img width='100%' src="/logo.gif" alt="" />
         </Box>
         <Box />
       </Stack>
