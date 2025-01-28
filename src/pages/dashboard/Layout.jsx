@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, Outlet, useLocation, useMatch } from 'react-router-dom';
-import { AccountCircle, Description, History, KeyboardArrowRight, Logout, LunchDining, MailOutline, MapOutlined, Notifications, NotificationsNone, People, PinDrop, Recommend, Search, Settings, SpaceDashboard, Timeline, } from '@mui/icons-material';
+import { AccountCircle, Description, History, KeyboardArrowRight, Logout, LunchDining, MailOutline, MapOutlined, Notifications, NotificationsNone, People, PinDrop, Recommend, Search, Settings, ShoppingCartCheckoutOutlined, SpaceDashboard, Timeline, } from '@mui/icons-material';
 import { Avatar, Badge, ClickAwayListener, Collapse, InputAdornment, Menu, MenuItem, Stack, TextField } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery } from '@apollo/client';
@@ -19,6 +19,7 @@ import { LOGOUT } from '../login/graphql/mutation';
 import { CLIENT_DETAILS, ME } from '../../graphql/query';
 import { UNREAD_NOTIFICATION_COUNT, USER_NOTIFICATIONS } from './notification/query';
 import SmallNotification from './notification/SmallNotification';
+import NavItem from './NavItem';
 
 const drawerWidth = 264;
 
@@ -79,11 +80,6 @@ function Layout() {
   const [unreadNotification, setUnreadNotification] = useState([])
 
 
-
-  const { pathname } = useLocation();
-  const orderDetailsMatch = useMatch('/dashboard/orders/details/:id')
-  const foodDetailsMatchFromItem = useMatch('/dashboard/food-item/food-details/:id')
-  const foodDetailsMatchFromCategories = useMatch('/dashboard/food-categories/food-details/:id')
 
   const { data: user } = useQuery(ME, { notifyOnNetworkStatusChange: true })
   const [clientDetails, setClientDetails] = useState({})
@@ -191,54 +187,7 @@ function Layout() {
       }}>
         Balansere: <b>{user?.me.vendor?.balance}</b> kr
       </Typography>
-      <Stack sx={{
-        width: '80%'
-      }}>
-        <ListBtn
-          onClick={handleDrawerClose}
-          link='/dashboard' icon={<SpaceDashboard fontSize='small' />} text='Dashbord'
-          selected={pathname === '/dashboard'} />
-        <ListBtn
-          notification={unreadNotification > 0 ? unreadNotification : ''}
-          onClick={handleDrawerClose}
-          link='/dashboard/notifications'
-          icon={<NotificationsNone fontSize='small' />}
-          text='Varsler'
-          selected={pathname === '/dashboard/notifications'}
-        />
-        <ListBtn
-          icon={<LunchDining fontSize='small' />}
-          onClick={handleDrawerClose}
-          link='/dashboard/food-item'
-          text='Matvare'
-          selected={pathname === '/dashboard/food-item' ||
-            pathname === foodDetailsMatchFromItem?.pathname}
-        />
-        <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/sales-history'
-          icon={<Timeline fontSize='small' />}
-          text='Salgs-Historikk'
-          selected={pathname === '/dashboard/sales-history'}
-        />
-        <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/withdraw-req'
-          icon={<History fontSize='small' />}
-          text='Uttaks-Forespørsel'
-          selected={pathname === '/dashboard/withdraw-req'}
-        />
-        {/* <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/invoice'
-          icon={<Description fontSize='small' />}
-          text='Faktura'
-          selected={pathname === '/dashboard/invoice'}
-        /> */}
-        <ListBtn onClick={handleDrawerClose}
-          link='/dashboard/settings'
-          icon={<Settings fontSize='small' />}
-          text='Innstillinger'
-          selected={pathname === '/dashboard/settings'}
-        />
-      </Stack>
+      <NavItem handleDrawerClose={handleDrawerClose} />
     </Box>
   );
 
@@ -270,23 +219,7 @@ function Layout() {
             <MenuIcon />
           </IconButton>
           <Box />
-          {/* <TextField sx={{
-            mr: { xs: 0, sm: 2, md: 20 },
-            maxWidth: '700px',
-            width: '100%'
-          }}
-            size='small'
-            placeholder='Type to search'
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search sx={{
-                    display: { xs: 'none', md: 'block' }
-                  }} />
-                </InputAdornment>
-              )
-            }}
-          /> */}
+
           <Box sx={{
             display: 'flex',
             alignItems: 'center'
@@ -295,37 +228,7 @@ function Layout() {
               import.meta.env.VITE_ENVIRONMENT === 'stage' &&
               <Typography sx={{ fontSize: '18px', fontWeight: 600, color: 'red' }}>Test Mode</Typography>
             }
-            {/* <ClickAwayListener onClickAway={() => setOpenEmail(false)}>
-              <Box sx={{
-                position: 'relative'
-              }}>
-                <IconButton onClick={() => (
-                  setOpenEmail(!openEmail),
-                  setOpenNotification(false)
-                )} sx={{ color: 'gray.main' }}>
-                  <Badge badgeContent={0} color="error">
-                    <MailOutline />
-                  </Badge>
-                </IconButton>
-                <Collapse sx={{
-                  position: 'absolute',
-                  right: { xs: -80, md: 0 },
-                  top: 55,
-                  zIndex: 9999999
-                }} in={openEmail}>
-                  <Box sx={{
-                    width: { xs: '90vw', sm: '300px', md: '350px' },
-                    maxHeight: '500px',
-                    overflowY: 'auto',
-                    bgcolor: '#fff',
-                    border: '1px solid gray',
-                    borderRadius: '8px', p: '10px 20px',
-                  }}>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ipsam asperiores quasi dolor, recusandae sequi ducimus nam labore impedit quam?</p>
-                  </Box>
-                </Collapse>
-              </Box>
-            </ClickAwayListener> */}
+
 
             <ClickAwayListener onClickAway={() => setOpenNotification(false)}>
               <Box sx={{

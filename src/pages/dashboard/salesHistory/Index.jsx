@@ -149,22 +149,18 @@ const SalesHistory = () => {
           <Box sx={{
             display: 'inline-flex',
             padding: '1px 12px',
-            bgcolor: row.order.status === 'Cancelled'
-              ? 'red'
-              : row.order.status === 'Confirmed'
-                ? 'lightgreen'
-                : row.order.status === 'Payment-completed'
-                  ? 'blue'
-                  : row.order.status === 'Delivered'
-                    ? 'green'
-                    : row.order.status === 'Processing'
-                      ? '#8294C4'
-                      : row.order.status === 'Ready-to-deliver'
-                        ? '#01B8A9'
-                        : 'yellow',
-            color: row.order.status === 'Placed'
-              ? 'dark' : row.order.status === 'Payment-pending'
-                ? 'dark' : row.order.status === 'Confirmed' ? 'dark' : '#fff',
+            bgcolor: {
+              Placed: '#6251DA',
+              Updated: '#6251DA',
+              Confirmed: '#433878',
+              Processing: '#B17457',
+              Delivered: 'green',
+              'Payment-completed': '#00695c',
+              'Ready-to-deliver': '#283593',
+              'Payment-pending': '#c2185b',
+              Cancelled: 'red',
+            }[row.order.status],
+            color: '#fff',
             borderRadius: '4px',
           }}>
             <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.order.status}</Typography>
