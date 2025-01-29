@@ -273,7 +273,7 @@ const Orders = () => {
   return (
     <Box maxWidth='xl'>
       <Stack sx={{ mb: 2 }} direction='row' alignItems='center'>
-        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Order History</Typography>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Bestillingshistorikk</Typography>
         <Typography sx={{
           fontSize: '12px',
           fontWeight: 600,

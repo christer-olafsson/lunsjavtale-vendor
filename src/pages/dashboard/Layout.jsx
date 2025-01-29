@@ -141,7 +141,9 @@ function Layout() {
       flexDirection: 'column',
       // justifyContent: 'center',
       alignItems: 'center',
-      bgcolor: '#F1F3F6',
+      bgcolor: 'primary.main',
+      // bgcolor: '#FFE8C5',
+      // bgcolor: '#F1F3F6',
       height: '100%',
     }}>
       <Toolbar sx={{
@@ -183,12 +185,13 @@ function Layout() {
         fontWeight: 500,
         textAlign: 'center',
         mb: 6,
-        boxShadow: 1
+        bgcolor: '#fff',
+        color: 'gray'
       }}>
         Balansere: <b>{user?.me.vendor?.balance}</b> kr
       </Typography>
       <NavItem handleDrawerClose={handleDrawerClose} />
-    </Box>
+    </Box >
   );
 
 
@@ -349,8 +352,9 @@ function Layout() {
         component="main"
         sx={{
           flexGrow: 1, p: 3,
-          width: { xs: '100%', sm: `calc(100% - ${drawerWidth}px)` }
-
+          width: { xs: '100%', sm: `calc(100% - ${drawerWidth}px)` },
+          // bgcolor: 'lightgray',
+          // height: '100vh'
         }}
       >
         <Toolbar />

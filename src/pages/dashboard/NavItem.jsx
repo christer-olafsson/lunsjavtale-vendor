@@ -77,7 +77,7 @@ const NavItem = ({ handleDrawerClose }) => {
     { name: 'Dashboard', icon: <SpaceDashboard fontSize='small' />, path: '/dashboard', end: true },
     { name: 'Varsler', icon: <NotificationsNone fontSize='small' />, path: '/dashboard/notifications', notification: unreadNotification },
     { name: 'Matvare', icon: <LunchDining fontSize='small' />, path: '/dashboard/food-item' },
-    { name: 'Orders', icon: <ShoppingCartCheckoutOutlined fontSize='small' />, path: '/dashboard/orders', notification: placedOrders.length },
+    { name: 'Bestillinger', icon: <ShoppingCartCheckoutOutlined fontSize='small' />, path: '/dashboard/orders', notification: placedOrders.length },
     { name: 'Salgs-Historikk', icon: <Timeline fontSize='small' />, path: '/dashboard/sales-history' },
     { name: 'Uttaks-Forespørsel', icon: <History fontSize='small' />, path: '/dashboard/withdraw-req' },
     { name: 'Innstillinger', icon: <SettingsOutlined />, path: '/dashboard/settings' },
@@ -147,14 +147,14 @@ const NavItem = ({ handleDrawerClose }) => {
                     px: 1,
                     mx: 2,
                     borderRadius: '5px',
-                    bgcolor: isActive ? 'primary.main' : '',
-                    color: isActive ? '#fff' : 'gray',
-                    ':hover': {
-                      bgcolor: isActive ? 'primary.main' : '#F5F5F5',
-                    },
+                    bgcolor: isActive ? '#fff' : '',
+                    color: isActive ? 'primary.main' : '#fff',
+                    // ':hover': {
+                    //   bgcolor: isActive ? '#fff' : 'gray',
+                    // },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: 0, mr: 1.5, color: 'inherit' }}>
+                  <ListItemIcon sx={{ minWidth: 0, mr: 1.5, color: isActive ? 'primary.main' : '#fff' }}>
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.name} />

@@ -21,7 +21,7 @@ const boxStyle = {
     px: 2,
     py: 1.5,
     borderRadius: '8px',
-    background: 'linear-gradient(135deg, #f3f4f6, #ffffff)',
+    // background: 'linear-gradient(135deg, #f3f4f6, #ffffff)',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
     '&:hover': {
@@ -32,15 +32,15 @@ const boxStyle = {
     fontSize: '16px',
     fontWeight: 700,
     mb: 1,
-    color: 'primary.main',
+    color: '#fff',
   },
   value: {
     display: 'inline-flex',
+    color: '#fff',
     alignItems: 'center',
     gap: '10px',
     fontSize: { xs: '20px', lg: '26px' },
     fontWeight: 600,
-    color: 'text.primary',
   },
 };
 
@@ -64,6 +64,8 @@ const Dashboard = () => {
     variables: { dateRange },
     onCompleted: (res) => setData(res.vendorDashboard.data),
   });
+
+  const colors = ['#1E88E5', '#D32F2F', '#388E3C', '#F57C00', '#7B1FA2'];
 
   return (
     <Box sx={{ maxWidth: 'xl', px: 3, py: 2 }}>
@@ -95,7 +97,10 @@ const Dashboard = () => {
 
           {/* Stat Boxes */}
           <Stack direction={{ xs: 'column', md: 'row' }} gap={2} flexWrap="wrap">
-            <Box sx={boxStyle.box}>
+            <Box sx={{
+              ...boxStyle.box,
+              bgcolor: 'primary.main',
+            }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography sx={boxStyle.title}>Balansere</Typography>
                 <IconButton
@@ -103,7 +108,7 @@ const Dashboard = () => {
                   variant="contained"
                   onClick={() => setWidthDrawReqDialogOpen(true)}
                 >
-                  <UploadOutlined />
+                  <UploadOutlined color='white' />
                 </IconButton>
               </Stack>
               <Typography sx={boxStyle.value}>
@@ -122,37 +127,45 @@ const Dashboard = () => {
                 value: data?.salesToday,
                 icon: <ShoppingBasketOutlined fontSize="large" />,
                 tooltip: 'Dette beløpet er salgsprisen for alle varer i dag',
+                bgcolor: '#BC7AF9',
               },
               {
                 title: 'Totale Bestillinger',
                 value: data?.totalOrders,
                 icon: <AddShoppingCartOutlined fontSize="large" />,
+                bgcolor: '#1E88E5',
               },
               {
                 title: 'Totalt Salg',
                 value: data?.totalSales,
                 icon: <AccountBalanceOutlined fontSize="large" />,
                 tooltip: 'Dette beløpet er total salgspris for varer',
+                bgcolor: '#388E3C',
               },
               {
                 title: 'Totale inntekter',
                 value: data?.totalRevenue,
                 icon: <TrendingUpOutlined fontSize="large" />,
+                bgcolor: '#A35C7A',
               },
               {
                 title: 'Totalt uttak',
                 value: data?.totalWithdraw,
                 icon: <PublishOutlined fontSize="large" />,
-                pendingWithdrawReqLength: pendingWithdrawReq?.length > 0 ? pendingWithdrawReq?.length : ''
+                pendingWithdrawReqLength: pendingWithdrawReq?.length > 0 ? pendingWithdrawReq?.length : '',
+                bgcolor: '#F57C00',
               },
             ].map((item, index) => (
-              <Box key={index} sx={boxStyle.box}>
+              <Box key={index} sx={{
+                ...boxStyle.box,
+                bgcolor: item.bgcolor,
+              }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Typography sx={boxStyle.title}>{item.title}</Typography>
                   {item.tooltip && (
                     <Tooltip title={item.tooltip}>
                       <IconButton>
-                        <Info fontSize="small" />
+                        <Info fontSize="small" color='white' />
                       </IconButton>
                     </Tooltip>
                   )}
@@ -179,9 +192,9 @@ const Dashboard = () => {
           </Stack>
 
 
-        </Stack>
+        </Stack >
       )}
-    </Box>
+    </Box >
   );
 };
 

@@ -70,7 +70,7 @@ const OrderDetails = () => {
         <IconButton onClick={() => navigate(- 1)}>
           <ArrowBack />
         </IconButton>
-        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Order Details</Typography>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '24px' }, fontWeight: 600 }}>Bestillingsdetaljer</Typography>
       </Stack>
 
       {/* update order */}
