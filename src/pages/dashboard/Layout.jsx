@@ -156,7 +156,7 @@ function Layout() {
             width: { xs: '150px', md: '180px' },
             mb: 5
           }}>
-            <img style={{ width: '100%' }} src="/logo.gif" alt="" />
+            <img style={{ width: '100%' }} src="/logo-white.png" alt="" />
           </Box>
         </Link>
       </Toolbar>
@@ -179,14 +179,13 @@ function Layout() {
       <Typography sx={{
         width: '80%',
         padding: '10px',
-        borderRadius: '8px',
+        borderRadius: '50px',
         border: '1px solid lightgray',
         fontSize: '15px',
         fontWeight: 500,
         textAlign: 'center',
         mb: 6,
-        bgcolor: '#fff',
-        color: 'gray'
+        color: '#fff'
       }}>
         Balansere: <b>{user?.me.vendor?.balance}</b> kr
       </Typography>
