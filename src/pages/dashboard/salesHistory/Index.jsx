@@ -111,9 +111,9 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'commission', width: 150,
+      field: 'supplier revenue(comission)', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Kommisjon</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Inntekter</Typography>
       ),
       renderCell: (params) => {
         return (
