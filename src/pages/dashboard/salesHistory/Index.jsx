@@ -98,7 +98,7 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'productPrice', width: 150,
+      field: 'productPrice', width: 200,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Produktpris</Typography>
       ),
@@ -111,27 +111,14 @@ const SalesHistory = () => {
       }
     },
     {
-      field: 'supplier revenue(comission)', width: 150,
-      renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Inntekter</Typography>
-      ),
-      renderCell: (params) => {
-        return (
-          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{params.row?.vendorCommission}%</Typography>
-          </Stack>
-        )
-      }
-    },
-    {
-      field: 'totalPrice', width: 150,
+      field: 'totalPrice', width: 230,
       renderHeader: () => (
         <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Totalpris</Typography>
       ),
       renderCell: (params) => {
         return (
           <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{(params.row.totalPriceWithTax - params.row.ownerCommission)?.toFixed(2)} kr</Typography>
+            <Typography sx={{ fontSize: '14px', fontWeight: 600 }}>{(params.row.totalPriceWithTax - params.row.ownerCommission)?.toFixed(2)} kr <span style={{ fontWeight: 300, color: 'green' }}>({params.row?.vendorCommission})%</span></Typography>
           </Stack>
         )
       }
