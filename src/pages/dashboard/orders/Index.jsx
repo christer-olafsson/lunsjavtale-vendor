@@ -35,7 +35,7 @@ const Orders = () => {
       setOrders(res.orders.edges.map(item => item.node));
     }
   });
-
+  console.log(orders)
 
   function handleEdit(row) {
     setOrderUpdateDialogOpen(true)
@@ -176,35 +176,32 @@ const Orders = () => {
       )
     },
     {
-      field: 'amount', headerName: '', width: 150,
+      field: 'Payment', headerName: '', width: 150,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Amount</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Payment</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%' }} justifyContent='center'>
-          {
-            params.row.paidAmount > 0 &&
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' }, color: params.row.paidAmount > 0 ? 'green' : 'lightgray' }}>
-              Paid: <b>{params.row.paidAmount}</b>
-              <span style={{ fontWeight: 400, marginLeft: '5px' }}>kr </span>
-            </Typography>
-          }
-          {
-            params.row.dueAmount > 0 &&
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' }, color: params.row.dueAmount > 0 ? 'coral' : 'lightgray' }}>
-              due: <b>{params.row.dueAmount}</b>
-              <span style={{ fontWeight: 400, marginLeft: '5px' }}>kr </span>
-            </Typography>
-          }
+          <Typography sx={{
+            fontWeight: 600,
+            fontSize: '14px',
+            border: '1px solid lightgray',
+            width: 'fit-content',
+            px: 1,
+            borderRadius: '4px',
+            color: params.row.isFullPaid ? 'green' : 'red',
+          }}>
+            {params.row.isFullPaid ? 'Done' : 'Pending'}
+          </Typography>
         </Stack>
       )
     },
 
     {
-      field: 'status', headerName: 'Status', width: 200,
-      renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' }, ml: 5 }}>Status</Typography>
-      ),
+      field: 'status', headerName: '', width: 200,
+      // renderHeader: () => (
+      //   <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' }, ml: 5 }}>Status</Typography>
+      // ),
       renderCell: (params) => {
         const { row } = params
         const isNew = ['Placed', 'Updated', 'Payment-pending', 'Payment-completed'].includes(row.status);

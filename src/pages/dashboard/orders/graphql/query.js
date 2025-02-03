@@ -17,6 +17,7 @@ export const ORDERS = gql`
           finalPrice
           paidAmount
           dueAmount
+          isFullPaid
           note
              statuses{
             edges{
