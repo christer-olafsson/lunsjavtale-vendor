@@ -33,6 +33,7 @@ export const ME = gql`
         withdrawnAmount
         formationDate
         commission
+        deliveryCharge
       }
     }
   }

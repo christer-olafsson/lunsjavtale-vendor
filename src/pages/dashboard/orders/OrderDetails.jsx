@@ -194,6 +194,10 @@ const OrderDetails = () => {
               </Stack>
             }
             <Stack direction='row'>
+              <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Delivery Charge:</b></Typography>
+              <Typography sx={{ fontWeight: 600 }}>{order?.shippingCharge ?? '0'} kr</Typography>
+            </Stack>
+            <Stack direction='row'>
               <Typography sx={{ width: '200px', whiteSpace: 'nowarp' }}> <b>Final Price:</b></Typography>
               <Typography sx={{ color: 'blue', fontWeight: 600 }}>{order?.finalPrice ?? '0'} kr</Typography>
             </Stack>

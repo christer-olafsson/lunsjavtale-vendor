@@ -1,4 +1,4 @@
-import { Autocomplete, Avatar, Box, Button, Checkbox, FormControl, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Avatar, Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import toast from 'react-hot-toast'
@@ -7,6 +7,7 @@ import { ME } from '../../graphql/query'
 import { deleteFile } from '../../utils/deleteFile'
 import { uploadFile } from '../../utils/uploadFile'
 import CButton from '../../common/CButton/CButton'
+import Loader from '../../common/loader/Index'
 
 
 const VendorProfile = () => {
@@ -15,17 +16,22 @@ const VendorProfile = () => {
   const [payloadEditOn, setPayloadEditOn] = useState(false);
   const [fileUploadLoading, setFileUploadLoading] = useState(false)
   const [postCodes, setPostCodes] = useState([])
+  const [isFreeDelivery, setIsFreeDelivery] = useState(true)
+
 
 
   const [payload, setPayload] = useState({
     name: '',
     email: '',
     contact: '',
-    commission: ''
-    // formationDate: null
+    commission: '',
+    deliveryCharge: {
+      minimumAmountForFreeDelivery: 0,
+      deliveryCharge: 0
+    }
   })
 
-  const { data: user } = useQuery(ME);
+  const { loading: userLoading, data: user } = useQuery(ME);
 
   const [vendorUpdate, { loading: updateLoading }] = useMutation(VENDOR_UPDATE, {
     refetchQueries: [
@@ -49,6 +55,8 @@ const VendorProfile = () => {
     }
   })
 
+  const deliveryCharge = JSON.parse(user?.me.vendor.deliveryCharge ?? '{}')
+
 
   const handleInputChange = (e) => {
     setPayload({ ...payload, [e.target.name]: e.target.value })
@@ -71,6 +79,15 @@ const VendorProfile = () => {
       setErrors({ contact: 'Kontakt påkrevd!' })
       return
     }
+    if (!isFreeDelivery) {
+      if (payload.deliveryCharge.deliveryCharge == 0) {
+        setErrors({ deliveryCharge: 'DeliveryCharge required!' })
+        return
+      }
+    }
+    // if (payload.deliveryCharge.minimumAmountForFreeDelivery > 0 && payload.deliveryCharge.deliveryCharge == 0) {
+    //   return
+    // }
     let logoUrl = user.me.vendor.logoUrl;
     let fileId = user.me.vendor.fileId;
     if (file) {
@@ -87,6 +104,10 @@ const VendorProfile = () => {
           ...payload,
           id: user.me.vendor.id,
           commission: parseInt(payload.commission),
+          deliveryCharge: JSON.stringify({
+            minimumAmountForFreeDelivery: parseInt(payload.deliveryCharge.minimumAmountForFreeDelivery),
+            deliveryCharge: parseInt(payload.deliveryCharge.deliveryCharge)
+          }),
           logoUrl,
           fileId
         },
@@ -96,15 +117,38 @@ const VendorProfile = () => {
   }
 
   useEffect(() => {
+    if (isFreeDelivery) {
+      setPayload({
+        ...payload,
+        deliveryCharge: {
+          minimumAmountForFreeDelivery: 0,
+          deliveryCharge: 0
+        }
+      })
+    }
+  }, [isFreeDelivery])
+
+
+
+  useEffect(() => {
     setPayload({
       name: user?.me.vendor.name ?? '',
       email: user?.me.vendor.email ?? '',
       contact: user?.me.vendor.contact ?? '',
       commission: user?.me.vendor.commission ?? '',
+      deliveryCharge: {
+        minimumAmountForFreeDelivery: deliveryCharge.minimumAmountForFreeDelivery ?? 0,
+        deliveryCharge: deliveryCharge.deliveryCharge ?? 0
+      },
       // formationDate: user?.me.vendor.formationDate ?? null,
     });
     setPostCodes(user?.me.vendor.postCode ?? [])
+    if (deliveryCharge.deliveryCharge > 0 || deliveryCharge.minimumAmountForFreeDelivery > 0) {
+      setIsFreeDelivery(false)
+    }
   }, [user]);
+
+  if (userLoading) return <Loader />
 
   return (
     <Box>
@@ -149,7 +193,7 @@ const VendorProfile = () => {
                 value={postCodes}
                 disableCloseOnSelect
                 onChange={(event, value) => setPostCodes(value)}
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => option.toString()}
                 renderOption={(props, option, { selected }) => (
                   <li {...props}>
                     {option}
@@ -160,6 +204,52 @@ const VendorProfile = () => {
                 )}
               />
               {/* <TextField disabled={!payloadEditOn} value={payload.formationDate ?? ''} name='formationDate' onChange={handleInputChange} size='small' type='date' helperText={`Stiftelsesdato`} /> */}
+
+              <FormGroup >
+                <FormControlLabel control={
+                  <Checkbox
+                    disabled={!payloadEditOn}
+                    defaultChecked
+                    onChange={(e) => setIsFreeDelivery(e.target.checked)}
+                    checked={isFreeDelivery}
+                  />
+                } label="Free Delivery" />
+              </FormGroup>
+
+              <TextField
+                onChange={e => setPayload({
+                  ...payload,
+                  deliveryCharge: {
+                    ...payload.deliveryCharge,
+                    minimumAmountForFreeDelivery: e.target.value,
+                  }
+                })}
+                value={payload.deliveryCharge?.minimumAmountForFreeDelivery}
+                disabled={isFreeDelivery || !payloadEditOn}
+                size='small'
+                helperText={errors.postCode}
+                error={Boolean(errors.postCode)}
+                type='number'
+                label="Minimum amount for delivery charge (kr)"
+              />
+
+              <TextField
+                onChange={e => setPayload({
+                  ...payload,
+                  deliveryCharge: {
+                    ...payload.deliveryCharge,
+                    deliveryCharge: e.target.value,
+                  }
+                })}
+                value={payload.deliveryCharge?.deliveryCharge}
+                disabled={isFreeDelivery || !payloadEditOn}
+                size='small'
+                helperText={errors.deliveryCharge}
+                error={Boolean(errors.deliveryCharge)}
+                type='number'
+                label="delivery charge (kr)"
+              />
+
             </Stack>
             <Stack flex={1} gap={2}>
               <TextField helperText={errors.email} inputProps={{ readOnly: true }} error={Boolean(errors.email)} disabled={!payloadEditOn} value={payload.email} onChange={handleInputChange} name='email' size='small' label='E-post' />
