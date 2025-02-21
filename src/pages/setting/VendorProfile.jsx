@@ -26,7 +26,7 @@ const VendorProfile = () => {
     contact: '',
     commission: '',
     deliveryCharge: {
-      minimumAmountForFreeDelivery: 0,
+      minimumAmountForFreeDelivery: undefined,
       deliveryCharge: 0
     }
   })
@@ -121,7 +121,7 @@ const VendorProfile = () => {
       setPayload({
         ...payload,
         deliveryCharge: {
-          minimumAmountForFreeDelivery: 0,
+          minimumAmountForFreeDelivery: '',
           deliveryCharge: 0
         }
       })
@@ -137,7 +137,7 @@ const VendorProfile = () => {
       contact: user?.me.vendor.contact ?? '',
       commission: user?.me.vendor.commission ?? '',
       deliveryCharge: {
-        minimumAmountForFreeDelivery: deliveryCharge.minimumAmountForFreeDelivery ?? 0,
+        minimumAmountForFreeDelivery: deliveryCharge.minimumAmountForFreeDelivery == 0 ? undefined : deliveryCharge.minimumAmountForFreeDelivery,
         deliveryCharge: deliveryCharge.deliveryCharge ?? 0
       },
       // formationDate: user?.me.vendor.formationDate ?? null,
@@ -147,7 +147,7 @@ const VendorProfile = () => {
       setIsFreeDelivery(false)
     }
   }, [user]);
-
+  console.log(deliveryCharge)
   if (userLoading) return <Loader />
 
   return (
@@ -221,23 +221,6 @@ const VendorProfile = () => {
                   ...payload,
                   deliveryCharge: {
                     ...payload.deliveryCharge,
-                    minimumAmountForFreeDelivery: e.target.value,
-                  }
-                })}
-                value={payload.deliveryCharge?.minimumAmountForFreeDelivery}
-                disabled={isFreeDelivery || !payloadEditOn}
-                size='small'
-                helperText={errors.postCode}
-                error={Boolean(errors.postCode)}
-                type='number'
-                label="Minimum amount for delivery charge (kr)"
-              />
-
-              <TextField
-                onChange={e => setPayload({
-                  ...payload,
-                  deliveryCharge: {
-                    ...payload.deliveryCharge,
                     deliveryCharge: e.target.value,
                   }
                 })}
@@ -249,6 +232,25 @@ const VendorProfile = () => {
                 type='number'
                 label="delivery charge (kr)"
               />
+
+              <TextField
+                onChange={e => setPayload({
+                  ...payload,
+                  deliveryCharge: {
+                    ...payload.deliveryCharge,
+                    minimumAmountForFreeDelivery: e.target.value,
+                  }
+                })}
+                value={payload.deliveryCharge?.minimumAmountForFreeDelivery}
+                disabled={isFreeDelivery || !payloadEditOn}
+                size='small'
+                helperText={errors.postCode}
+                error={Boolean(errors.postCode)}
+                type='number'
+                label="Minimum Order Amount For Free Delivery (kr)"
+              />
+
+
 
             </Stack>
             <Stack flex={1} gap={2}>
