@@ -76,10 +76,10 @@ const NavItem = ({ handleDrawerClose }) => {
   const navItems = [
     { name: 'Dashboard', icon: <SpaceDashboard fontSize='small' />, path: '/dashboard', end: true },
     { name: 'Varsler', icon: <NotificationsNone fontSize='small' />, path: '/dashboard/notifications', notification: unreadNotification },
-    { name: 'Matvare', icon: <LunchDining fontSize='small' />, path: '/dashboard/food-item' },
-    { name: 'Bestillinger', icon: <ShoppingCartCheckoutOutlined fontSize='small' />, path: '/dashboard/orders', notification: placedOrders.length },
-    { name: 'Salgs-Historikk', icon: <Timeline fontSize='small' />, path: '/dashboard/sales-history' },
-    { name: 'Uttaks-Forespørsel', icon: <History fontSize='small' />, path: '/dashboard/withdraw-req' },
+    { name: 'Produkter', icon: <LunchDining fontSize='small' />, path: '/dashboard/food-item' },
+    { name: 'Ordrebehandling', icon: <ShoppingCartCheckoutOutlined fontSize='small' />, path: '/dashboard/orders', notification: placedOrders.length },
+    { name: 'Salgshistorikk', icon: <Timeline fontSize='small' />, path: '/dashboard/sales-history' },
+    // { name: 'Uttaks-Forespørsel', icon: <History fontSize='small' />, path: '/dashboard/withdraw-req' },
     { name: 'Innstillinger', icon: <SettingsOutlined />, path: '/dashboard/settings' },
   ];
 
@@ -158,7 +158,7 @@ const NavItem = ({ handleDrawerClose }) => {
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.name} />
-                  <Badge sx={{ mr: 2 }} badgeContent={item.notification} color="warning" />
+                  <Badge sx={{ mx: 2 }} badgeContent={item.notification} color="warning" />
                 </Stack>
               )}
             </NavLink>

@@ -48,7 +48,7 @@ function App() {
           <Route path='/dashboard/orders/details/:id' element={<OrderDetails />} />
           <Route path='/dashboard/:path/food-details/:id' element={<FoodDetails />} />
           <Route path='/dashboard/sales-history' element={<SalesHistory />} />
-          <Route path='/dashboard/withdraw-req' element={<WithdrawReq />} />
+          {/* <Route path='/dashboard/withdraw-req' element={<WithdrawReq />} /> */}
           <Route path='/dashboard/settings' element={<Setting />} />
           <Route path='*' element={<NotFound />} />
         </Route>

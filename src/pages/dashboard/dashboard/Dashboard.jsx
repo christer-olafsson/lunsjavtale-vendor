@@ -45,23 +45,23 @@ const boxStyle = {
 };
 
 const Dashboard = () => {
-  const [dateRange, setDateRange] = useState('');
+  const [filter, setFilter] = useState('today');
   const [data, setData] = useState({});
   const [widthDrawReqDialogOpen, setWidthDrawReqDialogOpen] = useState(false);
   const [pendingWithdrawReq, setPendingWithdrawReq] = useState([])
 
 
-  useQuery(WITHDRAW_REQ, {
-    notifyOnNetworkStatusChange: true,
-    onCompleted: (res) => {
-      setPendingWithdrawReq(res.withdrawRequests.edges.filter(item => item.node.status === 'pending').map(item => item.node))
-    },
-  });
+  // useQuery(WITHDRAW_REQ, {
+  //   notifyOnNetworkStatusChange: true,
+  //   onCompleted: (res) => {
+  //     setPendingWithdrawReq(res.withdrawRequests.edges.filter(item => item.node.status === 'pending').map(item => item.node))
+  //   },
+  // });
 
   const { data: user } = useQuery(ME);
 
   const { loading, error } = useQuery(VENDOR_DASHBOARD, {
-    variables: { dateRange },
+    // variables: { dateRange: filter },
     onCompleted: (res) => setData(res.vendorDashboard.data),
   });
 
@@ -83,14 +83,13 @@ const Dashboard = () => {
             <FormControl sx={{ minWidth: '200px' }} size="small">
               <InputLabel>Status</InputLabel>
               <Select
-                value={dateRange}
+                value={filter}
                 label="Status"
-                onChange={(e) => setDateRange(e.target.value)}
+                onChange={(e) => setFilter(e.target.value)}
               >
-                <MenuItem value="last-7-days">Siste 7 dager</MenuItem>
-                <MenuItem value="last-30-days">Siste 30 dager</MenuItem>
-                <MenuItem value="last-6-months">Siste 6 måneder</MenuItem>
-                <MenuItem value="last-12-months">Siste 12 måneder</MenuItem>
+                <MenuItem value="today">Today</MenuItem>
+                <MenuItem value="this-month">This Month</MenuItem>
+                <MenuItem value="total">Total</MenuItem>
               </Select>
             </FormControl>
           </Stack>
@@ -142,19 +141,19 @@ const Dashboard = () => {
                 tooltip: 'Dette beløpet er total salgspris for varer',
                 bgcolor: '#388E3C',
               },
-              {
-                title: 'Totale inntekter',
-                value: data?.totalRevenue,
-                icon: <TrendingUpOutlined fontSize="large" />,
-                bgcolor: '#A35C7A',
-              },
-              {
-                title: 'Totalt uttak',
-                value: data?.totalWithdraw,
-                icon: <PublishOutlined fontSize="large" />,
-                pendingWithdrawReqLength: pendingWithdrawReq?.length > 0 ? pendingWithdrawReq?.length : '',
-                bgcolor: '#F57C00',
-              },
+              // {
+              //   title: 'Totale inntekter',
+              //   value: data?.totalRevenue,
+              //   icon: <TrendingUpOutlined fontSize="large" />,
+              //   bgcolor: '#A35C7A',
+              // },
+              // {
+              //   title: 'Totalt uttak',
+              //   value: data?.totalWithdraw,
+              //   icon: <PublishOutlined fontSize="large" />,
+              //   // pendingWithdrawReqLength: pendingWithdrawReq?.length > 0 ? pendingWithdrawReq?.length : '',
+              //   bgcolor: '#F57C00',
+              // },
             ].map((item, index) => (
               <Box key={index} sx={{
                 ...boxStyle.box,
