@@ -50,6 +50,7 @@ const Dashboard = () => {
   const [widthDrawReqDialogOpen, setWidthDrawReqDialogOpen] = useState(false);
   const [pendingWithdrawReq, setPendingWithdrawReq] = useState([])
 
+  console.log(data)
 
   // useQuery(WITHDRAW_REQ, {
   //   notifyOnNetworkStatusChange: true,
@@ -61,7 +62,7 @@ const Dashboard = () => {
   const { data: user } = useQuery(ME);
 
   const { loading, error } = useQuery(VENDOR_DASHBOARD, {
-    // variables: { dateRange: filter },
+    variables: { dateRange: filter },
     onCompleted: (res) => setData(res.vendorDashboard.data),
   });
 
@@ -88,8 +89,8 @@ const Dashboard = () => {
                 onChange={(e) => setFilter(e.target.value)}
               >
                 <MenuItem value="today">Today</MenuItem>
-                <MenuItem value="this-month">This Month</MenuItem>
-                <MenuItem value="total">Total</MenuItem>
+                <MenuItem value="last-30-days">Last 30 Days</MenuItem>
+                <MenuItem value="lifetime">Lifetime</MenuItem>
               </Select>
             </FormControl>
           </Stack>

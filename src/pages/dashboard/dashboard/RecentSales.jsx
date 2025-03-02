@@ -10,29 +10,30 @@ const RecentSales = ({ data }) => {
   const [recentOrders, setRecentOrders] = useState([])
 
   const columns = [
-    {
-      field: 'orderDate', width: 150,
-      renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Bestillingsdato</Typography>
-      ),
-      renderCell: (params) => {
-        return (
-          <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
-            <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}>{format(params.row.createdOn, 'dd-MM-yyyy')}</Typography>
-          </Stack>
-        )
-      }
-    },
+    // {
+    //   field: 'orderDate', width: 150,
+    //   renderHeader: () => (
+    //     <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Bestillingsdato</Typography>
+    //   ),
+    //   renderCell: (params) => {
+    //     return (
+    //       <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
+    //         <Typography sx={{ fontSize: { xs: '12px', md: '16px' } }}>{format(params.row.createdOn, 'dd-MM-yyyy')}</Typography>
+    //       </Stack>
+    //     )
+    //   }
+    // },
 
     {
-      field: 'deliveryDate', headerName: 'Prce', width: 150,
+      field: 'Date', headerName: '', width: 250,
       renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Leveringsdato</Typography>
+        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Dato</Typography>
       ),
       renderCell: (params) => (
         <Stack sx={{ height: '100%' }} direction='row' alignItems='center'>
           <Typography sx={{ fontSize: { xs: '12px', md: '16px' }, fontWeight: 600 }}>
-            {params.row.deliveryDate}
+            {format(params.row.date, 'dd-MM-yyyy')}
+            <span style={{ fontWeight: 300, fontSize: '14px', marginLeft: '5px' }}>{format(params.row.date, 'hh:mm')}</span>
           </Typography>
         </Stack>
       )
@@ -51,50 +52,48 @@ const RecentSales = ({ data }) => {
         </Stack>
       )
     },
-    {
-      field: 'status', headerName: 'Status', width: 150,
-      renderHeader: () => (
-        <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Status</Typography>
-      ),
-      renderCell: (params) => {
-        const { row } = params
-        return (
-          <Box sx={{
-            display: 'inline-flex',
-            padding: '1px 12px',
-            bgcolor:
-              row.status === 'Cancelled' ? 'red' :
-                row.status === 'Placed' ? '#6251DA' :
-                  row.status === 'Updated' ? '#6251DA' :
-                    row.status === 'Confirmed' ? '#433878' :
-                      row.status === 'Delivered' ? 'green' :
-                        row.status === 'Processing' ? '#B17457' :
-                          row.status === 'Payment-completed' ? '#00695c' :
-                            row.status === 'Ready-to-deliver' ? '#283593' :
-                              row.status === 'Payment-pending' ? '#c2185b' :
-                                '#616161',
-            color: '#FFF',
-            borderRadius: '4px',
-          }}>
-            <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.status}</Typography>
-          </Box>
-        )
-      }
-    },
+    // {
+    //   field: 'status', headerName: 'Status', width: 150,
+    //   renderHeader: () => (
+    //     <Typography sx={{ fontSize: { xs: '12px', fontWeight: 600, lg: '15px' } }}>Status</Typography>
+    //   ),
+    //   renderCell: (params) => {
+    //     const { row } = params
+    //     return (
+    //       <Box sx={{
+    //         display: 'inline-flex',
+    //         padding: '1px 12px',
+    //         bgcolor:
+    //           row.status === 'Cancelled' ? 'red' :
+    //             row.status === 'Placed' ? '#6251DA' :
+    //               row.status === 'Updated' ? '#6251DA' :
+    //                 row.status === 'Confirmed' ? '#433878' :
+    //                   row.status === 'Delivered' ? 'green' :
+    //                     row.status === 'Processing' ? '#B17457' :
+    //                       row.status === 'Payment-completed' ? '#00695c' :
+    //                         row.status === 'Ready-to-deliver' ? '#283593' :
+    //                           row.status === 'Payment-pending' ? '#c2185b' :
+    //                             '#616161',
+    //         color: '#FFF',
+    //         borderRadius: '4px',
+    //       }}>
+    //         <Typography sx={{ fontWeight: 500 }} variant='body2'>{row.status}</Typography>
+    //       </Box>
+    //     )
+    //   }
+    // },
   ];
 
 
   const rows = recentOrders?.map(item => ({
     id: item.pk,
-    deliveryDate: item.fields.delivery_date,
-    finalPrice: item.fields.final_price,
-    createdOn: item.fields.created_on,
-    status: item.fields.status
+    date: item.fields.date,
+    finalPrice: item.fields.total_price_with_tax,
   }))
 
 
   useEffect(() => {
-    setRecentOrders(data.recentOrders)
+    setRecentOrders(data.recentSales)
   }, [data])
 
 
