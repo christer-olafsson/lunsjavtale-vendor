@@ -66,7 +66,6 @@ const Dashboard = () => {
     onCompleted: (res) => setData(res.vendorDashboard.data),
   });
 
-  const colors = ['#1E88E5', '#D32F2F', '#388E3C', '#F57C00', '#7B1FA2'];
 
   return (
     <Box sx={{ maxWidth: 'xl', px: 3, py: 2 }}>
@@ -103,13 +102,13 @@ const Dashboard = () => {
             }}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography sx={boxStyle.title}>Balansere</Typography>
-                <IconButton
+                {/* <IconButton
                   size="small"
                   variant="contained"
                   onClick={() => setWidthDrawReqDialogOpen(true)}
                 >
                   <UploadOutlined color='white' />
-                </IconButton>
+                </IconButton> */}
               </Stack>
               <Typography sx={boxStyle.value}>
                 <AccountBalanceWalletOutlined fontSize="large" />
@@ -117,9 +116,9 @@ const Dashboard = () => {
               </Typography>
             </Box>
 
-            <CDialog openDialog={widthDrawReqDialogOpen}>
+            {/* <CDialog openDialog={widthDrawReqDialogOpen}>
               <CreateWithdrawReq closeDialog={() => setWidthDrawReqDialogOpen(false)} />
-            </CDialog>
+            </CDialog> */}
 
             {[
               {
@@ -142,12 +141,12 @@ const Dashboard = () => {
                 tooltip: 'Dette beløpet er total salgspris for varer',
                 bgcolor: '#388E3C',
               },
-              // {
-              //   title: 'Totale inntekter',
-              //   value: data?.totalRevenue,
-              //   icon: <TrendingUpOutlined fontSize="large" />,
-              //   bgcolor: '#A35C7A',
-              // },
+              {
+                title: 'Totale inntekter',
+                value: data?.totalRevenue,
+                icon: <TrendingUpOutlined fontSize="large" />,
+                bgcolor: '#A35C7A',
+              },
               // {
               //   title: 'Totalt uttak',
               //   value: data?.totalWithdraw,
