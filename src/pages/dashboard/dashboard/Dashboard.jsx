@@ -50,8 +50,6 @@ const Dashboard = () => {
   const [widthDrawReqDialogOpen, setWidthDrawReqDialogOpen] = useState(false);
   const [pendingWithdrawReq, setPendingWithdrawReq] = useState([])
 
-  console.log(data)
-
   // useQuery(WITHDRAW_REQ, {
   //   notifyOnNetworkStatusChange: true,
   //   onCompleted: (res) => {
