@@ -140,7 +140,7 @@ const Dashboard = () => {
                 bgcolor: '#388E3C',
               },
               {
-                title: 'Totale inntekter',
+                title: 'Serviceavgift',
                 value: data?.totalRevenue,
                 icon: <TrendingUpOutlined fontSize="large" />,
                 bgcolor: '#A35C7A',
